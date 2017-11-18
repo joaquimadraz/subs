@@ -1,5 +1,8 @@
 language: elixir
 
+env:
+  - MIX_ENV=test
+
 elixir:
   - 1.5
 
@@ -11,10 +14,8 @@ services:
 addons:
   postgresql: "9.6"
 
-install:
-  - mix local.rebar --force
-  - mix.local.hex --force
-  - mix deps.get
+before_script:
+  - mix ecto.setup
 
 script:
   - mix test
