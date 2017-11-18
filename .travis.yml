@@ -14,10 +14,8 @@ services:
 addons:
   postgresql: "9.6"
 
-install:
-  - yarn global add chromedriver
-
 before_script:
+  - yarn global add chromedriver
   - mix compile
   - mix ecto.setup
 
