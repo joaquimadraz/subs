@@ -12,4 +12,4 @@ config :subs, :sql_sandbox, true
 
 config :wallaby, phantomjs: "frontend/node_modules/phantomjs-prebuilt/bin/phantomjs"
 config :wallaby, driver: Wallaby.Experimental.Chrome
-config :wallaby, chrome: [headless: false]
+config :wallaby, chrome: [headless: true]
