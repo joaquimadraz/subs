@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { SingleDatePicker } from 'react-dates'
 
+import { dateTimeFormat } from 'constants'
 import moment from 'moment'
 import { formatDateToISO8601, parseFromISO8601 } from 'utils/dt'
 
@@ -51,6 +52,7 @@ class DatePicker extends Component {
         isOutsideRange={() => false}
         /* Hide help button */
         hideKeyboardShortcutsPanel
+        displayFormat={dateTimeFormat}
       />
     )
   }
