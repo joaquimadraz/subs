@@ -38,17 +38,12 @@ RUN apk upgrade --no-cache && \
 
 EXPOSE 4000
 
-ENV PORT=4000 \
-    MIX_ENV=prod \
+ENV MIX_ENV=prod \
     REPLACE_OS_VARS=true \
     SHELL=/bin/bash
 
 WORKDIR /subs
 
-RUN echo $(ls -la)
-
 COPY --from=builder /subs/rel/releases .
-
-RUN echo $(ls)
 
 CMD ["subs_web/bin/subs", "foreground"]

@@ -2,7 +2,8 @@ version: '2'
 services:
   web:
     build: .
-    mem_limit: 1024m
-    mem_reservation: 128m
+    environment:
+      - PORT=4000
+      - DATABASE_URL=
     ports:
-      - '4000'
+      - 4000
