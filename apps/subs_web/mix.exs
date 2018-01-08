@@ -47,6 +47,7 @@ defmodule SubsWeb.Mixfile do
       {:repository, in_umbrella: true},
       {:cowboy, "~> 1.0"},
       {:guardian, "~> 1.0-beta"},
+      {:distillery, "~> 1.5", runtime: false},
       {:wallaby, "~> 0.19.2", only: :test},
     ]
   end
