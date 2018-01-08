@@ -29,7 +29,7 @@ environment :dev do
   # the --env flag to Distillery explicitly if you want to use
   # dev mode.
   set dev_mode: true
-  set include_erts: false
+  set include_erts: true
   set cookie: :"=v&nM^&;%_l[3.w&0i*ZyfZl&zY4awMaXQENsb>8CaXiV{fX%iO&u9X$eKa`qG8z"
 end
 
@@ -45,7 +45,8 @@ end
 # will be used by default
 
 release :subs do
-  set version: "0.1.0"
+  set version: current_version(:subs_web)
+  set output_dir: "./rel/releases/subs_web"
   set applications: [
     :runtime_tools,
     notifier: :permanent,

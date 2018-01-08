@@ -3,3 +3,6 @@
 /deps
 erl_crash.dump
 *.ez
+
+rel/releases
+prod.secrets.exs

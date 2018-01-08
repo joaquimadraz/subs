@@ -1,10 +1,10 @@
 defmodule Notifier.Email do
   import Bamboo.Email
 
-  @from_email "no_reply@example.com"
+  @from_email Application.get_env(:notifier, :from_email)
 
   def confirmation_email(to_email, %{confirmation_url: confirmation_url}) do
-    subject = "Welcome to Subs, please confirm you account"
+    subject = "Confirm your Subs account"
     body = """
     Welcome to Subs,
 
