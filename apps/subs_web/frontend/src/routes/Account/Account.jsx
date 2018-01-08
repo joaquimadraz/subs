@@ -9,7 +9,7 @@ import InputSelect from 'components/InputSelect'
 // eslint-disable-next-line
 const Account = ({ currentUser }) => {
   return (
-    <div className="w-50 center">
+    <div className="w-50-l w-80-m center">
       <div className="pa3 br2 bg-near-white">
         <div className="f5 b dark-gray mb2">
           Timezone
@@ -43,7 +43,7 @@ const Account = ({ currentUser }) => {
         </div>
       </div>
       <div className="pa3">
-        <Button>Save</Button>
+        <Button disabled>Save</Button>
       </div>
     </div>
   )

@@ -27,12 +27,11 @@ const SubscriptionsList = ({ subscriptions, current }) => {
       <h3 className="black-70 f5 mb2 mt3">Payments</h3>
       <ul className="pl0 mt0">
         <li className="flex justify-around items-center lh-copy ph0-l light-silver">
-          <div className="w-40 pa2 f6 b ">Name</div>
-          <div className="w-30 pa2 f6 b tc">
+          <div className="w-40 w-60-l pa2 f6 b ">Name</div>
+          <div className="w-30 w-20-l pa2 f6 b tc">
             {current ? 'Bill date' : 'Next bill date'}
           </div>
-          <div className="w-20 pa2 f6 b tc">Alerts</div>
-          <div className="w-10 pa2 f6 b tr">Amount</div>
+          <div className="w-30 w-20-l pa2 f6 b tr">Amount</div>
         </li>
         {subscriptions.map(renderSubscriptionItem)}
       </ul>

@@ -6,6 +6,10 @@ export default styled('button') `
   box-shadow:inset 0 0 0 .15rem rgba(0,0,0,0.2),0 .15rem 0 0 #e7e6e4;
   outline: 0;
 
+  &:disabled {
+    opacity: 0.5;
+  }
+
   &:focus, &:hover {
     box-shadow:inset 0 0 0 .15rem rgba(0,0,0,0.2),0 .15rem 0 0 #e7e6e4;
   }

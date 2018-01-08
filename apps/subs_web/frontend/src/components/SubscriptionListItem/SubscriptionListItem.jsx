@@ -20,18 +20,17 @@ const SubscriptionListItem = ({ subscription, current }) => {
         to={routes.subscriptionsShow(subscription.id)}
         className="flex items-center dim pointer no-underline"
       >
-        <div className="w-30 w-40-ns pa2 pa3-ns">
+        <div className="w-40 w-60-l pa3">
           <span className="SubscriptionListItem--name">
             {subscription.name}
           </span>
         </div>
-        <div className="w-30 w-30-ns pa2 pa3-ns tc">
+        <div className="w-30 w-20-l pa3 tc">
           <span className="SubscriptionListItem--next-bill-date">
             {current ? subscription.humanCurrentBillDate : subscription.humanNextBillDate}
           </span>
         </div>
-        <div className="w-10 w-20-ns pa2 pa3-ns tc" />
-        <div className="w-30 w-10-ns pa2 pa3-ns tr">
+        <div className="w-30 w-20-l pa3 tr">
           <span className="SubscriptionListItem--amount">
             {subscription.amountFormatted}
           </span>

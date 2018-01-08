@@ -19,7 +19,7 @@ const NewSubscription = ({
   }
 
   return (
-    <div className="w-50 center">
+    <div className="w-50-l w-80-m center">
       <SubscriptionForm
         onClick={onClick}
         onChange={onChange}

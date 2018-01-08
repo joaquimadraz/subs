@@ -89,7 +89,7 @@ const NextMonthStats = ({
         <div className="dib v-mid">
           {message}
         </div>
-        <div className="dib ml3">
+        <div className="dib ml3-l">
           <Button onClick={() => onNextMonthClick(date)}>see more</Button>
         </div>
       </div>
