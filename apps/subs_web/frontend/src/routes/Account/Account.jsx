@@ -5,7 +5,9 @@ import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import Button from 'components/Button'
 import InputSelect from 'components/InputSelect'
 
-const Account = ({ currentUser }) => {
+// TODO: User settings
+// eslint-disable-next-line
+const Account = ({ currentUser }) => {
   return (
     <div className="w-50 center">
       <div className="pa3 br2 bg-near-white">
@@ -19,6 +21,7 @@ const Account = ({ currentUser }) => {
             options={[
               { value: 'Europe/London', label: 'Europe/London' },
             ]}
+            disabled
           />
         </div>
         <div className="f5 b dark-gray mb2 mt4">
@@ -32,6 +35,7 @@ const Account = ({ currentUser }) => {
               { value: 'weekly', label: 'Weekly' },
               { value: 'monthly', label: 'Monthly' },
             ]}
+            disabled
           />
         </div>
         <div>

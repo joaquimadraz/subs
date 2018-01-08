@@ -87,6 +87,7 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
             className="subscription-amount-currency"
             onChange={event => handleChange(event, 'amount_currency')}
             value={subscription.amount_currency}
+            disabled
           >
             <option value="GBP">£</option>
             <option value="EUR">€</option>

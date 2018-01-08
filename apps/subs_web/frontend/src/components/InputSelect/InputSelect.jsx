@@ -5,27 +5,15 @@ import Select from 'react-select'
 
 import Styles from './Styles'
 
-const cx = className => classNames(className)
+const InputSelect = ({ className, ...props }) => {
+  const cx = classNames(className).toString()
 
-const InputSelect = ({
-  className,
-  name,
-  placeholder,
-  value,
-  options,
-  onChange,
-}) => (
-  <Styles>
-    <Select
-      name={name}
-      placeholder={placeholder}
-      className={cx(className).toString()}
-      value={value}
-      options={options}
-      onChange={onChange}
-    />
-  </Styles>
-)
+  return (
+    <Styles>
+      <Select className={cx} {...props} />
+    </Styles>
+  )
+}
 
 InputSelect.propTypes = {
   name: PropTypes.string,
@@ -34,6 +22,7 @@ InputSelect.propTypes = {
   value: PropTypes.string,
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func,
+  disabled: PropTypes.bool,
 }
 
 InputSelect.defaultProps = {
@@ -41,7 +30,8 @@ InputSelect.defaultProps = {
   className: '',
   placeholder: '',
   value: '',
-  onChange: () => {},
+  onChange: () => { },
+  disabled: false,
 }
 
 export default InputSelect
