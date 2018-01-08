@@ -35,7 +35,7 @@ end
 
 environment :prod do
   set include_erts: true
-  set include_src: true
+  set include_src: false
   set cookie: :"`$8;n2%I.,gM}K{miLCS^C!`izkxvmeeXgJ(![Z]xFTbp,QzHHsYySflf}]U%qH*"
 end
 
@@ -55,5 +55,6 @@ release :subs do
     subs_services: :permanent,
     subs_web: :permanent
   ]
+  set pre_start_hook: "rel/hooks/pre_start.sh"
 end
 
