@@ -17,3 +17,4 @@ erl_crash.dump
 /priv/static/*
 !/priv/static/robots.txt
 !/priv/static/favicon.ico
+!/priv/static/.well-known
