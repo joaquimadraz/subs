@@ -10,6 +10,4 @@ config :notifier, Notifier.Mailer,
   adapter: Bamboo.SendgridAdapter,
   api_key: "my_api_key"
 
-config :notifier, :from_email, "no_reply@subsapp.io"
-
 import_config "prod.secrets.exs"
