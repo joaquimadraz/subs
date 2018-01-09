@@ -4,5 +4,6 @@
 erl_crash.dump
 *.ez
 
+tmp
 rel/releases
 prod.secrets.exs

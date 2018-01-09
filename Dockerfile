@@ -5,6 +5,9 @@ WORKDIR /subs
 
 ENV MIX_ENV=prod
 
+# tmp where ssl files are
+COPY tmp tmp
+
 # Umbrella
 COPY mix.exs mix.lock ./
 COPY config config
@@ -41,6 +44,12 @@ EXPOSE 4000
 ENV MIX_ENV=prod \
     REPLACE_OS_VARS=true \
     SHELL=/bin/bash
+
+WORKDIR /etc/letsencrypt/live/esquim.xyz
+
+COPY --from=builder /subs/tmp/privkey.pem .
+COPY --from=builder /subs/tmp/chain.pem .
+COPY --from=builder /subs/tmp/cert.pem .
 
 WORKDIR /subs
 
