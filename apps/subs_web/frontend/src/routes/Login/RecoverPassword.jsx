@@ -29,6 +29,8 @@ const RecoverPassword = ({
     <div id="recover-password-form" className="measure center pa3 bg-near-white br2">
       {renderErrors(remoteCall)}
       {renderMessage(remoteCall)}
+      <legend className="f4 fw6 ph0 mh0 subs-pink-darker">Recover password</legend>
+
       <div className="mv3">
         <div className="f5 b dark-gray mb2 mt3">
           Email
@@ -42,7 +44,7 @@ const RecoverPassword = ({
       </div>
       <div>
         <Button id="recover-password-btn" className="mr2" onClick={onClick}>
-          Reset password
+          Recover password
         </Button>
         {children}
       </div>

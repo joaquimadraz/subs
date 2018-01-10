@@ -18,6 +18,7 @@ import Login from './routes/Login'
 
 import RedirectIfNotLogged from './routes/RedirectIfNotLogged'
 import UsersConfirmSignup from './routes/Users/routes/ConfirmSignup'
+import UsersResetPassword from './routes/Users/routes/ResetPassword'
 import NewSubscription from './routes/Subscriptions/routes/NewSubscription'
 import ShowSubscription from './routes/Subscriptions/routes/ShowSubscription'
 import Subscriptions from './routes/Subscriptions'
@@ -37,6 +38,7 @@ if (document.getElementById('app')) {
             <Route path={routes.signup} component={Signup} />
             <Route path={routes.login} component={Login} />
             <Route path={routes.usersConfirmSignup} component={UsersConfirmSignup} />
+            <Route path={routes.usersResetPassword} component={UsersResetPassword} />
           </Route>
           {/* Protected routes */}
           <Route component={RedirectIfNotLogged}>

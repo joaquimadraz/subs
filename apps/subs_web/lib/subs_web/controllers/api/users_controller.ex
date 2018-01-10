@@ -117,6 +117,14 @@ defmodule SubsWeb.Api.UserController do
   def recover_password(conn, _) do
     conn
       |> put_status(:bad_request)
-      |> render(ErrorView, :"400", message: "Missing emails param")
+      |> render(ErrorView, :"400", message: "Missing email param")
+  end
+
+  def reset_password(conn, params) do
+    IO.inspect params
+
+    conn
+      |> put_status(:bad_request)
+      |> render(ErrorView, :"400", message: "Missing params")
   end
 end
