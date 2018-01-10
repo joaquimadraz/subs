@@ -4,13 +4,15 @@ FROM bitwalker/alpine-elixir-phoenix as builder
 WORKDIR /subs
 
 ARG host
+ARG erlang_cookie
 
 ENV MIX_ENV=prod \
     HOST=$host \
     SUBS_WEB_KEYKEY=/etc/letsencrypt/live/$host/privkey.pem \
     SUBS_WEB_CERTFILE=/etc/letsencrypt/live/$host/cert.pem \
     SUBS_WEB_CACERTFILE=/etc/letsencrypt/live/$host/chain.pem \
-    SUBS_ADMIN_EMAIL=no_reply@$host
+    SUBS_ADMIN_EMAIL=no_reply@$host \
+    ERLANG_COOKIE=$erlang_cookie
 
 # tmp where ssl files are
 COPY tmp tmp
