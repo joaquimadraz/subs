@@ -1,9 +1,0 @@
-version: '2'
-services:
-  web:
-    build: .
-    environment:
-      - PORT=4000
-      - DATABASE_URL=
-    ports:
-      - 4000
