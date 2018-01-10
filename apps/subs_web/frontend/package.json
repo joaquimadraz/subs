@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.jsx",
   "license": "MIT",
+  "scripts": {
+    "build": "webpack -p"
+  },
   "dependencies": {
     "axios": "^0.17.0",
     "classnames": "^2.2.5",
