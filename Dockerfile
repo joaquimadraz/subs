@@ -20,7 +20,7 @@ RUN cd deps/comeonin && make clean && make
 
 # Build assets in production mode:
 WORKDIR /subs/apps/subs_web/frontend
-RUN npm install && npm rebuild node-sass
+RUN npm install --global yarn && yarn install && yarn build
 
 WORKDIR /subs/apps/subs_web
 RUN MIX_ENV=prod mix phx.digest
@@ -35,17 +35,18 @@ RUN mix release --env=prod --verbose
 
 FROM alpine:3.6
 
+ARG host
+
 RUN apk upgrade --no-cache && \
     apk add --no-cache bash openssl
     # we need bash and openssl for Phoenix
-
-EXPOSE 4000
 
 ENV MIX_ENV=prod \
     REPLACE_OS_VARS=true \
     SHELL=/bin/bash
 
-WORKDIR /etc/letsencrypt/live/esquim.xyz
+# Dir where phoenix is looking for cert files. Default for letsencrypt
+WORKDIR /etc/letsencrypt/live/$host
 
 COPY --from=builder /subs/tmp/privkey.pem .
 COPY --from=builder /subs/tmp/chain.pem .
