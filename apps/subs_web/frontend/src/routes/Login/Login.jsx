@@ -1,6 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 
+import RemoteCall from 'data/domain/RemoteCall'
 import Button from 'components/Button'
 import InputText from 'components/InputText'
 import routes from 'constants/routes'
@@ -11,16 +13,22 @@ const renderErrors = (remoteCall) => {
   return (<p className="red">{remoteCall.get('message')}</p>)
 }
 
-const Login = ({ data, onClick, onChange, remoteCall }) => {
+const Login = ({
+  data,
+  onClick,
+  onChange,
+  remoteCall,
+  children,
+}) => {
   const handleChange = (event, attribute) => {
     onChange(attribute, event.target.value)
   }
 
   return (
-    <div id="login-form"className="measure center pa3 bg-near-white br2">
+    <div id="login-form" className="measure center pa3 bg-near-white br2">
       {renderErrors(remoteCall)}
 
-      <legend className="f4 fw6 ph0 mh0 subs-pink-darker">Login</legend>
+      <legend className="f4 fw6 ph0 mh0 subs-pink-darker">Log in</legend>
       <div className="mt3">
         <div className="f5 b dark-gray mb2 mt3">
           Email
@@ -28,7 +36,6 @@ const Login = ({ data, onClick, onChange, remoteCall }) => {
         <InputText
           className="user-email br2 pa2 input-reset ba w-100"
           type="email"
-          placeholder="email"
           value={data.email}
           onChange={event => handleChange(event, 'email')}
         />
@@ -38,23 +45,38 @@ const Login = ({ data, onClick, onChange, remoteCall }) => {
           Password
         </div>
         <InputText
-          className="user-password br2 b pa2 input-reset ba w-100"
+          className="user-password br2 pa2 input-reset ba w-100"
           type="password"
-          placeholder="password"
           value={data.password}
           onChange={event => handleChange(event, 'password')}
         />
       </div>
       <div>
         <Button id="login-btn" onClick={onClick}>
-          Login
+          Log in
         </Button>
       </div>
-      <div className="lh-copy mt3">
-        <Link className="f6 link dim black db" to={routes.signup}>Sign Up</Link>
+      <div className="mv4 bb bw2 subs-pink" />
+      <div className="lh-copy">
+        <span>{children}</span>
+        <span> or </span>
+        <Link className="link b dark-gray" to={routes.signup}>Sign up</Link>
       </div>
     </div>
   )
+}
+
+Login.propTypes = {
+  data: PropTypes.instanceOf(Object).isRequired,
+  remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
+  onClick: PropTypes.func,
+  onChange: PropTypes.func,
+  children: PropTypes.object,
+}
+
+Login.defaultProps = {
+  onClick: () => { },
+  onChange: () => { },
 }
 
 export default Login

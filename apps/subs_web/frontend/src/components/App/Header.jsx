@@ -37,7 +37,7 @@ const Header = ({ currentUser, onLogoutClick }) => {
 
   const renderNotLogged = () => (
     <HeaderLink to={routes.login} className="fr">
-      Login
+      Log in
     </HeaderLink>
   )
 

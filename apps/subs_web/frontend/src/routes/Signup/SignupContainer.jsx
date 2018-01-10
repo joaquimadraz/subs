@@ -42,10 +42,12 @@ class SignupContainer extends Component {
 
   render() {
     const { user, remoteCall } = this.props
+    const { data } = this.state
 
     return (
       <Signup
         user={user}
+        data={data}
         remoteCall={remoteCall}
         onClick={this.handleFormSubmit}
         onChange={this.handleFormChange}
@@ -71,6 +73,5 @@ SignupContainer.propTypes = {
   user: PropTypes.instanceOf(Map).isRequired,
   remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
 }
-
 
 export default connect(mapStateToProps)(SignupContainer)

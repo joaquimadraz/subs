@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import api from 'data/api'
-import RemoteCall, { parseErrorResponse } from 'data/domain/RemoteCall'
-import routes from 'constants/routes'
+import { parseErrorResponse } from 'data/domain/RemoteCall'
 
 class ConfirmSignupContainer extends Component {
   constructor() {
@@ -27,6 +27,10 @@ class ConfirmSignupContainer extends Component {
   render() {
     return (<p>{this.state.message}</p>)
   }
+}
+
+ConfirmSignupContainer.propTypes = {
+  location: PropTypes.object.isRequired,
 }
 
 export default ConfirmSignupContainer

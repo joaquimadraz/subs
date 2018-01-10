@@ -4,6 +4,8 @@ import { Map } from 'immutable'
 
 import RemoteCall from 'data/domain/RemoteCall'
 import ErrorMessages from 'components/ErrorMessages'
+import Button from 'components/Button'
+import InputText from 'components/InputText'
 
 const renderErrors = (remoteCall) => {
   if (remoteCall.loading || !remoteCall.data) { return null }
@@ -22,6 +24,7 @@ const Signup = ({
   onClick,
   onChange,
   user,
+  data,
   remoteCall,
 }) => {
   const handleChange = (event, attribute) => {
@@ -33,30 +36,46 @@ const Signup = ({
   }
 
   return (
-    <div>
-      Signup
-
-      <div id="signup-form">
-        {renderErrors(remoteCall)}
-        <input
-          className="user-email"
+    <div id="signup-form" className="measure center pa3 bg-near-white br2">
+      {renderErrors(remoteCall)}
+      <legend className="f4 fw6 ph0 mh0 subs-pink-darker">Sign up</legend>
+      <div className="mt3">
+        <div className="f5 b dark-gray mb2 mt3">
+          Email
+        </div>
+        <InputText
+          className="user-email br2 pa2 input-reset ba w-100"
           type="email"
-          placeholder="email"
+          value={data.email}
           onChange={event => handleChange(event, 'email')}
         />
-        <input
-          className="user-password"
+      </div>
+      <div className="mv3">
+        <div className="f5 b dark-gray mb2 mt3">
+          Password
+        </div>
+        <InputText
+          className="user-password br2 pa2 input-reset ba w-100"
           type="password"
-          placeholder="password"
+          value={data.password}
           onChange={event => handleChange(event, 'password')}
         />
-        <input
-          className="user-password-confirmation"
+      </div>
+      <div className="mv3">
+        <div className="f5 b dark-gray mb2 mt3">
+          Password confirmation
+        </div>
+        <InputText
+          className="user-password-confirmation br2 pa2 input-reset ba w-100"
           type="password"
-          placeholder="password confirmation"
+          value={data.password_confirmation}
           onChange={event => handleChange(event, 'password_confirmation')}
         />
-        <button id="signup-btn" onClick={onClick}>Let’s go!</button>
+      </div>
+      <div>
+        <Button id="signup-btn" onClick={onClick}>
+          Sign up
+        </Button>
       </div>
     </div>
   )
@@ -64,6 +83,7 @@ const Signup = ({
 
 Signup.propTypes = {
   user: PropTypes.instanceOf(Map).isRequired,
+  data: PropTypes.instanceOf(Object).isRequired,
   remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
   onClick: PropTypes.func,
   onChange: PropTypes.func,
