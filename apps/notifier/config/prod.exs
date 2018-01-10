@@ -10,4 +10,7 @@ config :notifier, Notifier.Mailer,
   adapter: Bamboo.SendgridAdapter,
   api_key: "my_api_key"
 
+config :notifier,
+  :from_email, System.get_env("SUBS_ADMIN_EMAIL")
+
 import_config "prod.secrets.exs"

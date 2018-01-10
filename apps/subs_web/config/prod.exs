@@ -16,7 +16,7 @@ use Mix.Config
 config :subs_web, SubsWeb.Endpoint,
   http: [port: {:system, "PORT"}],
   load_from_system_env: true,
-  url: [host:  {:system, "HOST"}, port: {:system, "PORT"}],
+  url: [host: System.get_env("HOST"), port: {:system, "PORT"}],
   force_ssl: [hsts: true],
   https: [:inet6,
     port: 443,

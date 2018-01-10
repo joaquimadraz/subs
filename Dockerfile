@@ -3,7 +3,14 @@ FROM bitwalker/alpine-elixir-phoenix as builder
 
 WORKDIR /subs
 
-ENV MIX_ENV=prod
+ARG host
+
+ENV MIX_ENV=prod \
+    HOST=$host \
+    SUBS_WEB_KEYKEY=/etc/letsencrypt/live/$host/privkey.pem \
+    SUBS_WEB_CERTFILE=/etc/letsencrypt/live/$host/cert.pem \
+    SUBS_WEB_CACERTFILE=/etc/letsencrypt/live/$host/chain.pem \
+    SUBS_ADMIN_EMAIL=no_reply@$host
 
 # tmp where ssl files are
 COPY tmp tmp
@@ -23,7 +30,7 @@ WORKDIR /subs/apps/subs_web/frontend
 RUN npm install --global yarn && yarn install && yarn build
 
 WORKDIR /subs/apps/subs_web
-RUN MIX_ENV=prod mix phx.digest
+RUN mix phx.digest
 
 WORKDIR /subs
 COPY rel rel
