@@ -5,6 +5,7 @@ import {
   SIGNUP_STARTED,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
+  SIGNUP_RESET,
 } from './signup/action'
 
 import {
@@ -27,6 +28,8 @@ const signupReducer = (state = initialState, action) => {
       return signupSuccess(state, action)
     case SIGNUP_FAILURE:
       return signupFailure(state, action)
+    case SIGNUP_RESET:
+      return initialState
     default:
       return state
   }

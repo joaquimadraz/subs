@@ -3,6 +3,7 @@ import api from 'data/api'
 const SIGNUP_STARTED = 'SIGNUP_STARTED'
 const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
+const SIGNUP_RESET = 'SIGNUP_RESET'
 
 function handleSignupStarted(dispatch) {
   dispatch({ type: SIGNUP_STARTED })
@@ -33,4 +34,5 @@ export {
   SIGNUP_STARTED,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
+  SIGNUP_RESET,
 }

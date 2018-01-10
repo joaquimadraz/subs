@@ -50,4 +50,21 @@ defmodule SubsWeb.Test.Acceptance.UserSignupTest do
     |> click(css("#signup-btn"))
     |> assert_has(css("p", text: "A confirmation email was sent to #{email}."))
   end
+
+  @tag :acceptance
+  test "signs up with success renders confirmation message and next signup is clear", %{session: session} do
+    email = "#{UUID.uuid4()}@example.com"
+
+    session
+    |> visit("/signup")
+    |> assert_has(css("#app"))
+    |> fill_in(css("#signup-form .user-email"), with: email)
+    |> fill_in(css("#signup-form .user-password"), with: "123456")
+    |> fill_in(css("#signup-form .user-password-confirmation"), with: "123456")
+    |> click(css("#signup-btn"))
+    |> assert_has(css("p", text: "A confirmation email was sent to #{email}."))
+    |> click(css("a[href='/login']"))
+    |> click(css("a[href='/signup']"))
+    |> assert_has(css("#signup-form .user-email", text: ""))
+  end
 end
