@@ -1,60 +1,39 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router'
 
+import routes from 'constants/routes'
 import RemoteCall from 'data/domain/RemoteCall'
-import ErrorMessages from 'components/ErrorMessages'
-import Button from 'components/Button'
-import InputText from 'components/InputText'
-
-const renderErrors = (remoteCall) => {
-  if (remoteCall.loading || !remoteCall.data) { return null }
-
-  return <ErrorMessages errors={remoteCall.data.get('errors')} />
-}
+import ResetPasswordForm from './ResetPasswordForm'
 
 const ResetPassword = ({
   data,
   onClick,
   onChange,
   remoteCall,
+  isTokenValid,
+  wasTokenChecked,
+  wasPasswordUpdated,
 }) => {
-  const handleChange = (event, attribute) => {
-    onChange(attribute, event.target.value)
+  if (!wasTokenChecked) {
+    return (<p>Checking your token validity...</p>)
+  }
+
+  if (wasPasswordUpdated) {
+    return (<p>Password was updated. Click <Link to={routes.login} className="link subs-pink b">here</Link> to log in.</p>)
+  }
+
+  if (!isTokenValid) {
+    return (<p>{remoteCall.message}. Click <Link to={routes.root} className="link subs-pink b">here</Link> to go home.</p>)
   }
 
   return (
-    <div id="reset-password-form" className="measure center pa3 bg-near-white br2">
-      {renderErrors(remoteCall)}
-
-      <legend className="f4 fw6 ph0 mh0 subs-pink-darker">Reset password</legend>
-      <div className="mv3">
-        <div className="f5 b dark-gray mb2 mt3">
-          Password
-        </div>
-        <InputText
-          className="user-password br2 pa2 input-reset ba w-100"
-          type="password"
-          value={data.password}
-          onChange={event => handleChange(event, 'password')}
-        />
-      </div>
-      <div className="mv3">
-        <div className="f5 b dark-gray mb2 mt3">
-          Password confirmation
-        </div>
-        <InputText
-          className="user-password-confirmation br2 pa2 input-reset ba w-100"
-          type="password"
-          value={data.password_confirmation}
-          onChange={event => handleChange(event, 'password_confirmation')}
-        />
-      </div>
-      <div>
-        <Button id="reset-btn" onClick={onClick}>
-          Reset password
-        </Button>
-      </div>
-    </div>
+    <ResetPasswordForm
+      remoteCall={remoteCall}
+      data={data}
+      onClick={onClick}
+      onChange={onChange}
+    />
   )
 }
 
@@ -63,11 +42,17 @@ ResetPassword.propTypes = {
   remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
   onChange: PropTypes.func,
   onClick: PropTypes.func,
+  isTokenValid: PropTypes.bool,
+  wasTokenChecked: PropTypes.bool,
+  wasPasswordUpdated: PropTypes.bool,
 }
 
 ResetPassword.defaultProps = {
   onClick: () => { },
-  onChange: () => {},
+  onChange: () => { },
+  isTokenValid: false,
+  wasTokenChecked: false,
+  wasPasswordUpdated: false,
 }
 
 export default ResetPassword

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import routes from 'constants/routes'
 import RemoteCall from 'data/domain/RemoteCall'
 import checkRecoveryTokenAction from 'data/domain/password/checkRecoveryToken/action'
 import resetPasswordAction from 'data/domain/password/resetPassword/action'
@@ -24,9 +25,13 @@ class ResetPasswordContainer extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, location: { query: { t } } } = this.props
+    const { dispatch, router, location: { query: { t } } } = this.props
 
-    dispatch(checkRecoveryTokenAction(t))
+    if (t) {
+      dispatch(checkRecoveryTokenAction(t))
+    } else {
+      router.push(routes.root)
+    }
   }
 
   handleFormSubmit() {
@@ -54,27 +59,18 @@ class ResetPasswordContainer extends Component {
       remoteCall,
     } = this.props
 
-    if (!wasTokenChecked) {
-      return <p>Loading</p>
-    }
-
-    if (wasPasswordUpdated) {
-      return <p>Password was updated</p>
-    }
-
     return (
-      isTokenValid
-        ? (
-          <ResetPassword
-            remoteCall={remoteCall}
-            data={data}
-            onClick={this.handleFormSubmit}
-            onChange={this.handleFormChange}
-          />
-        )
-        : (
-          <p>{remoteCall.message}</p>
-        )
+      <div className="measure center pa3 bg-near-white br2">
+        <ResetPassword
+          wasPasswordUpdated={wasPasswordUpdated}
+          wasTokenChecked={wasTokenChecked}
+          isTokenValid={isTokenValid}
+          remoteCall={remoteCall}
+          data={data}
+          onClick={this.handleFormSubmit}
+          onChange={this.handleFormChange}
+        />
+      </div>
     )
   }
 }
@@ -90,6 +86,7 @@ const mapStateToProps = (state) => {
 
 ResetPasswordContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  router: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
   wasPasswordUpdated: PropTypes.bool.isRequired,
