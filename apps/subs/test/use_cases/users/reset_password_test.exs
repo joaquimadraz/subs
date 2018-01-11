@@ -25,4 +25,18 @@ defmodule Subs.Test.UseCases.Users.ResetUserPasswordTest do
 
     assert error == :token_expired
   end
+
+  test "return error for token already used" do
+    user = insert(
+      :user,
+      password_recovery_token: "aaabbbccc",
+      encrypted_password_recovery_token: Crypto.sha1("aaabbbccc"),
+      password_recovery_expires_at: @dt.step_date(@dt.now(), :hours, 1),
+      password_recovery_used_at: @dt.step_date(@dt.now(), :hours, -1)
+    )
+
+    {:error, {error, _}} = ResetUserPassword.perform(user.password_recovery_token, %{})
+
+    assert error == :token_expired
+  end
 end
