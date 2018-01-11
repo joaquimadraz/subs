@@ -5,6 +5,7 @@ import api from 'data/api'
 const LOGIN_STARTED = 'LOGIN_STARTED'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGIN_FAILURE = 'LOGIN_FAILURE'
+const LOGIN_RESET = 'LOGIN_RESET'
 
 function handleLoginStarted(dispatch) {
   dispatch({ type: LOGIN_STARTED })
@@ -39,4 +40,5 @@ export {
   LOGIN_STARTED,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGIN_RESET,
 }

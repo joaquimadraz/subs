@@ -4,6 +4,7 @@ import RemoteCall from 'data/domain/RemoteCall'
 import {
   LOGIN_STARTED,
   LOGIN_FAILURE,
+  LOGIN_RESET,
 } from './login/login/action'
 
 import {
@@ -33,6 +34,8 @@ const loginReducer = (state = initialState, action) => {
       return loginStarted(state)
     case LOGIN_FAILURE:
       return loginFailure(state, action)
+    case LOGIN_RESET:
+      return initialState
     case RECOVER_PASSWORD_STARTED:
       return recoverPasswordStarted(state)
     case RECOVER_PASSWORD_SUCCESS:

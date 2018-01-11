@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import RemoteCall from 'data/domain/RemoteCall'
-import loginAction from 'data/domain/login/login/action'
+import loginAction, { LOGIN_RESET } from 'data/domain/login/login/action'
 import recoverPasswordAction from 'data/domain/login/recoverPassword/action'
 import Button from 'components/Button'
 
@@ -36,6 +36,8 @@ class LoginContainer extends Component {
   }
 
   setRecoverPassword() {
+    this.props.dispatch({ type: LOGIN_RESET })
+
     this.setState(() => ({
       isLogin: false,
       loginData: initialLoginData,
@@ -43,6 +45,8 @@ class LoginContainer extends Component {
   }
 
   setLogin() {
+    this.props.dispatch({ type: LOGIN_RESET })
+
     this.setState(() => ({
       isLogin: true,
       recoverEmail: '',
