@@ -18,7 +18,7 @@ function handleRecoverPasswordFailure(dispatch, error) {
   dispatch({ type: RECOVER_PASSWORD_FAILURE, error })
 }
 
-const recoverPassword = (email) =>
+const recoverPassword = email =>
   (dispatch) => {
     handleRecoverPasswordStarted(dispatch)
 

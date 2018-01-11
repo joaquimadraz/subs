@@ -15,6 +15,10 @@ class ResetPasswordContainer extends Component {
     this.handleFormChange = this.handleFormChange.bind(this)
 
     this.state = {
+      remoteCall: new RemoteCall(),
+      wasTokenChecked: false,
+      isTokenValid: false,
+      passwordUpdated: false,
       data: {
         password: '',
         password_confirmation: '',
@@ -22,17 +26,30 @@ class ResetPasswordContainer extends Component {
     }
   }
 
+  componentDidMount() {
+    const { location: { query: { t } } } = this.props
+
+    api.getPasswordReset(t)
+      .then(() => {
+        this.setState(() => ({ wasTokenChecked: true, isTokenValid: true }))
+      })
+      .catch((error) => {
+        const remoteCall = parseErrorResponse(error)
+
+        this.setState(() => ({ wasTokenChecked: true, remoteCall }))
+      })
+  }
+
   handleFormSubmit() {
     const { location: { query: { t } } } = this.props
     const { data } = this.state
 
     api.postUsersResetPassword(t, data)
-      .then(() => {
-        // TODO
+      .then((response) => {
+        this.setState(() => ({ passwordUpdated: true, remoteCall: new RemoteCall() }))
       })
       .catch((error) => {
-        const remoteCall = parseErrorResponse(error)
-        this.setState(() => ({ message: remoteCall.get('message') }))
+        this.setState(() => ({ remoteCall: parseErrorResponse(error) }))
       })
   }
 
@@ -45,23 +62,42 @@ class ResetPasswordContainer extends Component {
   }
 
   render() {
-    const { remoteCall } = this.props
-    const { data } = this.state
+    const {
+      wasTokenChecked,
+      isTokenValid,
+      data,
+      remoteCall,
+      passwordUpdated,
+    } = this.state
+
+    if (!wasTokenChecked) {
+      return <p>Loading</p>
+    }
+
+    if (passwordUpdated) {
+      return <p>Password was updated</p>
+    }
 
     return (
-      <ResetPassword
-        remoteCall={remoteCall}
-        data={data}
-        onClick={this.handleFormSubmit}
-        onChange={this.handleFormChange}
-      />
+      isTokenValid
+        ? (
+          <ResetPassword
+            remoteCall={remoteCall}
+            data={data}
+            onClick={this.handleFormSubmit}
+            onChange={this.handleFormChange}
+          />
+        )
+        : (
+          <p>{remoteCall.message}</p>
+        )
     )
   }
 }
 
 const mapStateToProps = () => {
   return {
-    remoteCall: new RemoteCall(),
+    // remoteCall: new RemoteCall(),
   }
 }
 

@@ -16,7 +16,10 @@ const postUsersRecoverPassword = params =>
   axios.post('/api/users/recover_password', params)
 
 const postUsersResetPassword = (token, params) =>
-  axios.post(`/api/users/recover_password?t=${token}`, params)
+  axios.post(`/api/users/reset_password?t=${token}`, params)
+
+const getPasswordReset = token =>
+  axios.get(`/api/password/reset?t=${token}`)
 
 // authenticated
 
@@ -56,4 +59,5 @@ export default {
   patchSubscription,
   getSubscription,
   getServices,
+  getPasswordReset,
 }

@@ -5,6 +5,7 @@ const remoteCallObject = {
   http: null,
   data: null,
   message: null,
+  error: false,
 }
 
 const RemoteCallRecord = Record(remoteCallObject)
@@ -22,6 +23,7 @@ export function parseErrorResponse(object) {
     http: object.response,
     data: Map({ errors: remoteCallData }),
     message: data.message,
+    error: object.response.status >= 400,
   })
 }
 
