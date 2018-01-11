@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import api from 'data/api'
 import RemoteCall, { parseErrorResponse } from 'data/domain/RemoteCall'
+import checkRecoveryTokenAction from 'data/domain/password/checkRecoveryToken/action'
 
 import ResetPassword from './ResetPassword'
 
@@ -15,9 +16,6 @@ class ResetPasswordContainer extends Component {
     this.handleFormChange = this.handleFormChange.bind(this)
 
     this.state = {
-      remoteCall: new RemoteCall(),
-      wasTokenChecked: false,
-      isTokenValid: false,
       passwordUpdated: false,
       data: {
         password: '',
@@ -27,17 +25,9 @@ class ResetPasswordContainer extends Component {
   }
 
   componentDidMount() {
-    const { location: { query: { t } } } = this.props
+    const { dispatch, location: { query: { t } } } = this.props
 
-    api.getPasswordReset(t)
-      .then(() => {
-        this.setState(() => ({ wasTokenChecked: true, isTokenValid: true }))
-      })
-      .catch((error) => {
-        const remoteCall = parseErrorResponse(error)
-
-        this.setState(() => ({ wasTokenChecked: true, remoteCall }))
-      })
+    dispatch(checkRecoveryTokenAction(t))
   }
 
   handleFormSubmit() {
@@ -63,12 +53,15 @@ class ResetPasswordContainer extends Component {
 
   render() {
     const {
-      wasTokenChecked,
-      isTokenValid,
       data,
-      remoteCall,
       passwordUpdated,
     } = this.state
+
+    const {
+      wasTokenChecked,
+      isTokenValid,
+      remoteCall,
+    } = this.props
 
     if (!wasTokenChecked) {
       return <p>Loading</p>
@@ -95,15 +88,20 @@ class ResetPasswordContainer extends Component {
   }
 }
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   return {
-    // remoteCall: new RemoteCall(),
+    wasTokenChecked: state.password.get('wasTokenChecked'),
+    isTokenValid: state.password.get('isTokenValid'),
+    remoteCall: state.password.get('remoteCall'),
   }
 }
 
 ResetPasswordContainer.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
+  wasTokenChecked: PropTypes.bool.isRequired,
+  isTokenValid: PropTypes.bool.isRequired,
 }
 
 export default connect(mapStateToProps)(ResetPasswordContainer)
