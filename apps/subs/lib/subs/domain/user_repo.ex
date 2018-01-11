@@ -31,6 +31,10 @@ defmodule Subs.UserRepo do
     Repo.get_by(User, encrypted_confirmation_token: Crypto.sha1(token))
   end
 
+  def get_by_password_recovery_token(token) do
+    Repo.get_by(User, encrypted_password_recovery_token: Crypto.sha1(token))
+  end
+
   def reset_user_recover_password_fields(user) do
     user
     |> User.recover_password_changeset()
