@@ -1,36 +1,27 @@
-import { Map, OrderedSet } from 'immutable'
+import { Map } from 'immutable'
 import RemoteCall from 'data/domain/RemoteCall'
 
 import {
   LOGIN_STARTED,
   LOGIN_FAILURE,
-} from './login/action'
+} from './login/login/action'
 
 import {
   RECOVER_PASSWORD_STARTED,
   RECOVER_PASSWORD_SUCCESS,
   RECOVER_PASSWORD_FAILURE,
-} from './recoverPassword/action'
+} from './login/recoverPassword/action'
 
 import {
   loginStarted,
   loginFailure,
-} from './login/reducer'
-
-// TODO: Refactor login actions/reducers. Two actions on the login page.
-// login
-// - login
-//   - action.js
-//   - reducer.js
-// - recoverPassword
-//   - action.js
-//   - reducer.js
+} from './login/login/reducer'
 
 import {
   recoverPasswordStarted,
   recoverPasswordSuccess,
   recoverPasswordFailure,
-} from './recoverPassword/reducer'
+} from './login/recoverPassword/reducer'
 
 const initialState = Map({
   remoteCall: new RemoteCall(),

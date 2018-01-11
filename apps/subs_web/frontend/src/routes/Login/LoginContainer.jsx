@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import RemoteCall from 'data/domain/RemoteCall'
-import loginAction from 'data/domain/login/action'
-import recoverPasswordAction from 'data/domain/recoverPassword/action'
+import loginAction from 'data/domain/login/login/action'
+import recoverPasswordAction from 'data/domain/login/recoverPassword/action'
 import Button from 'components/Button'
 
 import Login from './Login'

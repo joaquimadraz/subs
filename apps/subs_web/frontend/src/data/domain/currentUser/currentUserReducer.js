@@ -1,9 +1,7 @@
-import { Map, OrderedSet } from 'immutable'
-import RemoteCall from 'data/domain/RemoteCall'
 import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import Cookies from 'js-cookie'
 
-import { LOGIN_SUCCESS } from '../login/action'
+import { LOGIN_SUCCESS } from '../login/login/action'
 import { LOGOUT_SUCCESS } from './logout/action'
 import {
   GET_CURRENT_USER_SUCCESS,
