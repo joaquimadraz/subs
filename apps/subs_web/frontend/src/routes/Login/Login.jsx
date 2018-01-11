@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 
 import RemoteCall from 'data/domain/RemoteCall'
+import Message from 'components/Message'
 import Button from 'components/Button'
 import InputText from 'components/InputText'
 import routes from 'constants/routes'
@@ -10,7 +11,7 @@ import routes from 'constants/routes'
 const renderErrors = (remoteCall) => {
   if (remoteCall.loading || !remoteCall.data) { return null }
 
-  return (<p className="red">{remoteCall.get('message')}</p>)
+  return (<Message color="red">{remoteCall.get('message')}</Message>)
 }
 
 const Login = ({

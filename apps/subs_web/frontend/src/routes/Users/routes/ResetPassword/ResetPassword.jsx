@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 
 import routes from 'constants/routes'
 import RemoteCall from 'data/domain/RemoteCall'
+import Message from 'components/Message'
 import ResetPasswordForm from './ResetPasswordForm'
 
 const ResetPassword = ({

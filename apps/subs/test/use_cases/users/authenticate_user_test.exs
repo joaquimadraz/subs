@@ -42,8 +42,14 @@ defmodule Subs.Test.UseCases.Users.AuthenticateUserTest do
 
   defp create_user(_) do
     password = "password"
-    user = insert(:user, email: "email@email.com",
-                         encrypted_password: BCrypt.hashpwsalt(password))
+    user =
+      insert(
+        :user,
+        email: "email@email.com",
+        encrypted_password: BCrypt.hashpwsalt(password),
+        confirmed_at: NaiveDateTime.utc_now(),
+      )
+
     [
       user: user,
       email: user.email,
