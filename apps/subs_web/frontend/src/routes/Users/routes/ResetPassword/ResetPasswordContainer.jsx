@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import api from 'data/api'
-import RemoteCall, { parseErrorResponse } from 'data/domain/RemoteCall'
+import RemoteCall from 'data/domain/RemoteCall'
 import checkRecoveryTokenAction from 'data/domain/password/checkRecoveryToken/action'
+import resetPasswordAction from 'data/domain/password/resetPassword/action'
 
 import ResetPassword from './ResetPassword'
 
@@ -16,7 +16,6 @@ class ResetPasswordContainer extends Component {
     this.handleFormChange = this.handleFormChange.bind(this)
 
     this.state = {
-      passwordUpdated: false,
       data: {
         password: '',
         password_confirmation: '',
@@ -31,16 +30,10 @@ class ResetPasswordContainer extends Component {
   }
 
   handleFormSubmit() {
-    const { location: { query: { t } } } = this.props
+    const { dispatch, location: { query: { t } } } = this.props
     const { data } = this.state
 
-    api.postUsersResetPassword(t, data)
-      .then((response) => {
-        this.setState(() => ({ passwordUpdated: true, remoteCall: new RemoteCall() }))
-      })
-      .catch((error) => {
-        this.setState(() => ({ remoteCall: parseErrorResponse(error) }))
-      })
+    dispatch(resetPasswordAction(t, data))
   }
 
   handleFormChange(attribute, value) {
@@ -52,12 +45,10 @@ class ResetPasswordContainer extends Component {
   }
 
   render() {
-    const {
-      data,
-      passwordUpdated,
-    } = this.state
+    const { data } = this.state
 
     const {
+      wasPasswordUpdated,
       wasTokenChecked,
       isTokenValid,
       remoteCall,
@@ -67,7 +58,7 @@ class ResetPasswordContainer extends Component {
       return <p>Loading</p>
     }
 
-    if (passwordUpdated) {
+    if (wasPasswordUpdated) {
       return <p>Password was updated</p>
     }
 
@@ -90,6 +81,7 @@ class ResetPasswordContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    wasPasswordUpdated: state.password.get('wasPasswordUpdated'),
     wasTokenChecked: state.password.get('wasTokenChecked'),
     isTokenValid: state.password.get('isTokenValid'),
     remoteCall: state.password.get('remoteCall'),
@@ -100,6 +92,7 @@ ResetPasswordContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
+  wasPasswordUpdated: PropTypes.bool.isRequired,
   wasTokenChecked: PropTypes.bool.isRequired,
   isTokenValid: PropTypes.bool.isRequired,
 }
