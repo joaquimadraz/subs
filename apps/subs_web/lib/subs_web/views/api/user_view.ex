@@ -31,7 +31,7 @@ defmodule SubsWeb.Api.UserView do
     %{message: "A recover password email is on the way"}
   end
 
-  def render("rest_password.json", _) do
+  def render("reset_password.json", _) do
     %{message: "Password was updated"}
   end
 

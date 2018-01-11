@@ -126,7 +126,7 @@ defmodule SubsWeb.Api.UserController do
       {:ok, _} ->
         conn
         |> put_status(:ok)
-        |> render("rest_password.json")
+        |> render("reset_password.json")
       {:error, {:invalid_token, _}} ->
         conn
         |> put_status(:conflict)
