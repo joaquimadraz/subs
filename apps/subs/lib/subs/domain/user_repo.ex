@@ -1,5 +1,6 @@
 defmodule Subs.UserRepo do
   @moduledoc false
+  import Ecto.Query
 
   alias Subs.User
   alias Repository.Repo
@@ -29,6 +30,16 @@ defmodule Subs.UserRepo do
 
   def get_by_email(email) do
     Repo.get_by(User, email: String.downcase(email))
+  end
+
+  def get_confirmed_by_email(email) do
+    query =
+      from(
+        u in User,
+        where: not(is_nil(u.confirmed_at)) and u.email == ^email
+      )
+
+    Repo.one(query)
   end
 
   def get_by_id(user_id), do: Repo.get(User, user_id)

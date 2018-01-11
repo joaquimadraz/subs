@@ -105,7 +105,7 @@ defmodule Subs.User do
   end
 
   def authenticate(email, password) do
-    user = UserRepo.get_by_email(email)
+    user = UserRepo.get_confirmed_by_email(email)
 
     case user do
       nil ->

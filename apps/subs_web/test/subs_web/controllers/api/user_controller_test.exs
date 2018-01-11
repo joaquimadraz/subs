@@ -64,7 +64,12 @@ defmodule SubsWeb.Test.Controllers.UserControllerTest do
     setup %{conn: conn} do
       user_password = "password"
 
-      user = insert(:user, encrypted_password: @bcrypt.hashpwsalt(user_password))
+      user =
+        insert(
+          :user,
+          encrypted_password: @bcrypt.hashpwsalt(user_password),
+          confirmed_at: NaiveDateTime.utc_now()
+        )
 
       [conn: conn,
        user: user,
@@ -81,6 +86,23 @@ defmodule SubsWeb.Test.Controllers.UserControllerTest do
     test "returns forbidden for invalid credentials", %{conn: conn} do
       conn = post(conn, api_user_authenticate_path(conn, :authenticate), %{
         email: "unknown@email.com",
+        password: "password"
+      })
+
+      assert data = json_response(conn, 403)
+      assert data["message"] == "Invalid credentials"
+    end
+
+    test "returns forbidden for user not confirmed", %{conn: conn} do
+      user_password = "password"
+      user = insert(
+        :user,
+        encrypted_password: @bcrypt.hashpwsalt(user_password),
+        confirmed_at: nil
+      )
+
+      conn = post(conn, api_user_authenticate_path(conn, :authenticate), %{
+        email: user.email,
         password: "password"
       })
 
@@ -172,11 +194,13 @@ defmodule SubsWeb.Test.Controllers.UserControllerTest do
 
   describe "POST /api/users/recover_password" do
     setup %{conn: conn} do
-      user = insert(:user, %{
-        email: "dc@example.com",
-        password_recovery_token: nil,
-        password_recovery_expires_at: nil
-      })
+      user =
+        insert(:user, %{
+          email: "dc@example.com",
+          password_recovery_token: nil,
+          password_recovery_expires_at: nil,
+          confirmed_at: NaiveDateTime.utc_now(),
+        })
 
       [conn: conn, user: user]
     end
