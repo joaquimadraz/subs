@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { OrderedSet, Map } from 'immutable'
 
 import routes from 'constants/routes'
-import { now, parseFromISO8601 } from 'utils/dt'
+import { now, parseFromISO8601, daysBetween } from 'utils/dt'
 import RemoteCall from 'data/domain/RemoteCall'
 import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import getAllSubscriptionsAction from 'data/domain/subscriptions/getAllSubscriptions/action'
@@ -15,6 +15,9 @@ const pad = (num, size) => {
   const s = `0${num}`
   return s.substr(s.length - size)
 }
+
+const buildMonthYearQs = date =>
+  `month=${date.getMonth() + 1}&year=${date.getFullYear()}`
 
 class HomeContainer extends Component {
   constructor() {
@@ -48,12 +51,29 @@ class HomeContainer extends Component {
     }))
   }
 
+  // TODO: Remove this after finding a better way of navigating between months
+  componentWillReceiveProps(nextProps) {
+    const { dispatch, router, location: { query: { month, year } } } = nextProps
+    const { currentDate } = this.state
+
+    if (!month && !year && daysBetween(now(), currentDate) !== 0) {
+      router.push(`${routes.root}?${buildMonthYearQs(now())}`)
+
+      dispatch(getAllSubscriptionsAction({
+        month_eq: now().getMonth() + 1,
+        year_eq: now().getFullYear(),
+      }))
+
+      this.setState(() => ({ currentDate: now() }))
+    }
+  }
+
   handleNextMonthClick(date) {
     const { dispatch, router } = this.props
 
     this.setState(() => ({ currentDate: date }))
 
-    router.push(`${routes.root}?month=${date.getMonth() + 1}&year=${date.getFullYear()}`)
+    router.push(`${routes.root}?${buildMonthYearQs(date)}`)
 
     dispatch(getAllSubscriptionsAction({
       month_eq: date.getMonth() + 1,

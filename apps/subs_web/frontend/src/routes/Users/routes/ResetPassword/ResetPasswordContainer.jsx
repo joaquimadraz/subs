@@ -86,7 +86,7 @@ const mapStateToProps = (state) => {
 
 ResetPasswordContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  router: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
   wasPasswordUpdated: PropTypes.bool.isRequired,
