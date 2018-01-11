@@ -21,7 +21,6 @@ defmodule Subs.User do
     field :password_recovery_token, :string, virtual: true
     field :encrypted_password_recovery_token, :string
     field :password_recovery_expires_at, :naive_datetime
-    field :password_recovery_used_at, :naive_datetime
 
     has_many :subscriptions, Subscription
     has_many :subs_notifications, SubsNotification
@@ -76,15 +75,26 @@ defmodule Subs.User do
 
     change(struct, password_recovery_token: password_recovery_token,
                    encrypted_password_recovery_token: Crypto.sha1(password_recovery_token),
-                   password_recovery_expires_at: dt.step_date(dt.now(), :hours, 1),
-                   password_recovery_used_at: nil)
+                   password_recovery_expires_at: dt.step_date(dt.now(), :hours, 1))
   end
 
   def reset_password?(nil), do: false
   def reset_password?(user) do
     user.encrypted_password_recovery_token &&
-      user.password_recovery_used_at == nil &&
-        @dt.minutes_between(user.password_recovery_expires_at, @dt.now()) >= 0
+      @dt.minutes_between(user.password_recovery_expires_at, @dt.now()) >= 0
+  end
+
+  def reset_password_changeset(user, params) do
+    required_field = ~w(password password_confirmation)a
+
+    user
+    |> cast(params, required_field)
+    |> validate_required(required_field)
+    |> validate_length(:password, min: 6)
+    |> validate_password_confirmation_presence()
+    |> validate_confirmation(:password)
+    |> encrypt_password()
+    |> change(encrypted_password_recovery_token: nil, password_recovery_expires_at: nil)
   end
 
   def email_changeset(struct, params) do

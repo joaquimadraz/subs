@@ -17,6 +17,12 @@ defmodule Subs.UserRepo do
     |> Repo.update()
   end
 
+  def reset_password(user, params) do
+    user
+    |> User.reset_password_changeset(params)
+    |> Repo.update()
+  end
+
   def delete(user) do
     Repo.delete(user)
   end
