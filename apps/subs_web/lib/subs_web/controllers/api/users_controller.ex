@@ -4,7 +4,8 @@ defmodule SubsWeb.Api.UserController do
     AuthenticateUser,
     CreateUser,
     ConfirmUser,
-    RecoverUserPassword
+    RecoverUserPassword,
+    ResetUserPassword,
   }
   alias Subs.Application.{
     SendConfirmationEmail,
@@ -13,7 +14,7 @@ defmodule SubsWeb.Api.UserController do
   alias SubsWeb.Api.{ErrorView, ChangesetView}
   alias SubsWeb.Helpers.UserHelper
 
-  def me(conn, params) do
+  def me(conn, _params) do
     case UserHelper.current_user(conn) do
       nil ->
         conn
@@ -120,11 +121,29 @@ defmodule SubsWeb.Api.UserController do
       |> render(ErrorView, :"400", message: "Missing email param")
   end
 
-  def reset_password(conn, params) do
-    IO.inspect params
-
+  def reset_password(conn, params = %{"t" => token}) do
+    case ResetUserPassword.perform(token, params) do
+      {:ok, _} ->
+        conn
+        |> put_status(:ok)
+        |> render("rest_password.json")
+      {:error, {:invalid_token, _}} ->
+        conn
+        |> put_status(:conflict)
+        |> render(ErrorView, :"409", message: "Token is invalid")
+      {:error, {:token_expired, _}} ->
+        conn
+        |> put_status(:conflict)
+        |> render(ErrorView, :"409", message: "Token has expired")
+      {:error, {:invalid_params, %{changeset: changeset}}} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(ChangesetView, "error.json", changeset: changeset)
+    end
+  end
+  def reset_password(conn, _) do
     conn
-      |> put_status(:bad_request)
-      |> render(ErrorView, :"400", message: "Missing params")
+    |> put_status(:bad_request)
+    |> render(ErrorView, :"400", message: "Missing required params")
   end
 end
