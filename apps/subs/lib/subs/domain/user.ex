@@ -80,6 +80,13 @@ defmodule Subs.User do
                    password_recovery_used_at: nil)
   end
 
+  def reset_password?(nil), do: false
+  def reset_password?(user) do
+    user.encrypted_password_recovery_token &&
+      user.password_recovery_used_at == nil &&
+        @dt.minutes_between(user.password_recovery_expires_at, @dt.now()) >= 0
+  end
+
   def email_changeset(struct, params) do
     struct
     |> cast(params, [:email])
