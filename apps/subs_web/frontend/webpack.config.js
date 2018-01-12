@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
@@ -13,7 +14,31 @@ module.exports = {
     app: [
       path.resolve(__dirname, './src/index.jsx'),
     ],
+    vendor: [
+      'axios',
+      'classnames',
+      'emotion',
+      'immutable',
+      'js-cookie',
+      'moment',
+      'moment-timezone',
+      'prop-types',
+      'react',
+      'react-addons-shallow-compare',
+      'react-color',
+      'react-dates',
+      'react-dom',
+      'react-emotion',
+      'react-redux',
+      'react-redux-loading-bar',
+      'react-router',
+      'react-router-redux',
+      'react-select',
+      'redux',
+      'redux-thunk',
+    ],
   },
+
   output: {
     path: path.resolve(__dirname, '../priv/static'),
     filename: '[name].bundle.js',
@@ -45,5 +70,8 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin({ filename: 'app.bundle.css', allChunks: true }),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development',
+    }),
   ],
 }

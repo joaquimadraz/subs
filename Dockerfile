@@ -7,6 +7,7 @@ ARG host
 ARG erlang_cookie
 
 ENV MIX_ENV=prod \
+    NODE_ENV=production \
     HOST=$host \
     SUBS_WEB_KEYKEY=/etc/letsencrypt/live/$host/privkey.pem \
     SUBS_WEB_CERTFILE=/etc/letsencrypt/live/$host/cert.pem \
