@@ -42,8 +42,10 @@ class HomeContainer extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props
+    const { dispatch, currentUser } = this.props
     const { currentDate } = this.state
+
+    if (!currentUser.isLogged) { return }
 
     dispatch(getAllSubscriptionsAction({
       month_eq: currentDate.getMonth() + 1,
