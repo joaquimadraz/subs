@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import RemoteCall from 'data/domain/RemoteCall'
+import Message from 'components/Message'
 import ErrorMessages from 'components/ErrorMessages'
 import InputText from 'components/InputText'
 import Button from 'components/Button'
@@ -9,7 +10,7 @@ import Button from 'components/Button'
 const renderMessage = (remoteCall) => {
   if (remoteCall.loading || !remoteCall.message) { return null }
 
-  return (<p>{remoteCall.message}</p>)
+  return (<Message success>{remoteCall.message}</Message>)
 }
 
 const renderErrors = (remoteCall) => {

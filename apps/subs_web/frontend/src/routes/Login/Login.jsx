@@ -11,7 +11,7 @@ import routes from 'constants/routes'
 const renderErrors = (remoteCall) => {
   if (remoteCall.loading || !remoteCall.data) { return null }
 
-  return (<Message color="red">{remoteCall.get('message')}</Message>)
+  return (<Message error>{remoteCall.get('message')}</Message>)
 }
 
 const Login = ({

@@ -13,7 +13,7 @@ defmodule SubsWeb.Test.Acceptance.UserLoginTest do
     |> fill_in(css("#login-form .user-email"), with: "unexisting")
     |> fill_in(css("#login-form .user-password"), with: "nope")
     |> click(css("#login-btn"))
-    |> assert_has(css("div.message", text: "Invalid credentials"))
+    |> assert_has(css("p", text: "Invalid credentials"))
   end
 
   @tag :acceptance
