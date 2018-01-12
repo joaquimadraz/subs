@@ -9,6 +9,7 @@
 
     <title>Subs</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/app.bundle.css") %>">
+    <script src="<%= static_path(@conn, "/vendor.bundle.js") %>"></script>
   </head>
   <body>
     <%= render @view_module, @view_template, assigns %>

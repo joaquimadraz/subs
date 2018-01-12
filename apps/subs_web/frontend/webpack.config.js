@@ -70,6 +70,7 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin({ filename: 'app.bundle.css', allChunks: true }),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
     }),
