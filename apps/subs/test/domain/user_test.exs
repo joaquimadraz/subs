@@ -1,5 +1,5 @@
 defmodule Subs.Test.Domain.UserTest do
-  use ExUnit.Case
+  use SubsWeb.ConnCase
   alias Subs.User
   import Subs.Test.Support.Factory
 
@@ -8,55 +8,78 @@ defmodule Subs.Test.Domain.UserTest do
   describe "create_changeset" do
     test "encrypts password" do
       params = %{string_params_for(:user) | "password" => "11223344"}
-      user = create_changeset(params)
+      changeset = create_changeset(params)
 
-      assert user.changes.encrypted_password == @bcrypt.hashpwsalt("11223344")
+      assert changeset.changes.encrypted_password == @bcrypt.hashpwsalt("11223344")
     end
 
     test "confirmation token is set" do
       params = string_params_for(:user)
-      user = create_changeset(params)
+      changeset = create_changeset(params)
 
-      assert user.changes.confirmation_token != nil
+      assert changeset.changes.confirmation_token != nil
     end
 
     test "correctly formats email" do
       params = %{string_params_for(:user) | "email" => "eXaMPle@EMAIL.com"}
-      user = create_changeset(params)
+      changeset = create_changeset(params)
 
-      assert user.changes.email == "example@email.com"
+      assert changeset.changes.email == "example@email.com"
     end
 
     test "returns error for invalid email"do
       params = %{string_params_for(:user) | "email" => "invalid"}
-      user = create_changeset(params)
+      changeset = create_changeset(params)
 
-      assert {"has invalid format", _} = user.errors[:email]
+      assert {"has invalid format", _} = changeset.errors[:email]
     end
 
     test "returns error for missing require currency" do
       params = string_params_for(:user) |> Map.take(["email", "password", "password_confirmation"])
-      user = create_changeset(params)
+      changeset = create_changeset(params)
 
-      assert {"can't be blank", _} = user.errors[:currency]
+      assert {"can't be blank", _} = changeset.errors[:currency]
     end
 
     test "returns error for unknown currency" do
       params = %{string_params_for(:user) | "currency" => "AUD"}
-      user = create_changeset(params)
+      changeset = create_changeset(params)
 
-      assert {"is invalid", _} = user.errors[:currency]
+      assert {"is invalid", _} = changeset.errors[:currency]
     end
 
     test "populates currency symbol" do
       params = %{string_params_for(:user) | "currency" => "USD"}
-      user = create_changeset(params)
+      changeset = create_changeset(params)
 
-      assert user.changes.currency_symbol == "$"
+      assert changeset.changes.currency_symbol == "$"
+    end
+  end
+
+  describe "update_changeset" do
+    test "updates user currency" do
+      user = insert(:user, currency: "USD", currency_symbol: "$")
+      params = %{"currency" => "EUR"}
+      changeset = update_changeset(user, params)
+
+      assert changeset.changes.currency == "EUR"
+      assert changeset.changes.currency_symbol == "€"
+    end
+
+    test "returns error for unknown currency" do
+      user = insert(:user)
+      params = %{string_params_for(:user) | "currency" => "AUD"}
+      changeset = update_changeset(user, params)
+
+      assert {"is invalid", _} = changeset.errors[:currency]
     end
   end
 
   def create_changeset(params) do
     User.create_changeset(%User{}, params)
+  end
+
+  def update_changeset(user, params) do
+    User.update_changeset(user, params)
   end
 end
