@@ -85,8 +85,8 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
       conn = get(conn, api_subscription_path(conn, :index))
       assert %{"meta" => meta} = json_response(conn, 200)
 
-      assert meta["avg"]["monthly"] == "£10.83"
-      assert meta["avg"]["yearly"] == "£130.00"
+      assert meta["avg"]["monthly"] == "10.83"
+      assert meta["avg"]["yearly"] == "130.00"
     end
 
     test "returns 200 with month stats", %{conn: conn, user: user} do
@@ -131,7 +131,6 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
       assert %{"data" => []} = json_response(empty_conn, 200)
     end
 
-    # TODO: Use config mock to freeze current date
     test "returns subscriptions with month stats for current month/year", %{
       conn: conn,
       user: user
@@ -142,7 +141,8 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
 
       assert %{"meta" => meta} = json_response(data_conn, 200)
 
-      current_month = NaiveDateTime.from_iso8601!(List.first(meta["month"]["subscriptions"])["current_bill_date"])
+      current_month =
+        NaiveDateTime.from_iso8601!(List.first(meta["month"]["subscriptions"])["current_bill_date"])
 
       assert current_month.month == @dt.now().month
       assert current_month.year == @dt.now().year

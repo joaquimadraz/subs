@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import { Map } from 'immutable'
 import { formatDateToMonthYear, addMonths } from 'utils/dt'
 
+import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import Button from 'components/Button'
 import Styles from './Styles'
 
 // Example:
 // You will be spending 1300£ in January 2018.
 // That’s 35 % less than the current month.
-const renderMoreLessMessage = (date, nextMonth, diffPerc) => {
+const renderMoreLessMessage = (date, nextMonth, diffPerc, currencySymbol) => {
   const precLabel = diffPerc > 0 ? 'more' : 'less'
   const precCx = diffPerc > 0 ? 'red' : 'green'
 
@@ -17,7 +18,7 @@ const renderMoreLessMessage = (date, nextMonth, diffPerc) => {
     <div>
       <p className="mv2">
         <span>You will be spending </span>
-        <span className="subs-pink">£{nextMonth.get('total')}</span>
+        <span className="subs-pink">{currencySymbol}{nextMonth.get('total')}</span>
         <span> in {formatDateToMonthYear(date)}.</span>
       </p>
       {diffPerc !== 0 &&
@@ -52,11 +53,11 @@ const renderYearlyPaymentMessage = (date, count, diffPerc) => {
   )
 }
 
-const renderBaseMessage = (date, nextMonth) => {
+const renderBaseMessage = (date, nextMonth, currencySymbol) => {
   return (
     <div>
       <p className="mv2">
-        <span>Nothing unexpected is comming, you will be spending <span className="subs-pink">£{nextMonth.get('total')}</span></span>
+        <span>Nothing unexpected is comming, you will be spending <span className="subs-pink">{currencySymbol}{nextMonth.get('total')}</span></span>
         <span> in {formatDateToMonthYear(date)}.</span>
       </p>
       <p className="mv2">The monthly expense stays pretty much the same.</p>
@@ -65,6 +66,7 @@ const renderBaseMessage = (date, nextMonth) => {
 }
 
 const NextMonthStats = ({
+  currentUser,
   currentDate,
   month,
   nextMonth,
@@ -75,12 +77,12 @@ const NextMonthStats = ({
   const diffPerc = month.get('total') > 0 ? Math.round(((nextMonth.get('total') / month.get('total')) - 1) * 100) : 0
   const yearlyPaymentsCount = nextMonth.get('subscriptions').count(sub => sub.isYearly)
 
-  let message = renderBaseMessage(date, nextMonth)
+  let message = renderBaseMessage(date, nextMonth, currentUser.currencySymbol)
 
   if (yearlyPaymentsCount > 0) {
     message = renderYearlyPaymentMessage(date, yearlyPaymentsCount, diffPerc)
   } else if (diffPerc !== 0 || (month.get('total') === 0 && nextMonth.get('total') !== 0)) {
-    message = renderMoreLessMessage(date, nextMonth, diffPerc)
+    message = renderMoreLessMessage(date, nextMonth, diffPerc, currentUser.currencySymbol)
   }
 
   return (
@@ -98,6 +100,7 @@ const NextMonthStats = ({
 }
 
 NextMonthStats.propTypes = {
+  currentUser: PropTypes.instanceOf(CurrentUser).isRequired,
   currentDate: PropTypes.object.isRequired,
   month: PropTypes.instanceOf(Map).isRequired,
   nextMonth: PropTypes.instanceOf(Map).isRequired,

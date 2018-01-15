@@ -1,11 +1,10 @@
-import CurrentUser from 'data/domain/currentUser/CurrentUser'
+import { parseCurrentUser } from 'data/domain/currentUser/CurrentUser'
 
 const setCurrentUser = (state, { data, meta }) => {
-  return new CurrentUser(Object.assign({}, data, {
-    authToken: meta.auth_token,
-    wasRequested: true,
-    isLogged: true,
-  }))
+  return parseCurrentUser(data)
+    .set('authToken', meta.auth_token)
+    .set('wasRequested', true)
+    .set('isLogged', true)
 }
 
 export {

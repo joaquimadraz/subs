@@ -35,6 +35,7 @@ const Home = (props) => {
         <div className="flex">
           <div className="flex-column w-60">
             <CurrentMonthStats
+              currentUser={currentUser}
               currentDate={currentDate}
               month={month}
               prevMonth={prevMonth}
@@ -47,13 +48,13 @@ const Home = (props) => {
               <span className="black-70 f2 b dib">
                 <div className="f6 b light-silver">per month</div>
                 <span className="f2 b dib mt2 black-70">
-                  {avgs.get('monthly')}
+                  {currentUser.currencySymbol}{avgs.get('monthly')}
                 </span>
               </span>
               <span className="black-70 f2 b dib ml4-ns">
                 <div className="f6 b light-silver">per year</div>
                 <span className="f2 b dib mt2 black-70">
-                  {avgs.get('yearly')}
+                  {currentUser.currencySymbol}{avgs.get('yearly')}
                 </span>
               </span>
             </div>
@@ -63,6 +64,7 @@ const Home = (props) => {
         <SubscriptionsList subscriptions={month.get('subscriptions')} current />
         <div className="mv4 bb bw2 b--near-white" />
         <NextMonthStats
+          currentUser={currentUser}
           currentDate={currentDate}
           month={month}
           nextMonth={nextMonth}

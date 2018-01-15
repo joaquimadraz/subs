@@ -3,6 +3,8 @@ import { Record } from 'immutable'
 const remoteData = {
   name: null,
   email: null,
+  currency: null,
+  currencySymbol: null,
 }
 
 const objectData = {
@@ -18,7 +20,19 @@ class CurrentUser extends CurrentUserRecord {
 }
 
 export function parseCurrentUser(remoteData) {
-  return new CurrentUser(remoteData)
+  const {
+    name,
+    email,
+    currency,
+    currency_symbol,
+  } = remoteData
+
+  return new CurrentUser({
+    name,
+    email,
+    currency,
+    currencySymbol: currency_symbol,
+  })
 }
 
 export default CurrentUser

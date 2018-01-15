@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Map } from 'immutable'
 import { formatDateToMonthYear } from 'utils/dt'
 
+import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import SubscriptionPill from 'components/SubscriptionPill'
 import Styles from './Styles'
 import MonthDiff from './MonthDiff'
@@ -37,15 +38,16 @@ const renderYearlySubscriptions = (subscriptions) => {
   )
 }
 
-const CurrentMonthStats = ({ currentDate, month, prevMonth }) => (
+const CurrentMonthStats = ({ currentUser, currentDate, month, prevMonth }) => (
   <Styles>
     <h3 className="black-70 f4">{formatDateToMonthYear(currentDate)}</h3>
     <div className="flex">
       <div className="flex-auto">
         <div className="f6 b light-silver">Total</div>
         <span className="f2 b dib mt2 black-70">
-          <span className="v-mid">£{month.get('total')}</span>
+          <span className="v-mid">{currentUser.currencySymbol}{month.get('total')}</span>
           <MonthDiff
+            currentUser={currentUser}
             currentTotal={month.get('total')}
             previousTotal={prevMonth.get('total')}
           />
@@ -59,6 +61,7 @@ const CurrentMonthStats = ({ currentDate, month, prevMonth }) => (
 )
 
 CurrentMonthStats.propTypes = {
+  currentUser: PropTypes.instanceOf(CurrentUser).isRequired,
   currentDate: PropTypes.object.isRequired,
   month: PropTypes.instanceOf(Map).isRequired,
   prevMonth: PropTypes.instanceOf(Map).isRequired,

@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-const MonthDiff = ({ currentTotal, previousTotal }) => {
+import CurrentUser from 'data/domain/currentUser/CurrentUser'
+
+const MonthDiff = ({ currentUser, currentTotal, previousTotal }) => {
   const diff = currentTotal - previousTotal
 
   if (diff === 0) { return null }
@@ -26,12 +28,13 @@ const MonthDiff = ({ currentTotal, previousTotal }) => {
   return (
     <small className={containerCx}>
       <span className={arrowCx} />
-      <span className="dib ml2 v-mid">{sign} £{value}</span>
+      <span className="dib ml2 v-mid">{sign} {currentUser.currencySymbol}{value}</span>
     </small>
   )
 }
 
 MonthDiff.propTypes = {
+  currentUser: PropTypes.instanceOf(CurrentUser).isRequired,
   currentTotal: PropTypes.number.isRequired,
   previousTotal: PropTypes.number.isRequired,
 }
