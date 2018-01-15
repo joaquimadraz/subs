@@ -6,7 +6,7 @@ const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 
 const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT_SUCCESS })
-  dispatch(push(routes.root))
+  dispatch(push(routes.login))
 }
 
 export default logout
