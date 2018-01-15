@@ -39,7 +39,7 @@ defmodule Subs.Test.Application.DailyNotificationsBuilderTest do
 
              See you later,
              Subs
-             """
+             """ |> String.replace("\n", "\r\n")
 
     # Only the 2018-01-01 subscription was assigned for the notification
     [assigned_subscription] = subs_notification.subscriptions
@@ -73,7 +73,7 @@ defmodule Subs.Test.Application.DailyNotificationsBuilderTest do
 
              See you later,
              Subs
-             """
+             """ |> String.replace("\n", "\r\n")
   end
 
   test "creates multiple sub notifications for different users" do

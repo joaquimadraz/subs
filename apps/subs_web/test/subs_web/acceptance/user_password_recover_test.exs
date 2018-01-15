@@ -2,6 +2,9 @@ defmodule SubsWeb.Test.Acceptance.UserRecoverPasswordTest do
   use SubsWeb.FeatureCase
 
   import Wallaby.Query
+  import SubsWeb.Test.Support.AcceptanceHelpers, only: [
+    assert_signup: 3,
+  ]
 
   alias Subs.{User, UserRepo}
 
@@ -9,7 +12,7 @@ defmodule SubsWeb.Test.Acceptance.UserRecoverPasswordTest do
     email = "mac@example.com"
 
     session
-    |> assert_signup_and_login_user(email)
+    |> assert_signup(email, "123456")
     |> visit("/login")
     |> assert_has(css("#login-form"))
     |> click(button("Recover password"))
@@ -53,29 +56,5 @@ defmodule SubsWeb.Test.Acceptance.UserRecoverPasswordTest do
     |> fill_in(css("#reset-password-form .user-password-confirmation"), with: "123456")
     |> click(css("#reset-btn"))
     |> assert_has(css("p", text: "Password was updated"))
-  end
-
-  defp assert_signup_and_login_user(session, email) do
-    password = "123456"
-
-    session
-    |> visit("/signup")
-    |> assert_has(css("#app"))
-    |> fill_in(css("#signup-form .user-email"), with: email)
-    |> fill_in(css("#signup-form .user-currency .Select-input input"), with: "USD")
-    |> click(css("#signup-form .user-currency .Select-option"))
-    |> fill_in(css("#signup-form .user-password"), with: password)
-    |> fill_in(css("#signup-form .user-password-confirmation"), with: password)
-    |> click(css("#signup-btn"))
-    |> assert_has(css("p", text: "A confirmation email was sent to #{email}."))
-
-    # Set known confirmation token
-    user = UserRepo.get_by_email(email)
-    {:ok, user} = User.confirmation_changeset(user) |> Repo.update()
-
-    session
-    |> visit("/users/confirm_signup?t=#{user.confirmation_token}")
-    |> assert_has(css("#app"))
-    |> assert_has(css("p", text: "Account confirmed, ready to login"))
   end
 end

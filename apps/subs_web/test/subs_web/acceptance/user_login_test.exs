@@ -2,8 +2,10 @@ defmodule SubsWeb.Test.Acceptance.UserLoginTest do
   use SubsWeb.FeatureCase
 
   import Wallaby.Query
-
-  alias Subs.{User, UserRepo}
+  import SubsWeb.Test.Support.AcceptanceHelpers, only: [
+    assert_signup_and_login_user: 1,
+    assert_signup_and_login_user: 2
+  ]
 
   @tag :acceptance
   test "render error message when login fails", %{session: session} do
@@ -59,7 +61,7 @@ defmodule SubsWeb.Test.Acceptance.UserLoginTest do
 
   @tag :acceptance
   test "login successful and redirects to root page with email rendered", %{session: session} do
-    assert_signup_and_login_user(session, "joaquim@example.com")
+    assert_signup_and_login_user(session)
   end
 
   @tag :acceptance
@@ -80,39 +82,5 @@ defmodule SubsWeb.Test.Acceptance.UserLoginTest do
     |> assert_has(css("a[href='/login']"))
     |> visit("/")
     |> assert_has(css("a[href='/login']"))
-  end
-
-  defp assert_signup_and_login_user(session, email \\ "joaquim@example.com") do
-    password = "123456"
-
-    session
-    |> visit("/signup")
-    |> assert_has(css("#app"))
-    |> fill_in(css("#signup-form .user-email"), with: email)
-    |> fill_in(css("#signup-form .user-currency .Select-input input"), with: "GBP")
-    |> click(css("#signup-form .user-currency .Select-option"))
-    |> fill_in(css("#signup-form .user-password"), with: password)
-    |> fill_in(css("#signup-form .user-password-confirmation"), with: password)
-    |> click(css("#signup-btn"))
-    |> assert_has(css("p", text: "A confirmation email was sent to #{email}."))
-
-    # Set known confirmation token
-    user = UserRepo.get_by_email(email)
-    {:ok, user} = User.confirmation_changeset(user) |> Repo.update()
-
-    session
-    |> visit("/users/confirm_signup?t=#{user.confirmation_token}")
-    |> assert_has(css("#app"))
-    |> assert_has(css("p", text: "Account confirmed, ready to login"))
-
-    session
-    |> visit("/login")
-    |> assert_has(css("#login-form"))
-    |> fill_in(css("#login-form .user-email"), with: email)
-    |> fill_in(css("#login-form .user-password"), with: password)
-    |> click(css("#login-btn"))
-    |> assert_has(css(".Header--menu-trigger"))
-
-    session
   end
 end

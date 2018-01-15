@@ -27,7 +27,7 @@ defmodule Subs.Domain.NotificationTemplate do
       |> append_total(subscriptions, user.currency_symbol)
       |> append_new_line(3)
       |> append_good_bye()
-      |> freeze("\n")
+      |> freeze("\r\n")
 
     %__MODULE__{title: title, body: message}
   end
@@ -46,7 +46,7 @@ defmodule Subs.Domain.NotificationTemplate do
       |> append_payments(subscriptions, :full, user.currency_symbol)
       |> append_new_line(3)
       |> append_good_bye()
-      |> freeze("\n")
+      |> freeze("\r\n")
 
     %__MODULE__{title: title, body: message}
   end
@@ -64,7 +64,7 @@ defmodule Subs.Domain.NotificationTemplate do
       |> append_payments(subscriptions, :detail, user.currency_symbol)
       |> append_new_line(3)
       |> append_good_bye()
-      |> freeze("\n")
+      |> freeze("\r\n")
 
     %__MODULE__{title: title, body: message}
   end
@@ -179,11 +179,11 @@ defmodule Subs.Domain.NotificationTemplate do
   defp append_total(message, subscriptions, currency_symbol) do
     total = Enum.reduce(subscriptions, 0.0, fn subscription, acc -> acc + subscription.amount end)
 
-    [message, ["\n", ["\n", ["\n", ["Total - ", [Money.to_human_formated(total, currency_symbol)]]]]]]
+    [message, ["\r\n", ["\r\n", ["\r\n", ["Total - ", [Money.to_human_formated(total, currency_symbol)]]]]]]
   end
 
   defp append_good_bye(message) do
-    [message, ["See you later,", ["\n", ["Subs"]]]]
+    [message, ["See you later,", ["\r\n", ["Subs"]]]]
   end
 
   defp subscription_detail(subscription, :full, currency_symbol) do
@@ -205,7 +205,7 @@ defmodule Subs.Domain.NotificationTemplate do
 
   defp subscription_detail(subscription, :compact, currency_symbol) do
     [
-      "\n",
+      "\r\n",
       [
         subscription.name,
         [" - ", [Money.to_human_formated(subscription.amount, currency_symbol)]]

@@ -28,7 +28,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
       See you later,
       Subs
-      """
+      """ |> String.replace("\n", "\r\n")
 
       template = NotificationTemplate.build(:daily, user, subscriptions)
 
@@ -71,7 +71,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
       See you later,
       Subs
-      """
+      """ |> String.replace("\n", "\r\n")
 
       template = NotificationTemplate.build(:daily, user, subscriptions)
       assert template.title == expected_title
@@ -121,7 +121,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
       See you later,
       Subs
-      """
+      """ |> String.replace("\n", "\r\n")
 
       template = NotificationTemplate.build(:daily, user, subscriptions)
 
@@ -166,7 +166,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
       See you later,
       Subs
-      """
+      """ |> String.replace("\n", "\r\n")
 
       template = NotificationTemplate.build(:daily, user, subscriptions)
 
@@ -201,7 +201,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
       See you later,
       Subs
-      """
+      """ |> String.replace("\n", "\r\n")
 
       template = NotificationTemplate.build(:weekly, user, subscriptions)
 
@@ -243,7 +243,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
       See you later,
       Subs
-      """
+      """ |> String.replace("\n", "\r\n")
 
       template = NotificationTemplate.build(:weekly, user, subscriptions)
 
@@ -289,7 +289,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
       See you later,
       Subs
-      """
+      """ |> String.replace("\n", "\r\n")
 
       template = NotificationTemplate.build(:monthly, user, subscriptions)
 
