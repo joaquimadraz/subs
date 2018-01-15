@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { Map } from 'immutable'
 import { formatDateToMonthYear, addMonths } from 'utils/dt'
 
@@ -18,13 +19,13 @@ const renderMoreLessMessage = (date, nextMonth, diffPerc, currencySymbol) => {
     <div>
       <p className="mv2">
         <span>You will be spending </span>
-        <span className="subs-pink">{currencySymbol}{nextMonth.get('total')}</span>
+        <span className="subs-blue b">{currencySymbol}{nextMonth.get('total')}</span>
         <span> in {formatDateToMonthYear(date)}.</span>
       </p>
       {diffPerc !== 0 &&
         <p className="mv2">
           <span>That’s </span>
-          <span className={precCx}>{Math.abs(diffPerc)}% {precLabel}</span>
+          <span className={classNames(precCx, 'b')}>{Math.abs(diffPerc)}% {precLabel}</span>
           <span> than the current month</span>
         </p>}
     </div>
@@ -41,12 +42,12 @@ const renderYearlyPaymentMessage = (date, count, diffPerc) => {
   return (
     <div>
       <p className="mv2">
-        <span><span className="subs-pink">{count} yearly payment</span> is due</span>
+        <span><span className="subs-blue b">{count} yearly payment</span> is due</span>
         <span> in {formatDateToMonthYear(date)}.</span>
       </p>
       <p className="mv2">
         <span>The monthly expense goes {precLabel} </span>
-        <span className={precCx}>{Math.abs(diffPerc)}%</span>
+        <span className={classNames(precCx, 'b')}>{Math.abs(diffPerc)}%</span>
         <span> than the current month.</span>
       </p>
     </div>
@@ -57,7 +58,7 @@ const renderBaseMessage = (date, nextMonth, currencySymbol) => {
   return (
     <div>
       <p className="mv2">
-        <span>Nothing unexpected is comming, you will be spending <span className="subs-pink">{currencySymbol}{nextMonth.get('total')}</span></span>
+        <span>Nothing unexpected is comming, you will be spending <span className="subs-blue b">{currencySymbol}{nextMonth.get('total')}</span></span>
         <span> in {formatDateToMonthYear(date)}.</span>
       </p>
       <p className="mv2">The monthly expense stays pretty much the same.</p>
@@ -87,13 +88,11 @@ const NextMonthStats = ({
 
   return (
     <Styles>
-      <div className="silver b">
-        <div className="dib v-mid">
+      <div className="silver tc">
+        <div className="mv3">
           {message}
         </div>
-        <div className="dib ml3-l">
-          <Button onClick={() => onNextMonthClick(date)}>see more</Button>
-        </div>
+        <Button onClick={() => onNextMonthClick(date)}>See more</Button>
       </div>
     </Styles>
   )

@@ -12,7 +12,7 @@ const NavigationLink = ({
   className,
   index,
 }) => {
-  const defaultCx = 'db mv2 mh1-5 no-underline br2 relative tc'
+  const defaultCx = 'db mv2 mh3-5 no-underline br2 relative tc'
   const cx = classNames(className, defaultCx, { active })
 
   return (
@@ -26,7 +26,7 @@ const NavigationLink = ({
 
 NavigationLink.propTypes = {
   to: PropTypes.string,
-  children: PropTypes.string,
+  children: PropTypes.array,
   active: PropTypes.bool,
   index: PropTypes.bool,
   className: PropTypes.string,

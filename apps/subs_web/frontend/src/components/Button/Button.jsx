@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
-import StyledButton from './Styles'
+import Styles from './Styles'
 
 const colorClass = color => `bg-${color}`
 
@@ -18,16 +18,16 @@ const Button = (props) => {
   const classNames = cx(
     className,
     colorClass(color),
-    'f6 bn white pointer b br0 bb--silver br2',
+    'bg-subs-blue bn white pv2 ph3 br2 pointer dim',
   )
 
   return (
-    <StyledButton
+    <Styles
       className={classNames}
       {...buttonProps}
     >
       {children}
-    </StyledButton>
+    </Styles>
   )
 }
 
