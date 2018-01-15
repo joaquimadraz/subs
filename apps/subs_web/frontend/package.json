@@ -7,6 +7,9 @@
     "build": "NODE_ENV=production node_modules/.bin/webpack -p"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.2",
+    "@fortawesome/fontawesome-free-solid": "^5.0.4",
+    "@fortawesome/react-fontawesome": "^0.0.17",
     "axios": "^0.17.0",
     "classnames": "^2.2.5",
     "emotion": "^8.0.10",

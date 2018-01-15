@@ -1,16 +1,26 @@
 @import '../../../node_modules/tachyons/css/tachyons.css';
+@import url('https://fonts.googleapis.com/css?family=Lato');
 
 $subs-pink: #EF4370;
 $subs-pink-darker: #BC274E;
+$subs-blue: #0077FF;
 
 body {
-  font-family: sans-serif;
+  font-family: 'Lato', sans-serif;
+}
+
+.mh1-5 {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
 }
 
 .subs-pink { color: $subs-pink }
 .subs-pink-darker { color: $subs-pink-darker }
 .bg-subs-pink { background: $subs-pink }
 .bg-subs-pink-darker { background: $subs-pink-darker }
+
+.subs-blue { color: $subs-blue }
+.bg-subs-blue { background: $subs-blue }
 
 .logo {
   width: 70px;

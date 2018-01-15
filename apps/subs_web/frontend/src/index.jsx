@@ -31,7 +31,6 @@ if (document.getElementById('app')) {
     <Provider store={store} >
       <Router history={awesomeHistory}>
         <Route path={routes.root} component={AppContainer}>
-          <IndexRoute component={Home} />
           {/* Public routes */}
           <Route component={RedirectIfLogged}>
             <Route path={routes.signup} component={Signup} />
@@ -41,6 +40,7 @@ if (document.getElementById('app')) {
           </Route>
           {/* Protected routes */}
           <Route component={RedirectIfNotLogged}>
+            <IndexRoute component={Home} />
             <Route path={routes.subscriptions} component={Subscriptions} />
             <Route path={routes.subscriptionsNew} component={NewSubscription} />
             <Route path={routes.subscriptionsShow(':subscriptionId')} component={ShowSubscription} />
