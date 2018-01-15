@@ -8,7 +8,7 @@ import routes from 'constants/routes'
 const renderNoPayments = () => (
   <p className="b silver tc">
     <span>You have no payments. Click </span>
-    <Link to={routes.subscriptionsNew} className="subs-pink">here</Link>
+    <Link to={routes.subscriptionsNew} className="subs-blue">here</Link>
     <span> to add one.</span>
   </p>
 )

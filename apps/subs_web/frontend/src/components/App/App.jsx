@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router'
 import LoadingBar from 'react-redux-loading-bar'
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faBell from '@fortawesome/fontawesome-free-solid/faBell'
 import faCog from '@fortawesome/fontawesome-free-solid/faCog'
 import faUserCircle from '@fortawesome/fontawesome-free-solid/faUserCircle'
+import routes from 'constants/routes'
 import CurrentUser from 'data/domain/currentUser/CurrentUser'
-import Button from 'components/Button'
 
 import Styles from './Styles'
 import Navigation from './Navigation'
@@ -31,7 +32,9 @@ const App = ({ currentUser, onLogoutClick, children }) => {
               <div className="w-40">
                 <FontAwesomeIcon icon={faUserCircle} className="silver f4 fr" onClick={onLogoutClick} />
                 <FontAwesomeIcon icon={faCog} className="silver f4 fr mr4" />
-                <Button >New payment</Button>
+                <Link to={routes.subscriptionsNew} className="bg-subs-blue no-underline bn white pv2 ph3 br2 pointer dim">
+                  New payment
+                </Link>
               </div>
             </div>
             <div className="pa3-5">

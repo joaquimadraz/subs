@@ -24,6 +24,7 @@
     "react-dates": "^15.1.0",
     "react-dom": "^15.6.1",
     "react-emotion": "^8.0.10",
+    "react-modal": "^3.1.10",
     "react-redux": "^5.0.6",
     "react-redux-loading-bar": "^3.0.0",
     "react-router": "^3.0.5",

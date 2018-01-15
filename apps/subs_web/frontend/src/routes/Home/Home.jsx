@@ -17,7 +17,6 @@ const Home = (props) => {
   const {
     currentDate,
     currentUser,
-    avgs,
     month,
     prevMonth,
     nextMonth,
@@ -38,26 +37,11 @@ const Home = (props) => {
           month={month}
           prevMonth={prevMonth}
         />
-        {/* <div className="mh4 br bw2 b--near-white" />
-        <div className="flex-column w-40">
-          <h3 className="black-70 f4">Average Expenses</h3>
-          <div>
-            <span className="black-70 f2 b dib">
-              <div className="f6 b light-silver">per month</div>
-              <span className="f2 b dib mt2 black-70">
-                {currentUser.currencySymbol}{avgs.get('monthly')}
-              </span>
-            </span>
-            <span className="black-70 f2 b dib ml4-ns">
-              <div className="f6 b light-silver">per year</div>
-              <span className="f2 b dib mt2 black-70">
-                {currentUser.currencySymbol}{avgs.get('yearly')}
-              </span>
-            </span>
-          </div>
-        </div> */}
-        <div className="br2 bg-white mt4 ba ph3-5 pv3 b--moon-gray">
-          <SubscriptionsList subscriptions={month.get('subscriptions')} current />
+        <div className="br2 bg-white mt3-5 ba ph3-5 pv3 b--moon-gray">
+          <SubscriptionsList
+            subscriptions={month.get('subscriptions')}
+            current
+          />
         </div>
         <NextMonthStats
           currentUser={currentUser}
@@ -80,7 +64,6 @@ const Home = (props) => {
 Home.propTypes = {
   currentDate: PropTypes.object.isRequired,
   currentUser: PropTypes.instanceOf(CurrentUser).isRequired,
-  avgs: PropTypes.instanceOf(Map).isRequired,
   month: PropTypes.instanceOf(Map).isRequired,
   prevMonth: PropTypes.instanceOf(Map).isRequired,
   nextMonth: PropTypes.instanceOf(Map).isRequired,
