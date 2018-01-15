@@ -5,6 +5,8 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
   describe "Daily notification" do
     test "one monthly subscription for daily notification" do
+      user = insert(:user)
+
       subscriptions = [
         build(
           :complete_subscription,
@@ -28,13 +30,15 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Subs
       """
 
-      template = NotificationTemplate.build(:daily, subscriptions)
+      template = NotificationTemplate.build(:daily, user, subscriptions)
 
       assert template.title == expected_title
       assert template.body == expected_body
     end
 
     test "multiple monthly subscriptions for daily notification" do
+      user = insert(:user)
+
       subscriptions = [
         build(
           :complete_subscription,
@@ -69,12 +73,14 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Subs
       """
 
-      template = NotificationTemplate.build(:daily, subscriptions)
+      template = NotificationTemplate.build(:daily, user, subscriptions)
       assert template.title == expected_title
       assert template.body == expected_body
     end
 
     test "more than 2 monthly subscriptions for daily notification" do
+      user = insert(:user)
+
       subscriptions = [
         build(
           :complete_subscription,
@@ -117,13 +123,15 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Subs
       """
 
-      template = NotificationTemplate.build(:daily, subscriptions)
+      template = NotificationTemplate.build(:daily, user, subscriptions)
 
       assert template.title == expected_title
       assert template.body == expected_body
     end
 
     test "one yearly subscription for daily notification" do
+      user = insert(:user)
+
       subscriptions = [
         build(
           :complete_subscription,
@@ -160,7 +168,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Subs
       """
 
-      template = NotificationTemplate.build(:daily, subscriptions)
+      template = NotificationTemplate.build(:daily, user, subscriptions)
 
       assert template.title == expected_title
       assert template.body == expected_body
@@ -169,6 +177,8 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
   describe "Weekly notifications" do
     test "no yearly payments for weekly notification" do
+      user = insert(:user)
+
       subscriptions = [
         build(
           :complete_subscription,
@@ -193,13 +203,15 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Subs
       """
 
-      template = NotificationTemplate.build(:weekly, subscriptions)
+      template = NotificationTemplate.build(:weekly, user, subscriptions)
 
       assert template.title == expected_title
       assert template.body == expected_body
     end
 
     test "multiple subscriptions for weekly notification" do
+      user = insert(:user)
+
       subscriptions = [
         build(
           :complete_subscription,
@@ -233,7 +245,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Subs
       """
 
-      template = NotificationTemplate.build(:weekly, subscriptions)
+      template = NotificationTemplate.build(:weekly, user, subscriptions)
 
       assert template.title == expected_title
       assert template.body == expected_body
@@ -242,6 +254,8 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
   describe "Monthly notifications" do
     test "multiple subscriptions for monthly notification" do
+      user = insert(:user)
+
       subscriptions = [
         build(
           :complete_subscription,
@@ -277,7 +291,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Subs
       """
 
-      template = NotificationTemplate.build(:monthly, subscriptions)
+      template = NotificationTemplate.build(:monthly, user, subscriptions)
 
       assert template.title == expected_title
       assert template.body == expected_body

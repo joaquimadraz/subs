@@ -56,7 +56,7 @@ defmodule Subs.Application.DailyNotificationsBuilder do
       Map.update(acc, subscription.user, [subscription], &(&1 ++ [subscription]))
     end)
     |> Enum.map(fn {user, subscriptions} ->
-      template = NotificationTemplate.build(type, subscriptions, from)
+      template = NotificationTemplate.build(type, user, subscriptions, from)
 
       case SubsNotificationRepo.create(user, subscriptions, type, template, now) do
         {:ok, subs_notification} -> subs_notification

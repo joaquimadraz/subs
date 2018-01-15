@@ -6,8 +6,12 @@ defmodule Subs.Domain.NotificationTemplate do
 
   defstruct [:title, :body]
 
-  # TODO: Refactor, this module is awfull. What have I done!?
-  def build(:daily, subscriptions, _date \\ @dt.now()) do
+  # TODO: Refactor, this module is awfull. What have I done!? Use EEx to build the templates.
+  # I can explain, I was trying do premature optimization using IO Lists to
+  # build the templates istead of concatenating strings.
+  # Well, after this mess I remembered about EEx and I'm pretty sure it does
+  # that optimization for us. Is the tempalte engine for Phoenix so..
+  def build(:daily, user, subscriptions, _date \\ @dt.now()) do
     yearly_payments = Enum.filter(subscriptions, &Subscription.yearly?/1)
     monthly_payments = Enum.filter(subscriptions, &Subscription.monthly?/1)
 
@@ -17,10 +21,10 @@ defmodule Subs.Domain.NotificationTemplate do
       []
       |> append_greeting()
       |> append_new_line(2)
-      |> append_yearly_payments(yearly_payments)
+      |> append_yearly_payments(yearly_payments, user.currency_symbol)
       |> append_new_line_between_payments(yearly_payments, monthly_payments)
-      |> append_monthly_payments(monthly_payments)
-      |> append_total(subscriptions)
+      |> append_monthly_payments(monthly_payments, user.currency_symbol)
+      |> append_total(subscriptions, user.currency_symbol)
       |> append_new_line(3)
       |> append_good_bye()
       |> freeze("\n")
@@ -28,7 +32,7 @@ defmodule Subs.Domain.NotificationTemplate do
     %__MODULE__{title: title, body: message}
   end
 
-  def build(:weekly, subscriptions, _date) do
+  def build(:weekly, user, subscriptions, _date) do
     yearly_payments = Enum.filter(subscriptions, &Subscription.yearly?/1)
     monthly_payments = Enum.filter(subscriptions, &Subscription.monthly?/1)
 
@@ -39,7 +43,7 @@ defmodule Subs.Domain.NotificationTemplate do
       |> append_greeting()
       |> append_new_line(2)
       |> append_weekly_title()
-      |> append_payments(subscriptions, :full)
+      |> append_payments(subscriptions, :full, user.currency_symbol)
       |> append_new_line(3)
       |> append_good_bye()
       |> freeze("\n")
@@ -47,17 +51,17 @@ defmodule Subs.Domain.NotificationTemplate do
     %__MODULE__{title: title, body: message}
   end
 
-  def build(:monthly, subscriptions, date) do
+  def build(:monthly, user, subscriptions, date) do
     title = build_title(:monthly, date) |> freeze()
 
     message =
       []
       |> append_greeting()
       |> append_new_line(2)
-      |> append_monthly_total(subscriptions)
+      |> append_monthly_total(subscriptions, user.currency_symbol)
       |> append_new_line(2)
       |> append_monthly_title(subscriptions)
-      |> append_payments(subscriptions, :detail)
+      |> append_payments(subscriptions, :detail, user.currency_symbol)
       |> append_new_line(3)
       |> append_good_bye()
       |> freeze("\n")
@@ -105,8 +109,7 @@ defmodule Subs.Domain.NotificationTemplate do
     [message, ["Here are your payments for next week:"]]
   end
 
-  defp append_monthly_total(message, subscriptions) do
-    currency_symbol = "£"
+  defp append_monthly_total(message, subscriptions, currency_symbol) do
     total = Enum.reduce(subscriptions, 0.0, fn subscription, acc -> acc + subscription.amount end)
 
     [message, ["Next month you are spending ", Money.to_human_formated(total, currency_symbol)]]
@@ -122,7 +125,7 @@ defmodule Subs.Domain.NotificationTemplate do
 
   defp append_greeting(message), do: message ++ ["Hello,"]
 
-  defp append_new_line(message, count \\ 1) do
+  defp append_new_line(message, count) do
     [message, Enum.map(0..(count - 1), fn _ -> "\n" end)]
   end
 
@@ -133,14 +136,14 @@ defmodule Subs.Domain.NotificationTemplate do
     append_new_line(message, 2)
   end
 
-  defp append_yearly_payments(message, []), do: message
+  defp append_yearly_payments(message, [], _), do: message
 
-  defp append_yearly_payments(message, subscriptions) do
+  defp append_yearly_payments(message, subscriptions, currency_symbol) do
     count = Enum.count(subscriptions)
 
     message
     |> append_yearly_header(count)
-    |> append_payments(subscriptions)
+    |> append_payments(subscriptions, :compact, currency_symbol)
   end
 
   defp append_yearly_header(message, count) do
@@ -150,14 +153,14 @@ defmodule Subs.Domain.NotificationTemplate do
     [message, [Integer.to_string(count), [" yearly ", [payments, [are, ["due tomorrow:"]]]]]]
   end
 
-  defp append_monthly_payments(message, []), do: message
+  defp append_monthly_payments(message, [], _), do: message
 
-  defp append_monthly_payments(message, subscriptions) do
+  defp append_monthly_payments(message, subscriptions, currency_symbol) do
     count = Enum.count(subscriptions)
 
     message
     |> append_monthly_header(count)
-    |> append_payments(subscriptions)
+    |> append_payments(subscriptions, :compact, currency_symbol)
   end
 
   defp append_monthly_header(message, count) do
@@ -167,14 +170,13 @@ defmodule Subs.Domain.NotificationTemplate do
     [message, [Integer.to_string(count), [" monthly ", [payments, [are, ["due tomorrow:"]]]]]]
   end
 
-  defp append_payments(message, subscriptions, view \\ :compact) do
-    [message, Enum.map(subscriptions, &subscription_detail(&1, view))]
+  defp append_payments(message, subscriptions, view, currency_symbol) do
+    [message, Enum.map(subscriptions, &subscription_detail(&1, view, currency_symbol))]
   end
 
-  defp append_total(message, [_subscription]), do: message
+  defp append_total(message, [_subscription], _), do: message
 
-  defp append_total(message, subscriptions) do
-    currency_symbol = "£"
+  defp append_total(message, subscriptions, currency_symbol) do
     total = Enum.reduce(subscriptions, 0.0, fn subscription, acc -> acc + subscription.amount end)
 
     [message, ["\n", ["\n", ["\n", ["Total - ", [Money.to_human_formated(total, currency_symbol)]]]]]]
@@ -184,26 +186,24 @@ defmodule Subs.Domain.NotificationTemplate do
     [message, ["See you later,", ["\n", ["Subs"]]]]
   end
 
-  defp subscription_detail(subscription, :full) do
+  defp subscription_detail(subscription, :full, currency_symbol) do
     human_date = @dt.strftime(subscription.next_bill_date, "(%F)")
 
     if NaiveDateTime.to_date(@dt.now()) == NaiveDateTime.to_date(subscription.next_bill_date) do
-      [subscription_detail(subscription, :compact), ", is due tomorrow ", human_date]
+      [subscription_detail(subscription, :compact, currency_symbol), ", is due tomorrow ", human_date]
     else
       weekday = @dt.strftime(subscription.next_bill_date, "%A")
-      [subscription_detail(subscription, :compact), ", is due on ", weekday, " ", human_date]
+      [subscription_detail(subscription, :compact, currency_symbol), ", is due on ", weekday, " ", human_date]
     end
   end
 
-  defp subscription_detail(subscription, :detail) do
+  defp subscription_detail(subscription, :detail, currency_symbol) do
     human_date = @dt.strftime(subscription.next_bill_date, "%F")
 
-    [subscription_detail(subscription, :compact), ", ", human_date]
+    [subscription_detail(subscription, :compact, currency_symbol), ", ", human_date]
   end
 
-  defp subscription_detail(subscription, :compact) do
-    currency_symbol = "£"
-
+  defp subscription_detail(subscription, :compact, currency_symbol) do
     [
       "\n",
       [
