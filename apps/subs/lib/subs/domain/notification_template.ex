@@ -126,7 +126,7 @@ defmodule Subs.Domain.NotificationTemplate do
   defp append_greeting(message), do: message ++ ["Hello,"]
 
   defp append_new_line(message, count) do
-    [message, Enum.map(0..(count - 1), fn _ -> "\n" end)]
+    [message, Enum.map(0..(count - 1), fn _ -> "\r\n" end)]
   end
 
   defp append_new_line_between_payments(message, [], _), do: message
