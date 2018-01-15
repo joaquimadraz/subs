@@ -25,8 +25,9 @@ const SubscriptionsList = ({ subscriptions, current }) => {
   const renderSubscriptionsList = () => (
     <div>
       <div className="flex">
-        <div className="w-40 w-60-l moon-gray">Payment</div>
-        <div className="w-30 w-20-l moon-gray tc">
+        <div className="w-30 w-40-l moon-gray">Payment</div>
+        <div className="w-20 moon-gray tc">Cycle</div>
+        <div className="w-20 moon-gray tc">
           {current ? 'Bill date' : 'Next bill date'}
         </div>
         <div className="w-30 w-20-l moon-gray tr">Amount</div>

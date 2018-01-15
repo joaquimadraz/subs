@@ -58,7 +58,7 @@ const renderBaseMessage = (date, nextMonth, currencySymbol) => {
   return (
     <div>
       <p className="mv2">
-        <span>Nothing unexpected is comming, you will be spending <span className="subs-blue b">{currencySymbol}{nextMonth.get('total')}</span></span>
+        <span>Nothing unexpected is coming, you will be spending <span className="subs-blue b">{currencySymbol}{nextMonth.get('total')}</span></span>
         <span> in {formatDateToMonthYear(date)}.</span>
       </p>
       <p className="mv2">The monthly expense stays pretty much the same.</p>
