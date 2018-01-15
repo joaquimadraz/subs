@@ -14,7 +14,6 @@ import ServiceSelector from 'components/ServiceSelector'
 import Button from 'components/Button'
 import InputText from 'components/InputText'
 import InputNumber from 'components/InputNumber'
-import InputSelect from 'components/InputSelect'
 
 const renderErrors = (remoteCall) => {
   if (remoteCall.loading || !remoteCall.data) { return null }
@@ -82,17 +81,7 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           Amount
         </div>
         <div>
-          <select
-            style={{ height: 35 }}
-            className="subscription-amount-currency"
-            onChange={event => handleChange(event, 'amount_currency')}
-            value={subscription.amount_currency}
-            disabled
-          >
-            <option value="GBP">£</option>
-            <option value="EUR">€</option>
-            <option value="USD">$</option>
-          </select>
+          {subscription.amount_currency_symbol}
           <InputNumber
             name="amount"
             className="subscription-amount w-30"
