@@ -18,6 +18,7 @@ class SignupContainer extends Component {
     this.state = {
       data: {
         email: '',
+        currency: 'GBP',
         password: '',
         password_confirmation: '',
       },

@@ -21,6 +21,8 @@ defmodule SubsWeb.Test.Acceptance.UserConfirmSignupTest do
     |> visit("/signup")
     |> assert_has(css("#app"))
     |> fill_in(css("#signup-form .user-email"), with: email)
+    |> fill_in(css("#signup-form .user-currency .Select-input input"), with: "GBP")
+    |> click(css(".Select .Select-option"))
     |> fill_in(css("#signup-form .user-password"), with: "123456")
     |> fill_in(css("#signup-form .user-password-confirmation"), with: "123456")
     |> click(css("#signup-btn"))

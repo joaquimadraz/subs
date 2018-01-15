@@ -89,6 +89,8 @@ defmodule SubsWeb.Test.Acceptance.UserLoginTest do
     |> visit("/signup")
     |> assert_has(css("#app"))
     |> fill_in(css("#signup-form .user-email"), with: email)
+    |> fill_in(css("#signup-form .user-currency .Select-input input"), with: "GBP")
+    |> click(css("#signup-form .user-currency .Select-option"))
     |> fill_in(css("#signup-form .user-password"), with: password)
     |> fill_in(css("#signup-form .user-password-confirmation"), with: password)
     |> click(css("#signup-btn"))

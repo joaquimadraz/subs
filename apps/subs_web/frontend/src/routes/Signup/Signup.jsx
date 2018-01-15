@@ -6,6 +6,7 @@ import RemoteCall from 'data/domain/RemoteCall'
 import ErrorMessages from 'components/ErrorMessages'
 import Button from 'components/Button'
 import InputText from 'components/InputText'
+import InputSelect from 'components/InputSelect'
 
 const renderErrors = (remoteCall) => {
   if (remoteCall.loading || !remoteCall.data) { return null }
@@ -27,6 +28,10 @@ const Signup = ({
   data,
   remoteCall,
 }) => {
+  const handleSelectChange = (select, attribute) => {
+    onChange(attribute, select.value)
+  }
+
   const handleChange = (event, attribute) => {
     onChange(attribute, event.target.value)
   }
@@ -48,6 +53,21 @@ const Signup = ({
           type="email"
           value={data.email}
           onChange={event => handleChange(event, 'email')}
+        />
+      </div>
+      <div className="mt3">
+        <div className="f5 b dark-gray mb2 mt3">
+          Currency
+        </div>
+        <InputSelect
+          className="user-currency"
+          onChange={event => handleSelectChange(event, 'currency')}
+          value={data.currency}
+          options={[
+            { value: 'GBP', label: '£ (GBP)' },
+            { value: 'EUR', label: '€ (EUR)' },
+            { value: 'USD', label: '$ (USD)' },
+          ]}
         />
       </div>
       <div className="mv3">

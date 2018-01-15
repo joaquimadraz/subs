@@ -60,7 +60,7 @@ defmodule SubsWeb.Test.Acceptance.SubscriptionsNewTest do
   end
 
   @tag :acceptance
-  test "creates subscription from service and updates amount", %{session: session} do
+  test "creates custom subscription and updates amount", %{session: session} do
     session
     |> assert_signup_and_login_user()
     |> visit("/subscriptions/new")
@@ -87,6 +87,8 @@ defmodule SubsWeb.Test.Acceptance.SubscriptionsNewTest do
     |> visit("/signup")
     |> assert_has(css("#app"))
     |> fill_in(css("#signup-form .user-email"), with: email)
+    |> fill_in(css("#signup-form .user-currency .Select-input input"), with: "EUR")
+    |> click(css("#signup-form .user-currency .Select-option"))
     |> fill_in(css("#signup-form .user-password"), with: password)
     |> fill_in(css("#signup-form .user-password-confirmation"), with: password)
     |> click(css("#signup-btn"))
