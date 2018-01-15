@@ -43,7 +43,9 @@ defmodule SubsWeb.Api.UserView do
     %{
       id: user.id,
       name: user.name,
-      email: user.email
+      email: user.email,
+      currency: user.currency,
+      currency_symbol: user.currency_symbol,
     }
   end
 end

@@ -13,7 +13,9 @@ defmodule Subs.Test.Support.Factory do
       password: "password",
       password_confirmation: "password",
       confirmation_token: "111xxx222yyy333zzz",
-      encrypted_confirmation_token: Crypto.sha1("111xxx222yyy333zzz")
+      encrypted_confirmation_token: Crypto.sha1("111xxx222yyy333zzz"),
+      currency: "GBP",
+      currency_symbol: "£"
     }
   end
 

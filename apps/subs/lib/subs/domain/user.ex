@@ -3,7 +3,7 @@ defmodule Subs.User do
 
   use Subs.Schema
   alias Subs.{Subscription, UserRepo, SubsNotification}
-  alias Subs.Helpers.Crypto
+  alias Subs.Helpers.{Crypto, Money}
 
   @bcrypt Application.get_env(:subs, :bcrypt)
   @dt Application.get_env(:subs, :dt)
@@ -21,6 +21,8 @@ defmodule Subs.User do
     field :password_recovery_token, :string, virtual: true
     field :encrypted_password_recovery_token, :string
     field :password_recovery_expires_at, :naive_datetime
+    field :currency, :string
+    field :currency_symbol, :string
 
     has_many :subscriptions, Subscription
     has_many :subs_notifications, SubsNotification
@@ -28,25 +30,33 @@ defmodule Subs.User do
     timestamps()
   end
 
-  @required_create_fields ~w(email password password_confirmation)a
+  @required_create_fields ~w(email
+                             password
+                             password_confirmation
+                             currency)a
+
   @required_update_fields ~w(password
                              password_confirmation
                              confirmation_sent_at
                              confirmed_at)a
-  @optional_fields ~w(name)a
+
+  @optional_fields ~w(name currency)a
+
   @email_regex ~r/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/
 
   def create_changeset(struct, params \\ %{}) do
     struct
     |> cast(params, @required_create_fields ++ @optional_fields)
     |> validate_required(@required_create_fields)
-    |> downcase_email
+    |> downcase_email()
     |> validate_format(:email, @email_regex)
     |> validate_length(:name, min: 3)
     |> validate_length(:password, min: 6)
     |> validate_password_confirmation_presence()
     |> validate_confirmation(:password)
     |> unique_constraint(:email)
+    |> validate_inclusion(:currency, Money.currency_codes())
+    |> populate_currency_symbol()
     |> encrypt_password()
     |> confirmation_changeset()
   end
@@ -58,6 +68,8 @@ defmodule Subs.User do
     |> validate_length(:password, min: 6)
     |> validate_password_confirmation_presence()
     |> validate_confirmation(:password)
+    |> validate_inclusion(:currency, Money.currency_codes())
+    |> populate_currency_symbol()
     |> encrypt_password()
   end
 
@@ -139,6 +151,15 @@ defmodule Subs.User do
         changeset
       email ->
         put_change(changeset, :email, String.downcase(email))
+    end
+  end
+
+  defp populate_currency_symbol(changeset) do
+    case get_change(changeset, :currency) do
+      nil ->
+        changeset
+      currency ->
+        put_change(changeset, :currency_symbol, Money.currency_symbol(currency))
     end
   end
 

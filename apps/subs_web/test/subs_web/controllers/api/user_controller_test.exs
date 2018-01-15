@@ -28,7 +28,8 @@ defmodule SubsWeb.Test.Controllers.UserControllerTest do
       assert data["data"]["errors"] == %{
         "email" => ["can't be blank"],
         "password" => ["can't be blank"],
-        "password_confirmation" => ["can't be blank"]
+        "password_confirmation" => ["can't be blank"],
+        "currency" => ["can't be blank"],
       }
     end
 
@@ -37,13 +38,16 @@ defmodule SubsWeb.Test.Controllers.UserControllerTest do
       conn = post(conn, api_user_path(conn, :create), user: %{
         "email" => email,
         "password" => "password",
-        "password_confirmation" => "password"
+        "password_confirmation" => "password",
+        "currency" => "EUR"
       })
 
       assert data = json_response(conn, 201)
       assert data["data"]["id"] != nil
       assert data["data"]["email"] == email
       assert data["data"]["confirmation_sent_at"] != nil
+      assert data["data"]["currency"] == "EUR"
+      assert data["data"]["currency_symbol"] == "€"
     end
 
     test "user created and confirmation email sent", %{conn: conn} do
@@ -52,7 +56,8 @@ defmodule SubsWeb.Test.Controllers.UserControllerTest do
       conn = post(conn, api_user_path(conn, :create), user: %{
         "email" => email,
         "password" => "password",
-        "password_confirmation" => "password"
+        "password_confirmation" => "password",
+        "currency" => "EUR"
       })
 
       assert json_response(conn, 201)
@@ -135,7 +140,9 @@ defmodule SubsWeb.Test.Controllers.UserControllerTest do
       assert data["data"] == %{
         "id" => user.id,
         "name" => user.name,
-        "email" => user.email
+        "email" => user.email,
+        "currency" => user.currency,
+        "currency_symbol" => user.currency_symbol,
       }
     end
   end
@@ -187,7 +194,9 @@ defmodule SubsWeb.Test.Controllers.UserControllerTest do
       assert data["data"] == %{
         "id" => user.id,
         "name" => user.name,
-        "email" => user.email
+        "email" => user.email,
+        "currency" => user.currency,
+        "currency_symbol" => user.currency_symbol,
       }
     end
   end

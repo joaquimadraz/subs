@@ -50,6 +50,27 @@ defmodule Subs.Test.Domain.UserTest do
     end
   end
 
+  test "returns error for missing require currency" do
+    params = string_params_for(:user) |> Map.take(["email"])
+    user = create_user(params)
+
+    assert {"can't be blank", _} = user.errors[:currency]
+  end
+
+  test "returns error for unknown currency" do
+    params = %{string_params_for(:user) | "currency" => "AUD"}
+    user = create_user(params)
+
+    assert {"is invalid", _} = user.errors[:currency]
+  end
+
+  test "populates currency symbol" do
+    params = %{string_params_for(:user) | "currency" => "USD"}
+    user = create_user(params)
+
+    assert user.changes.currency_symbol == "$"
+  end
+
   def create_user(params) do
     User.create_changeset(%User{}, params)
   end
