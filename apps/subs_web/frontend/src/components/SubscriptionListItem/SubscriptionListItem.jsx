@@ -19,6 +19,7 @@ const SubscriptionListItem = ({ subscription, current }) => {
       <Link
         to={routes.subscriptionsShow(subscription.id)}
         className="flex items-center dim pointer no-underline"
+        title={subscription.name}
       >
         <div className="w-30 w-40-l pa3">
           <span className="SubscriptionListItem--name">
@@ -30,6 +31,7 @@ const SubscriptionListItem = ({ subscription, current }) => {
         </div>
         <div className="w-20 pa3 tc">
           <span className="SubscriptionListItem--next-bill-date">
+            { isDue ? <span>(Due) </span> : null}
             {current ? subscription.humanCurrentBillDate : subscription.humanNextBillDate}
           </span>
         </div>

@@ -26,9 +26,9 @@ const ResetPasswordForm = ({
     <div id="reset-password-form">
       {renderErrors(remoteCall)}
 
-      <legend className="f4 fw6 ph0 mh0 subs-pink-darker">Reset password</legend>
+      <legend className="f4 fw6 ph0 mh0 subs-blue">Reset password</legend>
       <div className="mv3">
-        <div className="f5 b dark-gray mb2 mt3">
+        <div className="b dark-gray mb2 mt3">
           Password
         </div>
         <InputText
@@ -39,7 +39,7 @@ const ResetPasswordForm = ({
         />
       </div>
       <div className="mv3">
-        <div className="f5 b dark-gray mb2 mt3">
+        <div className="b dark-gray mb2 mt3">
           Password confirmation
         </div>
         <InputText

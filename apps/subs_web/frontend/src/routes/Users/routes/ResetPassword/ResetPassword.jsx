@@ -21,11 +21,11 @@ const ResetPassword = ({
   }
 
   if (wasPasswordUpdated) {
-    return (<p>Password was updated. Click <Link to={routes.login} className="link subs-pink b">here</Link> to log in.</p>)
+    return (<p>Password was updated. Click <Link to={routes.login} className="link subs-blue b">here</Link> to log in.</p>)
   }
 
   if (!isTokenValid) {
-    return (<p>{remoteCall.message}. Click <Link to={routes.root} className="link subs-pink b">here</Link> to go home.</p>)
+    return (<p>{remoteCall.message}. Click <Link to={routes.root} className="link subs-blue b">here</Link> to go home.</p>)
   }
 
   return (

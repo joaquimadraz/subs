@@ -21,7 +21,7 @@ const MonthDiff = ({ currentUser, currentTotal, previousTotal }) => {
     'b--green Home--arrow-down': isPositive,
   })
 
-  const sign = isPositive ? '+' : '-'
+  const sign = isPositive ? '-' : '+'
 
   const value = Math.abs(diff).toFixed(2)
 

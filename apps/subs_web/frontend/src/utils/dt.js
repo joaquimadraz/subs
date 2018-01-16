@@ -42,8 +42,13 @@ const formatDateToMonthYear = (date = now()) => {
   return moment(date).format(monthYearFormat)
 }
 
+const beginningOfDay = () => moment().startOf('day').toDate()
+
+const endOfMonth = () => moment().endOf('month').toDate()
+
 export {
   now,
+  toMoment,
   addMonths,
   daysBetween,
   parseFromISO8601,
@@ -51,4 +56,6 @@ export {
   formatDateToISO8601,
   formatDateToMonthYear,
   parseAndFormatDate,
+  beginningOfDay,
+  endOfMonth,
 }

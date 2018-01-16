@@ -4,39 +4,8 @@ import { Map } from 'immutable'
 import { formatDate } from 'utils/dt'
 
 import CurrentUser from 'data/domain/currentUser/CurrentUser'
-import SubscriptionPill from 'components/SubscriptionPill'
 import Styles from './Styles'
 import MonthDiff from './MonthDiff'
-
-const renderYearlySubscriptions = (subscriptions) => {
-  const yearlyPayments = subscriptions.filter(sub => sub.cycle === 'yearly')
-
-  const noYearlyPayments = (
-    <div>
-      <p className="gray f6">No yearly payments this month.</p>
-    </div>
-  )
-
-  return (
-    <div className="flex-auto">
-      <div className="f6 b light-silver">
-        <span className="subs-pink">Yearly payments</span>
-        <small className="ml2">this month</small>
-      </div>
-      <div className="flex mt2">
-        {yearlyPayments.size === 0
-          ? noYearlyPayments
-          : yearlyPayments.map((subscription, index) => (
-            <SubscriptionPill
-              key={subscription.id}
-              subscription={subscription}
-              last={index !== subscriptions.length}
-            />
-          ))}
-      </div>
-    </div>
-  )
-}
 
 const CurrentMonthStats = ({ currentUser, currentDate, month, prevMonth }) => (
   <Styles>
@@ -63,9 +32,6 @@ const CurrentMonthStats = ({ currentUser, currentDate, month, prevMonth }) => (
         </div>
       </div>
     </div>
-    {/* <div className="flex-auto">
-      {renderYearlySubscriptions(month.get('subscriptions'))}
-    </div> */}
   </Styles>
 )
 
