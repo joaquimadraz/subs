@@ -15,6 +15,9 @@ module.exports = {
       path.resolve(__dirname, './src/index.jsx'),
     ],
     vendor: [
+      '@fortawesome/fontawesome',
+      '@fortawesome/fontawesome-free-solid',
+      '@fortawesome/react-fontawesome',
       'axios',
       'classnames',
       'emotion',
@@ -29,6 +32,7 @@ module.exports = {
       'react-dates',
       'react-dom',
       'react-emotion',
+      'react-modal',
       'react-redux',
       'react-redux-loading-bar',
       'react-router',

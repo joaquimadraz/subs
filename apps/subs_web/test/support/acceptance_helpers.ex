@@ -42,7 +42,7 @@ defmodule SubsWeb.Test.Support.AcceptanceHelpers do
     |> fill_in(css("#login-form .user-email"), with: email)
     |> fill_in(css("#login-form .user-password"), with: password)
     |> click(css("#login-btn"))
-    |> assert_has(css(".Header--menu-trigger"))
+    |> assert_has(css(".logout-btn"))
 
     session
   end

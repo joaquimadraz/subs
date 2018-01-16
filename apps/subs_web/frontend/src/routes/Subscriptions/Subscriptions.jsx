@@ -23,22 +23,20 @@ const Subscriptions = ({
         <div className="flex-column">
           <div className="moon-gray">
             <div>{subscriptions.size} payment{subscriptions.size === 1 ? '' : 's'}</div>
-            <h3 className="f3 ma0 ttu mt1" style={{ color: '#1A173B' }}>
-              All Payments
-            </h3>
+            <h3 className="f3 ma0 ttu mt1 subs-blue-darker">All Payments</h3>
           </div>
         </div>
         <div className="flex-column ml4">
           <div className="moon-gray">
             <div className="fl mr4">
               <div>Avg. per month</div>
-              <div className="f3 ma0 ttu mt1 b" style={{ color: '#1A173B' }}>
+              <div className="f3 ma0 ttu mt1 b subs-blue-darker">
                 {currentUser.currencySymbol}{avgs.get('monthly')}
               </div>
             </div>
             <div className="fl">
               <div>Avg. per year</div>
-              <div className="f3 ma0 ttu mt1 b" style={{ color: '#1A173B' }}>
+              <div className="f3 ma0 ttu mt1 b subs-blue-darker">
                 {currentUser.currencySymbol}{avgs.get('yearly')}
               </div>
             </div>

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faSignOutAlt from '@fortawesome/fontawesome-free-solid/faSignOutAlt'
-// import faCog from '@fortawesome/fontawesome-free-solid/faCog'
-// import faUserCircle from '@fortawesome/fontawesome-free-solid/faUserCircle'
 import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import Navigation from './Navigation'
 import Notifications from './Notifications'
@@ -23,7 +21,7 @@ const PrivateApp = ({ currentUser, subscriptions, onLogoutClick, children }) => 
           <div className="w-40">
             <FontAwesomeIcon
               icon={faSignOutAlt}
-              className="silver f4 fr mt1 dim pointer"
+              className="silver f4 fr mt1 dim pointer logout-btn"
               onClick={onLogoutClick}
             />
           </div>

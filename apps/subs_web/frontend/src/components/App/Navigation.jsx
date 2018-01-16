@@ -16,9 +16,9 @@ const Navigation = ({ currentUser }) => (
   <Styles>
     <Link
       to={routes.root}
-      className="f1 no-underline white b tc db mv4"
+      className="f2 no-underline white b tc db mv4 pa2"
     >
-      Subs
+      <div className="b i">OpenSubs</div>
     </Link>
     {currentUser.isLogged && (
       <div>

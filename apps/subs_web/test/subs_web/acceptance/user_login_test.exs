@@ -70,17 +70,16 @@ defmodule SubsWeb.Test.Acceptance.UserLoginTest do
     session
     |> assert_signup_and_login_user(email)
     |> visit("/")
-    |> assert_has(css(".Header--menu-trigger"))
+    |> assert_has(css(".logout-btn"))
   end
 
   @tag :acceptance
   test "logout successful", %{session: session} do
     session
     |> assert_signup_and_login_user()
-    |> click(css(".Header--menu-trigger"))
-    |> click(css(".Header--logout-button"))
-    |> assert_has(css("a[href='/login']"))
+    |> click(css(".logout-btn"))
+    |> assert_has(css("#login-btn"))
     |> visit("/")
-    |> assert_has(css("a[href='/login']"))
+    |> assert_has(css("#login-btn"))
   end
 end

@@ -10,6 +10,7 @@ import Button from 'components/Button'
 import InputText from 'components/InputText'
 import InputSelect from 'components/InputSelect'
 
+
 const renderErrors = (remoteCall) => {
   if (remoteCall.loading || !remoteCall.data) { return null }
 
@@ -17,7 +18,7 @@ const renderErrors = (remoteCall) => {
 }
 
 const renderSuccessMessage = user => (
-  <div>
+  <div className="measure center pa3 bg-white br2 ba b--black shadow-5">
     <p>A confirmation email was sent to {user.get('signed_up_email')}.</p>
     <p>Check your email to confirm your account.</p>
   </div>

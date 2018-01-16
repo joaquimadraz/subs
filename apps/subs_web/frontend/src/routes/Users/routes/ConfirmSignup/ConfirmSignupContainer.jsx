@@ -25,7 +25,11 @@ class ConfirmSignupContainer extends Component {
   }
 
   render() {
-    return (<p>{this.state.message}</p>)
+    return (
+      <div className="measure center pa3 bg-white br2 ba b--black shadow-5">
+        <p>{this.state.message}</p>
+      </div>
+    )
   }
 }
 

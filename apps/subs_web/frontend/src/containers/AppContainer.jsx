@@ -8,6 +8,7 @@ import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import logoutAction from 'data/domain/currentUser/logout/action'
 import getCurrentUserAction from 'data/domain/currentUser/getCurrentUser/action'
 
+import CenteredContainer from 'components/CenteredContainer'
 import PrivateApp from 'components/App/PrivateApp'
 import PublicApp from 'components/App/PublicApp'
 import Styles from 'components/App/Styles'
@@ -37,11 +38,10 @@ class AppContainer extends Component {
     // TODO: Extract to component
     if (!currentUser.wasRequested) {
       return (
-        <div className="vh-100 dt w-100 bg-subs-blue-darker">
-          <div className="dtc v-mid ph3 ph4-l tc white">
-            <p>Booting the systems...</p>
-          </div>
-        </div>
+
+        <CenteredContainer>
+          <p className="white tc">Booting the systems...</p>
+        </CenteredContainer>
       )
     }
 

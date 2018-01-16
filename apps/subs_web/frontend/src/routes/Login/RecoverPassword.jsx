@@ -16,7 +16,7 @@ const renderMessage = (remoteCall) => {
 const renderErrors = (remoteCall) => {
   if (remoteCall.loading || !remoteCall.data) { return null }
 
-  return <ErrorMessages errors={remoteCall.data.get('errors')} />
+  return (<ErrorMessages errors={remoteCall.data.get('errors')} />)
 }
 
 const RecoverPassword = ({

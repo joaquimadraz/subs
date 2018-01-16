@@ -69,8 +69,7 @@ defmodule SubsWeb.Test.Acceptance.UserSignupTest do
     |> fill_in(css("#signup-form .user-password-confirmation"), with: "123456")
     |> click(css("#signup-btn"))
     |> assert_has(css("p", text: "A confirmation email was sent to #{email}."))
-    |> click(css("a[href='/login']"))
-    |> click(css("a[href='/signup']"))
+    |> visit("/signup")
     |> assert_has(css("#signup-form .user-email", text: ""))
   end
 end

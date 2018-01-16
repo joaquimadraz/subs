@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import CenteredContainer from 'components/CenteredContainer'
+
 const PublicApp = ({ children }) => {
   return (
-    <div className="vh-100 dt w-100 bg-subs-blue-darker">
-      <div className="dtc v-mid ph3 ph4-l">
-        {children}
-      </div>
-    </div>
+    <CenteredContainer>
+      <div className="b i f1 white tc mb4">OpenSubs</div>
+      {children}
+    </CenteredContainer>
   )
 }
 
