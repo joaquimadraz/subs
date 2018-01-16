@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { OrderedSet } from 'immutable'
 
+import colors from 'constants/colors'
 import RemoteCall from 'data/domain/RemoteCall'
 import Subscription from 'data/domain/subscriptions/Subscription'
 
@@ -18,14 +19,26 @@ const NewSubscription = ({
     return (<p>Loading services...</p>)
   }
 
+  const textColor = colors.textColorForBg(subscription.color)
+
   return (
-    <SubscriptionForm
-      onClick={onClick}
-      onChange={onChange}
-      remoteCall={remoteCall}
-      subscription={subscription}
-      services={services}
-    />
+    <div className="bg-white br2">
+      <h3
+        className="pa3 f3 ma0 ttu mt1 br--top br2"
+        style={{ background: subscription.color, color: textColor }}
+      >
+        New Payment
+      </h3>
+      <div className="pa3 br--bottom br2">
+        <SubscriptionForm
+          onClick={onClick}
+          onChange={onChange}
+          remoteCall={remoteCall}
+          subscription={subscription}
+          services={services}
+        />
+      </div>
+    </div>
   )
 }
 

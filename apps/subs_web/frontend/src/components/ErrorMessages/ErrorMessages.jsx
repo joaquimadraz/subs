@@ -20,8 +20,8 @@ const ErrorMessages = ({ errors }) => {
   const messageList = errorMessages(errors)
 
   return (
-    <div className="bg-light-red pa2 f6 ba b--red br2 bw1 mb3">
-      <p className="b pa0 ma0 white f5">There are some errors</p>
+    <div className="bg-light-red pa2 ba b--red br2 bw1 mb3">
+      <p className="b pa0 ma0 white">There are some errors</p>
       <ul className="list pa1 mt1 mb0 white">
         {messageList.map(error => <li className="ml1" key={error.attribute}>{error.message}</li>)}
       </ul>

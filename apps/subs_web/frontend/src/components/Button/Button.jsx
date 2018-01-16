@@ -18,7 +18,7 @@ const Button = (props) => {
   const classNames = cx(
     className,
     colorClass(color),
-    'bg-subs-blue bn white pv2 ph3 br2 pointer dim',
+    'bn white pv2 ph3 br2 pointer dim',
   )
 
   return (
@@ -40,7 +40,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   onClick: () => {},
-  color: 'subs-pink',
+  color: 'subs-blue',
 }
 
 export default Button

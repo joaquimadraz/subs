@@ -7,6 +7,7 @@ import {
   CREATE_SUBSCRIPTION_STARTED,
   CREATE_SUBSCRIPTION_SUCCESS,
   CREATE_SUBSCRIPTION_FAILURE,
+  CREATE_SUBSCRIPTION_RESET,
 } from './createSubscription/action'
 
 import {
@@ -93,6 +94,8 @@ const subscriptionsReducer = (state = initialState, action) => {
       return createSubscriptionSuccess(state, action)
     case CREATE_SUBSCRIPTION_FAILURE:
       return createSubscriptionFailure(state, action)
+    case CREATE_SUBSCRIPTION_RESET:
+      return state.set('remoteCall', initialState.get('remoteCall'))
     case GET_ALL_SUBSCRIPTIONS_STARTED:
       return getAllSubscriptionsStarted(state)
     case GET_ALL_SUBSCRIPTIONS_SUCCESS:

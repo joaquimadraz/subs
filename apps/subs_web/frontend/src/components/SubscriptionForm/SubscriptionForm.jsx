@@ -10,10 +10,10 @@ import colors from 'constants/colors'
 import ErrorMessages from 'components/ErrorMessages'
 import ColorPicker from 'components/ColorPicker'
 import DatePicker from 'components/DatePicker'
-import ServiceSelector from 'components/ServiceSelector'
 import Button from 'components/Button'
 import InputText from 'components/InputText'
 import InputNumber from 'components/InputNumber'
+import InputSelect from 'components/InputSelect'
 
 const renderErrors = (remoteCall) => {
   if (remoteCall.loading || !remoteCall.data) { return null }
@@ -48,19 +48,15 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
   }
 
   const servicesOptions = buildServiceOptions(services)
-  const textColor = colors.textColorForBg(subscription.color)
 
   const renderCustomServiceForm = () => {
     return (
       <div>
-        <div
-          className="f5 b dark-gray mb2"
-          style={{ color: textColor }}
-        >
+        <div className="b dark-gray mb2">
           What’s the payment about?
         </div>
         {!subscription.id &&
-          <ServiceSelector
+          <InputSelect
             className="subscription-service w-50"
             value={subscription.service_code || 'custom'}
             options={servicesOptions}
@@ -74,17 +70,16 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           value={subscription.name}
           onChange={event => handleChange(event, 'name')}
         />
-        <div
-          className="f5 b dark-gray mb2 mt3"
-          style={{ color: textColor }}
-        >
+        <div className="b dark-gray mb2 mt3">
           Amount
         </div>
         <div>
-          {subscription.amount_currency_symbol}
+          <span className="f4 mr2 v-mid dark-gray">
+            {subscription.amount_currency_symbol}
+          </span>
           <InputNumber
             name="amount"
-            className="subscription-amount w-30"
+            className="subscription-amount w-30 v-mid mr2"
             value={subscription.amount}
             onChange={event => handleChange(event, 'amount')}
           />
@@ -98,10 +93,7 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
             <option value="yearly">Yearly</option>
           </select>
         </div>
-        <div
-          className="f5 b dark-gray mb2 mt3"
-          style={{ color: textColor }}
-        >
+        <div className="b dark-gray mb2 mt3">
           First bill
         </div>
         <DatePicker
@@ -109,15 +101,17 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           onChange={date => onChange('first_bill_date', date)}
         />
         <div>
-          <div className="f5 b dark-gray mb2 mt3" style={{ color: textColor }}>Colors</div>
-          <ColorPicker onChange={color => onChange('color', color)} />
+          <div className="b dark-gray mb2 mt3">Colors</div>
+          <ColorPicker
+            onChange={color => onChange('color', color)}
+          />
         </div>
       </div>
     )
   }
 
   const renderServiceForm = () => {
-    const amountCx = classNames('f5 b dark-gray mb2', {
+    const amountCx = classNames('b dark-gray mb2', {
       mt3: !subscription.id,
       mt0: subscription.id,
     })
@@ -126,13 +120,10 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
       <div>
         {!subscription.id &&
           <div>
-            <div
-              className="f5 b dark-gray mb2"
-              style={{ color: textColor }}
-            >
+            <div className="b dark-gray mb2">
               What’s the payment about?
             </div>
-            <ServiceSelector
+            <InputSelect
               className="subscription-service w-50"
               value={subscription.service_code || 'custom'}
               options={servicesOptions}
@@ -140,17 +131,16 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
             />
           </div>
         }
-        <div
-          className={amountCx}
-          style={{ color: textColor }}
-        >
+        <div className={amountCx}>
           Amount
         </div>
         <div>
-          {subscription.amount_currency_symbol}
+          <span className="f4 mr2 v-mid dark-gray">
+            {subscription.amount_currency_symbol}
+          </span>
           <InputNumber
             name="amount"
-            className="subscription-amount w-30"
+            className="subscription-amount w-30 v-mid mr2"
             value={subscription.amount}
             onChange={event => handleChange(event, 'amount')}
           />
@@ -164,10 +154,7 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
             <option value="yearly">Yearly</option>
           </select>
         </div>
-        <div
-          className="f5 b dark-gray mb2 mt3"
-          style={{ color: textColor }}
-        >
+        <div className="b dark-gray mb2 mt3">
           First bill
         </div>
         <DatePicker
@@ -180,18 +167,15 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
 
   return (
     <div id="subscription-form">
-      <div className="pa3 br2" style={{ background: subscription.color }}>
-        {renderErrors(remoteCall)}
-        {
-          subscription.service_code
-            ? renderServiceForm()
-            : renderCustomServiceForm()
-        }
-      </div>
-      <div className="pa3">
-        <Button type="submit" onClick={onClick} className="mr3">Save</Button>
-        {children}
-      </div>
+      {renderErrors(remoteCall)}
+      {
+        subscription.service_code
+          ? renderServiceForm()
+          : renderCustomServiceForm()
+      }
+      <div className="mv3 bb b--near-white" />
+      <Button type="submit" onClick={onClick} className="mr3">Save</Button>
+      {children}
     </div>
   )
 }
