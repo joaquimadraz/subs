@@ -43,8 +43,8 @@ if (document.getElementById('app')) {
             <IndexRoute component={Home} />
             <Route path={routes.subscriptions} component={Subscriptions}>
               <Route path={routes.subscriptionsNew} component={NewSubscription} />
+              <Route path={routes.subscriptionsShow(':subscriptionId')} component={ShowSubscription} />
             </Route>
-            <Route path={routes.subscriptionsShow(':subscriptionId')} component={ShowSubscription} />
             <Route path={routes.account} component={Account} />
           </Route>
         </Route>

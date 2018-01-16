@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { OrderedSet } from 'immutable'
 
+import colors from 'constants/colors'
 import RemoteCall from 'data/domain/RemoteCall'
 import Subscription from 'data/domain/subscriptions/Subscription'
 
@@ -27,42 +28,32 @@ const ShowSubscription = ({
     onArchiveClick(subscription.id)
   }
 
+  const textColor = colors.textColorForBg(data.color)
+
   return (
-    <div>
-      <div className="flex">
-        <div className="w-50-l w-80-m center">
-          <h1>{subscription.name}</h1>
-          <SubscriptionForm
-            onClick={onClick}
-            onChange={onChange}
-            remoteCall={remoteCall}
-            subscription={data}
-            services={services}
+    <div className="bg-white br2">
+      <h3
+        className="pa3 f3 ma0 ttu mt1 br--top br2"
+        style={{ background: data.color, color: textColor }}
+      >
+        {subscription.name}
+      </h3>
+      <div className="pa3 br--bottom br2">
+        <SubscriptionForm
+          onClick={onClick}
+          onChange={onChange}
+          remoteCall={remoteCall}
+          subscription={data}
+          services={services}
+        >
+          <Button
+            className="SubscriptionListItem--archive-button"
+            onClick={handleArchiveClick}
+            color="red"
           >
-            <Button
-              className="SubscriptionListItem--archive-button"
-              onClick={handleArchiveClick}
-              color="red"
-            >
-              Archive
-            </Button>
-          </SubscriptionForm>
-        </div>
-        {/* <div className="w-60 pa3">
-          <div className="f5 b dark-gray mt0 mb2">Payments</div>
-          <ul className="pl0 mt0 light-silver">
-            <li className="flex justify-around lh-copy mb2">
-              <div className="w-20">12/08/2017</div>
-              <div className="w-60 tc" />
-              <div className="w-20 tr">7.99£</div>
-            </li>
-            <li className="flex justify-around lh-copy mb2">
-              <div className="w-20">12/08/2017</div>
-              <div className="w-60 tc" />
-              <div className="w-20 tr">7.99£</div>
-            </li>
-          </ul>
-        </div> */}
+            Archive
+          </Button>
+        </SubscriptionForm>
       </div>
     </div>
   )

@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import routes from 'constants/routes'
 import RemoteCall from 'data/domain/RemoteCall'
 import Subscription from 'data/domain/subscriptions/Subscription'
 import getSubscriptionAction from 'data/domain/subscriptions/getSubscription/action'
 import updateSubscriptionAction from 'data/domain/subscriptions/updateSubscription/action'
 import archiveSubscriptionAction from 'data/domain/subscriptions/archiveSubscription/action'
+import Modal from 'components/Modal'
 import ShowSubscription from './ShowSubscription'
 
 class ShowsSubscriptionContainer extends Component {
@@ -16,6 +18,7 @@ class ShowsSubscriptionContainer extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.handleFormChange = this.handleFormChange.bind(this)
     this.handleArchiveClick = this.handleArchiveClick.bind(this)
+    this.handleModalClose = this.handleModalClose.bind(this)
 
     this.state = {
       data: new Subscription(),
@@ -56,19 +59,25 @@ class ShowsSubscriptionContainer extends Component {
     dispatch(archiveSubscriptionAction(subscriptionId, { archived: true }))
   }
 
+  handleModalClose() {
+    this.props.router.push(routes.subscriptions)
+  }
+
   render() {
     const { remoteCall, subscription } = this.props
     const { data } = this.state
 
     return (
-      <ShowSubscription
-        data={data}
-        subscription={subscription}
-        remoteCall={remoteCall}
-        onClick={this.handleFormSubmit}
-        onChange={this.handleFormChange}
-        onArchiveClick={this.handleArchiveClick}
-      />
+      <Modal onClose={this.handleModalClose}>
+        <ShowSubscription
+          data={data}
+          subscription={subscription}
+          remoteCall={remoteCall}
+          onClick={this.handleFormSubmit}
+          onChange={this.handleFormChange}
+          onArchiveClick={this.handleArchiveClick}
+        />
+      </Modal>
     )
   }
 }

@@ -100,6 +100,7 @@ const mapStateToProps = (state) => {
 
 NewSubscriptionContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired,
   currentUser: PropTypes.instanceOf(CurrentUser).isRequired,
   services: PropTypes.instanceOf(OrderedSet).isRequired,
   remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
