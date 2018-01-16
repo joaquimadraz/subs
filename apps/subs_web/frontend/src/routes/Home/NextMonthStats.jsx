@@ -38,18 +38,21 @@ const renderMoreLessMessage = (date, nextMonth, diffPerc, currencySymbol) => {
 const renderYearlyPaymentMessage = (date, count, diffPerc) => {
   const precLabel = diffPerc > 0 ? 'up' : 'down'
   const precCx = diffPerc > 0 ? 'red' : 'green'
-
+  const payments = count === 1 ? 'payment' : 'payments'
+  const are = count === 1 ? 'is' : 'are'
+  console.log(diffPerc)
   return (
     <div>
       <p className="mv2">
-        <span><span className="subs-blue b">{count} yearly payment</span> is due</span>
+        <span><span className="subs-blue b">{count} yearly {payments}</span> {are} due</span>
         <span> in {formatDateToMonthYear(date)}.</span>
       </p>
-      <p className="mv2">
-        <span>The monthly expense goes {precLabel} </span>
-        <span className={classNames(precCx, 'b')}>{Math.abs(diffPerc)}%</span>
-        <span> than the current month.</span>
-      </p>
+      {diffPerc !== 0 &&
+        <p className="mv2">
+          <span>The monthly expense goes {precLabel} </span>
+          <span className={classNames(precCx, 'b')}>{Math.abs(diffPerc)}%</span>
+          <span> than the current month.</span>
+        </p>}
     </div>
   )
 }
