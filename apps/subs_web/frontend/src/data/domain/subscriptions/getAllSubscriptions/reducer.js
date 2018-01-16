@@ -1,6 +1,7 @@
 import { OrderedSet, Map } from 'immutable'
 import { parseSubscription } from 'data/domain/subscriptions/Subscription'
 import RemoteCall, { parseErrorResponse } from 'data/domain/RemoteCall'
+import { GET_ALL_SUBSCRIPTIONS } from './action'
 
 const resetState = state =>
   state.set('remoteCall', new RemoteCall())
@@ -8,7 +9,9 @@ const resetState = state =>
     .set('entities', Map())
 
 const getAllSubscriptionsStarted = (state) => {
-  return resetState(state).setIn(['remoteCall', 'loading'], true)
+  return resetState(state)
+    .setIn(['remoteCall', 'loading'], true)
+    .setIn(['remoteCall', 'action'], GET_ALL_SUBSCRIPTIONS)
 }
 
 const getAllSubscriptionsSuccess = (state, { data, meta }) => {

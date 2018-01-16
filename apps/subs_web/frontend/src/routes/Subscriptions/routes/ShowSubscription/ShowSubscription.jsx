@@ -5,6 +5,7 @@ import { OrderedSet } from 'immutable'
 import colors from 'constants/colors'
 import RemoteCall from 'data/domain/RemoteCall'
 import Subscription from 'data/domain/subscriptions/Subscription'
+import { UPDATE_SUBSCRIPTION } from 'data/domain/subscriptions/updateSubscription/action'
 
 import Button from 'components/Button'
 import SubscriptionForm from 'components/SubscriptionForm'
@@ -18,9 +19,7 @@ const ShowSubscription = ({
   onArchiveClick,
   remoteCall,
 }) => {
-  if (!subscription) {
-    return (<p>Loading...</p>)
-  }
+  if (!subscription) { return null }
 
   const handleArchiveClick = (event) => {
     event.preventDefault()
@@ -39,21 +38,25 @@ const ShowSubscription = ({
         {subscription.name}
       </h3>
       <div className="pa3 br--bottom br2">
-        <SubscriptionForm
-          onClick={onClick}
-          onChange={onChange}
-          remoteCall={remoteCall}
-          subscription={data}
-          services={services}
-        >
-          <Button
-            className="SubscriptionListItem--archive-button"
-            onClick={handleArchiveClick}
-            color="red"
-          >
-            Archive
-          </Button>
-        </SubscriptionForm>
+        {remoteCall.isLoading(UPDATE_SUBSCRIPTION)
+          ? <p>Loading...</p>
+          : (
+            <SubscriptionForm
+              onClick={onClick}
+              onChange={onChange}
+              remoteCall={remoteCall}
+              subscription={data}
+              services={services}
+            >
+              <Button
+                className="SubscriptionListItem--archive-button"
+                onClick={handleArchiveClick}
+                color="red"
+              >
+                Archive
+              </Button>
+            </SubscriptionForm>
+         )}
       </div>
     </div>
   )

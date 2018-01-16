@@ -5,7 +5,7 @@ import { Map, OrderedSet } from 'immutable'
 
 import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import RemoteCall from 'data/domain/RemoteCall'
-import getAllSubscriptionsAction from 'data/domain/subscriptions/getAllSubscriptions/action'
+import getAllSubscriptionsAction, { GET_ALL_SUBSCRIPTIONS } from 'data/domain/subscriptions/getAllSubscriptions/action'
 import Subscriptions from './Subscriptions'
 
 class SubscriptionsContainer extends Component {
@@ -26,13 +26,13 @@ class SubscriptionsContainer extends Component {
 
     return (
       <div>
-        {children}
         <Subscriptions
           currentUser={currentUser}
           avgs={avgs}
           subscriptions={subscriptions}
-          remoteCall={remoteCall}
+          isLoading={remoteCall.isLoading(GET_ALL_SUBSCRIPTIONS)}
         />
+        {children}
       </div>
     )
   }
@@ -59,6 +59,7 @@ SubscriptionsContainer.propTypes = {
   avgs: PropTypes.instanceOf(Map).isRequired,
   subscriptions: PropTypes.instanceOf(OrderedSet).isRequired,
   remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
+  children: PropTypes.object,
 }
 
 export default connect(mapStateToProps)(SubscriptionsContainer)

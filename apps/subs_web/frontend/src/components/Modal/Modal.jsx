@@ -4,8 +4,6 @@ import ReactModal from 'react-modal'
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faTimesCircle from '@fortawesome/fontawesome-free-solid/faTimesCircle'
 
-import Button from 'components/Button'
-
 const styles = {
   overlay: {
     position: 'fixed',
@@ -13,7 +11,7 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
   },
   content: {
     position: 'absolute',
@@ -74,7 +72,7 @@ class Modal extends Component {
 }
 
 Modal.propTypes = {
-  children: PropTypes.array,
+  children: PropTypes.object,
   onClose: PropTypes.func,
 }
 

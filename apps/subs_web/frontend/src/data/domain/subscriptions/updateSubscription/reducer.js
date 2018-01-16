@@ -1,10 +1,13 @@
 import { parseSubscription } from 'data/domain/subscriptions/Subscription'
 import RemoteCall, { parseErrorResponse } from 'data/domain/RemoteCall'
+import { UPDATE_SUBSCRIPTION } from './action'
 
 const resetState = state => state.set('remoteCall', new RemoteCall())
 
 const updateSubscriptionStarted = (state) => {
-  return resetState(state).setIn(['remoteCall', 'loading'], true)
+  return resetState(state)
+    .setIn(['remoteCall', 'loading'], true)
+    .setIn(['remoteCall', 'action'], UPDATE_SUBSCRIPTION)
 }
 
 const updateSubscriptionSuccess = (state, { data }) => {

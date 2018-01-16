@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Map } from 'immutable'
 
-import RemoteCall from 'data/domain/RemoteCall'
 import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import SubscriptionsList from 'components/SubscriptionsList'
 import CurrentMonthStats from './CurrentMonthStats'
@@ -20,11 +19,11 @@ const Home = (props) => {
     month,
     prevMonth,
     nextMonth,
-    remoteCall,
     onNextMonthClick,
+    isLoading,
   } = props
 
-  if (remoteCall.loading) {
+  if (isLoading) {
     return (<p>Loading...</p>)
   }
 
@@ -67,8 +66,12 @@ Home.propTypes = {
   month: PropTypes.instanceOf(Map).isRequired,
   prevMonth: PropTypes.instanceOf(Map).isRequired,
   nextMonth: PropTypes.instanceOf(Map).isRequired,
-  remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
   onNextMonthClick: PropTypes.func,
+  isLoading: PropTypes.bool,
+}
+
+Home.defaultProps = {
+  isLoading: false,
 }
 
 export default Home

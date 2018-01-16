@@ -32,9 +32,6 @@ const App = ({ currentUser, onLogoutClick, children }) => {
               <div className="w-40">
                 <FontAwesomeIcon icon={faUserCircle} className="silver f4 fr" onClick={onLogoutClick} />
                 <FontAwesomeIcon icon={faCog} className="silver f4 fr mr4" />
-                <Link to={routes.subscriptionsNew} className="bg-subs-blue no-underline bn white pv2 ph3 br2 pointer dim">
-                  New payment
-                </Link>
               </div>
             </div>
             <div className="pa3-5">

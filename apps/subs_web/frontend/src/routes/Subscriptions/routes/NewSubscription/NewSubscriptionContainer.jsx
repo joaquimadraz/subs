@@ -59,7 +59,7 @@ class NewSubscriptionContainer extends Component {
   }
 
   handleModalClose() {
-    this.props.router.push(routes.subscriptions)
+    this.props.router.goBack()
   }
 
   render() {
@@ -72,9 +72,9 @@ class NewSubscriptionContainer extends Component {
         <NewSubscription
           services={services}
           subscription={newSubscription}
-          remoteCall={remoteCall}
           onClick={this.handleFormSubmit}
           onChange={this.handleFormChange}
+          remoteCall={remoteCall}
         />
       </Modal>
     )

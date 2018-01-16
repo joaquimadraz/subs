@@ -60,7 +60,7 @@ class ShowsSubscriptionContainer extends Component {
   }
 
   handleModalClose() {
-    this.props.router.push(routes.subscriptions)
+    this.props.router.goBack()
   }
 
   render() {
@@ -101,6 +101,7 @@ const mapStateToProps = (state, props) => {
 
 ShowsSubscriptionContainer.propTypes = {
   params: PropTypes.object,
+  router: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   remoteCall: PropTypes.instanceOf(RemoteCall),
   subscription: PropTypes.instanceOf(Subscription),

@@ -3,6 +3,7 @@ import { push } from 'react-router-redux'
 import api from 'data/api'
 import routes from 'constants/routes'
 
+const CREATE_SUBSCRIPTION = 'CREATE_SUBSCRIPTION'
 const CREATE_SUBSCRIPTION_STARTED = 'CREATE_SUBSCRIPTION_STARTED'
 const CREATE_SUBSCRIPTION_SUCCESS = 'CREATE_SUBSCRIPTION_SUCCESS'
 const CREATE_SUBSCRIPTION_FAILURE = 'CREATE_SUBSCRIPTION_FAILURE'
@@ -35,6 +36,7 @@ const createSubscription = (params = {}) =>
 export default createSubscription
 
 export {
+  CREATE_SUBSCRIPTION,
   CREATE_SUBSCRIPTION_STARTED,
   CREATE_SUBSCRIPTION_SUCCESS,
   CREATE_SUBSCRIPTION_FAILURE,

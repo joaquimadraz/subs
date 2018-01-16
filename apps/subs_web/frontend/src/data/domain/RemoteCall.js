@@ -6,12 +6,16 @@ const remoteCallObject = {
   data: null,
   message: null,
   error: false,
+  action: null,
 }
 
 const RemoteCallRecord = Record(remoteCallObject)
 
 class RemoteCall extends RemoteCallRecord {
   // Extend immutable js Record
+  isLoading(action) {
+    return this.loading && this.action === action
+  }
 }
 
 export function parseErrorResponse(object) {

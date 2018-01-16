@@ -7,7 +7,7 @@ import routes from 'constants/routes'
 import { now, parseFromISO8601, daysBetween } from 'utils/dt'
 import RemoteCall from 'data/domain/RemoteCall'
 import CurrentUser from 'data/domain/currentUser/CurrentUser'
-import getAllSubscriptionsAction from 'data/domain/subscriptions/getAllSubscriptions/action'
+import getAllSubscriptionsAction, { GET_ALL_SUBSCRIPTIONS } from 'data/domain/subscriptions/getAllSubscriptions/action'
 
 import Home from './Home'
 
@@ -105,8 +105,8 @@ class HomeContainer extends Component {
         nextMonth={nextMonth}
         currentUser={currentUser}
         subscriptions={subscriptions}
-        remoteCall={remoteCall}
         onNextMonthClick={this.handleNextMonthClick}
+        isLoading={remoteCall.isLoading(GET_ALL_SUBSCRIPTIONS)}
       />
     )
   }

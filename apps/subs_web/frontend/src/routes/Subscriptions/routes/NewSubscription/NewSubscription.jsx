@@ -5,6 +5,7 @@ import { OrderedSet } from 'immutable'
 import colors from 'constants/colors'
 import RemoteCall from 'data/domain/RemoteCall'
 import Subscription from 'data/domain/subscriptions/Subscription'
+import { CREATE_SUBSCRIPTION } from 'data/domain/subscriptions/createSubscription/action'
 
 import SubscriptionForm from 'components/SubscriptionForm'
 
@@ -19,6 +20,7 @@ const NewSubscription = ({
     return (<p>Loading services...</p>)
   }
 
+  const isLoading = remoteCall.isLoading(CREATE_SUBSCRIPTION)
   const textColor = colors.textColorForBg(subscription.color)
 
   return (
@@ -30,13 +32,17 @@ const NewSubscription = ({
         New Payment
       </h3>
       <div className="pa3 br--bottom br2">
-        <SubscriptionForm
-          onClick={onClick}
-          onChange={onChange}
-          remoteCall={remoteCall}
-          subscription={subscription}
-          services={services}
-        />
+        {isLoading
+          ? <p>Loading...</p>
+          : (
+            <SubscriptionForm
+              onClick={onClick}
+              onChange={onChange}
+              remoteCall={remoteCall}
+              subscription={subscription}
+              services={services}
+            />
+          )}
       </div>
     </div>
   )
@@ -44,10 +50,10 @@ const NewSubscription = ({
 
 NewSubscription.propTypes = {
   subscription: PropTypes.instanceOf(Subscription),
+  remoteCall: PropTypes.instanceOf(RemoteCall).isRequired,
+  services: PropTypes.instanceOf(OrderedSet).isRequired,
   onClick: PropTypes.func,
   onChange: PropTypes.func,
-  remoteCall: PropTypes.instanceOf(RemoteCall),
-  services: PropTypes.instanceOf(OrderedSet),
 }
 
 export default NewSubscription
