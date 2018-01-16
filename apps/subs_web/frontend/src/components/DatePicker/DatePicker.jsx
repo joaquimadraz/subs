@@ -8,6 +8,7 @@ import { SingleDatePicker } from 'react-dates'
 import { dateTimeFormat } from 'constants'
 import moment from 'moment'
 import { formatDateToISO8601, parseFromISO8601 } from 'utils/dt'
+import Styles from './Styles'
 
 class DatePicker extends Component {
   constructor() {
@@ -41,19 +42,21 @@ class DatePicker extends Component {
     const date = value ? moment(parseFromISO8601(value)) : moment()
 
     return (
-      <SingleDatePicker
-        date={date}
-        daySize={40}
-        numberOfMonths={1}
-        focused={focused}
-        onDateChange={(this.handleOnChange)}
-        onFocusChange={this.handleOnFocusChange}
-        /* Allow dates before today to be selected */
-        isOutsideRange={() => false}
-        /* Hide help button */
-        hideKeyboardShortcutsPanel
-        displayFormat={dateTimeFormat}
-      />
+      <Styles>
+        <SingleDatePicker
+          date={date}
+          daySize={40}
+          focused={focused}
+          onDateChange={(this.handleOnChange)}
+          onFocusChange={this.handleOnFocusChange}
+          /* Allow dates before today to be selected */
+          isOutsideRange={() => false}
+          /* Hide help button */
+          hideKeyboardShortcutsPanel
+          displayFormat={dateTimeFormat}
+          withPortal
+        />
+      </Styles>
     )
   }
 }
