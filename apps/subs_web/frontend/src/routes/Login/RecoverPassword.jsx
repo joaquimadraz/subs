@@ -27,13 +27,13 @@ const RecoverPassword = ({
   children,
 }) => {
   return (
-    <div id="recover-password-form" className="measure center pa3 bg-near-white br2">
+    <div id="recover-password-form" className="measure center pa3 bg-white br2 ba b--black shadow-5">
       {renderErrors(remoteCall)}
       {renderMessage(remoteCall)}
-      <legend className="f4 fw6 ph0 mh0 subs-pink-darker">Recover password</legend>
+      <legend className="f4 fw6 ph0 mh0 subs-blue ttu">Recover password</legend>
 
       <div className="mv3">
-        <div className="f5 b dark-gray mb2 mt3">
+        <div className="b dark-gray mb2 mt3">
           Email
         </div>
         <InputText

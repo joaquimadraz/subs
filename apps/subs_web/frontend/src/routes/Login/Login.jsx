@@ -26,12 +26,12 @@ const Login = ({
   }
 
   return (
-    <div id="login-form" className="measure center pa3 bg-near-white br2">
+    <div id="login-form" className="measure center pa3 bg-white br2 ba b--black shadow-5">
       {renderErrors(remoteCall)}
 
-      <legend className="f4 fw6 ph0 mh0 subs-pink-darker">Log in</legend>
+      <legend className="f4 fw6 ph0 mh0 subs-blue ttu">Log in</legend>
       <div className="mt3">
-        <div className="f5 b dark-gray mb2 mt3">
+        <div className="b dark-gray mb2 mt3">
           Email
         </div>
         <InputText
@@ -42,7 +42,7 @@ const Login = ({
         />
       </div>
       <div className="mv3">
-        <div className="f5 b dark-gray mb2 mt3">
+        <div className="b dark-gray mb2 mt3">
           Password
         </div>
         <InputText
@@ -57,11 +57,11 @@ const Login = ({
           Log in
         </Button>
       </div>
-      <div className="mv4 bb bw2 subs-pink" />
+      <div className="mv3 bb moon-gray" />
       <div className="lh-copy">
-        <span>{children}</span>
-        <span> or </span>
-        <Link className="link b dark-gray" to={routes.signup}>Sign up</Link>
+        <span className="v-mid">{children}</span>
+        <span className="mh2 dib v-mid gray">or</span>
+        <Link className="link b dark-gray v-mid" to={routes.signup}>Sign up</Link>
       </div>
     </div>
   )

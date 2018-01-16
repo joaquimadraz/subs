@@ -91,7 +91,7 @@ class LoginContainer extends Component {
         onChange={this.handleFormChange}
       >
         <button
-          className="bg-transparent pa0 bn dark-gray b pointer"
+          className="bg-transparent pa0 bn dark-gray pointer"
           onClick={this.setRecoverPassword}
         >
           Recover password

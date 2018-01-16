@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router'
 import { Map } from 'immutable'
 
+import routes from 'constants/routes'
 import RemoteCall from 'data/domain/RemoteCall'
 import ErrorMessages from 'components/ErrorMessages'
 import Button from 'components/Button'
@@ -41,11 +43,11 @@ const Signup = ({
   }
 
   return (
-    <div id="signup-form" className="measure center pa3 bg-near-white br2">
+    <div id="signup-form" className="measure center pa3 bg-white br2 ba b--black shadow-5">
       {renderErrors(remoteCall)}
-      <legend className="f4 fw6 ph0 mh0 subs-pink-darker">Sign up</legend>
+      <legend className="f4 fw6 ph0 mh0 subs-blue ttu">Sign up</legend>
       <div className="mt3">
-        <div className="f5 b dark-gray mb2 mt3">
+        <div className="b dark-gray mb2 mt3">
           Email
         </div>
         <InputText
@@ -56,7 +58,7 @@ const Signup = ({
         />
       </div>
       <div className="mt3">
-        <div className="f5 b dark-gray mb2 mt3">
+        <div className="b dark-gray mb2 mt3">
           Currency
         </div>
         <InputSelect
@@ -71,7 +73,7 @@ const Signup = ({
         />
       </div>
       <div className="mv3">
-        <div className="f5 b dark-gray mb2 mt3">
+        <div className="b dark-gray mb2 mt3">
           Password
         </div>
         <InputText
@@ -82,7 +84,7 @@ const Signup = ({
         />
       </div>
       <div className="mv3">
-        <div className="f5 b dark-gray mb2 mt3">
+        <div className="b dark-gray mb2 mt3">
           Password confirmation
         </div>
         <InputText
@@ -96,6 +98,8 @@ const Signup = ({
         <Button id="signup-btn" onClick={onClick}>
           Sign up
         </Button>
+        <span className="mh2 dib v-mid gray">or</span>
+        <Link className="link dark-gray v-mid" to={routes.login}>Log in</Link>
       </div>
     </div>
   )
