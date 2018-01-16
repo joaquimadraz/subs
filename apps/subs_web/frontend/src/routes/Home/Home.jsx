@@ -36,7 +36,7 @@ const Home = (props) => {
           month={month}
           prevMonth={prevMonth}
         />
-        <div className="br2 bg-white mt3-5 ba ph3-5 pv3 b--moon-gray">
+        <div className="br2 bg-white mt4 ba pa4 b--moon-gray">
           <SubscriptionsList
             subscriptions={month.get('subscriptions')}
             current

@@ -53,7 +53,7 @@ const Subscriptions = ({
           </div>
         </div>
       </div>
-      <div className="br2 bg-white mt3-5 ba ph3-5 pv3 b--moon-gray">
+      <div className="br2 bg-white mt4 ba ph4 pv4 b--moon-gray">
         <SubscriptionsList subscriptions={subscriptions} />
       </div>
     </div>

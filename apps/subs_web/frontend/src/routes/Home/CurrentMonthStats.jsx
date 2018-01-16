@@ -57,7 +57,7 @@ const CurrentMonthStats = ({ currentUser, currentDate, month, prevMonth }) => (
             currentTotal={month.get('total')}
             previousTotal={prevMonth.get('total')}
           />
-          <span className="f3 ma0 ttu mt1 v-mid ml3" style={{ color: '#1A173B' }}>
+          <span className="f3 ma0 ttu mt1 v-mid ml3 b" style={{ color: '#1A173B' }}>
             {currentUser.currencySymbol}{month.get('total')}
           </span>
         </div>

@@ -10,11 +10,13 @@ injectGlobal`
 export default styled('div') `
   .App--sidebar {
     background-color: #1C2237;
-    z-index: -1;
+  }
+
+  .App--content {
+    margin-left: 20%;
   }
 
   .App-top-bar {
-    z-index: -2;
     border-bottom-width: 2px;
     border-bottom-color: #EBEDF8;
   }

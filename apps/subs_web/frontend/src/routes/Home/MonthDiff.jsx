@@ -11,7 +11,7 @@ const MonthDiff = ({ currentUser, currentTotal, previousTotal }) => {
 
   const isPositive = diff < 0
 
-  const containerCx = classNames('f5 v-mid ml2', {
+  const containerCx = classNames('f5 v-mid ml2 b', {
     red: !isPositive,
     green: isPositive,
   })

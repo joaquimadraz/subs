@@ -12,7 +12,7 @@ const NavigationLink = ({
   className,
   index,
 }) => {
-  const defaultCx = 'db mv2 mh3-5 no-underline br2 relative tc'
+  const defaultCx = 'db mv2 mh2 mh4-l no-underline br2 relative tc'
   const cx = classNames(className, defaultCx, { active })
 
   return (
