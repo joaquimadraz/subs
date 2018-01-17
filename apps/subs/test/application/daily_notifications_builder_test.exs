@@ -34,12 +34,13 @@ defmodule Subs.Test.Application.DailyNotificationsBuilderTest do
              Hello,
 
              1 monthly payment is due tomorrow:
+
              Custom Service - £7.00
 
 
              See you later,
              Subs
-             """ |> String.replace("\n", "\r\n")
+             """
 
     # Only the 2018-01-01 subscription was assigned for the notification
     [assigned_subscription] = subs_notification.subscriptions
@@ -64,7 +65,9 @@ defmodule Subs.Test.Application.DailyNotificationsBuilderTest do
              Hello,
 
              2 monthly payments are due tomorrow:
+
              A - £7.00
+
              B - £7.00
 
 
@@ -73,7 +76,7 @@ defmodule Subs.Test.Application.DailyNotificationsBuilderTest do
 
              See you later,
              Subs
-             """ |> String.replace("\n", "\r\n")
+             """
   end
 
   test "creates multiple sub notifications for different users" do

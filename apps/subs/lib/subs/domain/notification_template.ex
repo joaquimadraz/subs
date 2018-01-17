@@ -27,7 +27,7 @@ defmodule Subs.Domain.NotificationTemplate do
       |> append_total(subscriptions, user.currency_symbol)
       |> append_new_line(3)
       |> append_good_bye()
-      |> freeze("\r\n")
+      |> freeze("\n")
 
     %__MODULE__{title: title, body: message}
   end
@@ -46,7 +46,7 @@ defmodule Subs.Domain.NotificationTemplate do
       |> append_payments(subscriptions, :full, user.currency_symbol)
       |> append_new_line(3)
       |> append_good_bye()
-      |> freeze("\r\n")
+      |> freeze("\n")
 
     %__MODULE__{title: title, body: message}
   end
@@ -64,7 +64,7 @@ defmodule Subs.Domain.NotificationTemplate do
       |> append_payments(subscriptions, :detail, user.currency_symbol)
       |> append_new_line(3)
       |> append_good_bye()
-      |> freeze("\r\n")
+      |> freeze("\n")
 
     %__MODULE__{title: title, body: message}
   end
@@ -126,7 +126,7 @@ defmodule Subs.Domain.NotificationTemplate do
   defp append_greeting(message), do: message ++ ["Hello,"]
 
   defp append_new_line(message, count) do
-    [message, Enum.map(0..(count - 1), fn _ -> "\r\n" end)]
+    [message, Enum.map(0..(count - 1), fn _ -> "\n" end)]
   end
 
   defp append_new_line_between_payments(message, [], _), do: message
@@ -179,11 +179,11 @@ defmodule Subs.Domain.NotificationTemplate do
   defp append_total(message, subscriptions, currency_symbol) do
     total = Enum.reduce(subscriptions, 0.0, fn subscription, acc -> acc + subscription.amount end)
 
-    [message, ["\r\n", ["\r\n", ["\r\n", ["Total - ", [Money.to_human_formated(total, currency_symbol)]]]]]]
+    [message, ["\n", ["\n", ["\n", ["Total - ", [Money.to_human_formated(total, currency_symbol)]]]]]]
   end
 
   defp append_good_bye(message) do
-    [message, ["See you later,", ["\r\n", ["Subs"]]]]
+    [message, ["See you later,", ["\n", ["Subs"]]]]
   end
 
   defp subscription_detail(subscription, :full, currency_symbol) do
@@ -205,7 +205,8 @@ defmodule Subs.Domain.NotificationTemplate do
 
   defp subscription_detail(subscription, :compact, currency_symbol) do
     [
-      "\r\n",
+      "\n",
+      "\n",
       [
         subscription.name,
         [" - ", [Money.to_human_formated(subscription.amount, currency_symbol)]]

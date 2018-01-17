@@ -23,12 +23,13 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Hello,
 
       1 monthly payment is due tomorrow:
+
       A - £9.99
 
 
       See you later,
       Subs
-      """ |> String.replace("\n", "\r\n")
+      """
 
       template = NotificationTemplate.build(:daily, user, subscriptions)
 
@@ -62,7 +63,9 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Hello,
 
       2 monthly payments are due tomorrow:
+
       A - £9.99
+
       B - £12.50
 
 
@@ -71,7 +74,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
       See you later,
       Subs
-      """ |> String.replace("\n", "\r\n")
+      """
 
       template = NotificationTemplate.build(:daily, user, subscriptions)
       assert template.title == expected_title
@@ -111,8 +114,11 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Hello,
 
       3 monthly payments are due tomorrow:
+
       A - £9.99
+
       B - £12.50
+
       C - £7.50
 
 
@@ -121,7 +127,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
       See you later,
       Subs
-      """ |> String.replace("\n", "\r\n")
+      """
 
       template = NotificationTemplate.build(:daily, user, subscriptions)
 
@@ -155,9 +161,11 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Hello,
 
       1 yearly payment is due tomorrow:
+
       A - £100.00
 
       1 monthly payment is due tomorrow:
+
       B - £9.99
 
 
@@ -166,7 +174,7 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
 
       See you later,
       Subs
-      """ |> String.replace("\n", "\r\n")
+      """
 
       template = NotificationTemplate.build(:daily, user, subscriptions)
 
@@ -196,12 +204,13 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Hello,
 
       Here are your payments for next week:
+
       B - £9.99, is due on Wednesday (2018-01-03)
 
 
       See you later,
       Subs
-      """ |> String.replace("\n", "\r\n")
+      """
 
       template = NotificationTemplate.build(:weekly, user, subscriptions)
 
@@ -237,13 +246,15 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Hello,
 
       Here are your payments for next week:
+
       A - £100.00, is due on Monday (2018-01-01)
+
       B - £9.99, is due on Wednesday (2018-01-03)
 
 
       See you later,
       Subs
-      """ |> String.replace("\n", "\r\n")
+      """
 
       template = NotificationTemplate.build(:weekly, user, subscriptions)
 
@@ -283,13 +294,15 @@ defmodule Subs.Test.Domain.NotificationTemplateTest do
       Next month you are spending £1200.00
 
       Here are your payments for next month:
+
       R - £1000.00, 2018-01-01
+
       I - £200.00, 2018-01-31
 
 
       See you later,
       Subs
-      """ |> String.replace("\n", "\r\n")
+      """
 
       template = NotificationTemplate.build(:monthly, user, subscriptions)
 
