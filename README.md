@@ -1,15 +1,15 @@
-# Subs [![Build Status](https://travis-ci.org/joaquimadraz/subs.svg?branch=master)](https://travis-ci.org/joaquimadraz/subs)
+# OpenSubs [![Build Status](https://travis-ci.org/joaquimadraz/subs.svg?branch=master)](https://travis-ci.org/joaquimadraz/subs)
 ## Track recurring bills and subscriptions :money_with_wings:
 
 I'm drafting some blog posts about the work done:
-- [Deploying-an-Elixir-Phoenix-app-to-AWS-ECS](https://github.com/joaquimadraz/subs/wiki/Deploying-an-Elixir-Phoenix-app-to-AWS-ECS-(WIP))
+- [Deploying-an-Elixir-Phoenix-app-to-AWS-ECS](https://github.com/joaquimadraz/opensubs.io/wiki/Deploying-an-Elixir-Phoenix-app-to-AWS-ECS-(WIP))
 
 ### Stack
 - Elixir backend
 - React frontend
 - PostgreSQL database
 
-### How to run Subs
+### How to run OpenSubs
 1. `mix deps.get`, to install dependencies
 2. `mix ecto.setup`, to create and migrate the database
 3. `cd apps/subs_web/frontend && yarn install`, to install frontend dependencies
