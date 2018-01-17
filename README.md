@@ -1,5 +1,8 @@
-# Subs (WIP) [![Build Status](https://travis-ci.org/joaquimadraz/subs.svg?branch=master)](https://travis-ci.org/joaquimadraz/subs)
+# Subs [![Build Status](https://travis-ci.org/joaquimadraz/subs.svg?branch=master)](https://travis-ci.org/joaquimadraz/subs)
 ## Track recurring bills and subscriptions :money_with_wings:
+
+I'm drafting some blog posts about the work done:
+- [Deploying-an-Elixir-Phoenix-app-to-AWS-ECS](https://github.com/joaquimadraz/subs/wiki/Deploying-an-Elixir-Phoenix-app-to-AWS-ECS-(WIP))
 
 ### Stack
 - Elixir backend
