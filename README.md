@@ -1,4 +1,4 @@
-# OpenSubs [![Build Status](https://travis-ci.org/joaquimadraz/opensubs.io.svg?branch=setup-travis-ci)](https://travis-ci.org/joaquimadraz/opensubs.io)
+# OpenSubs [![Build Status](https://travis-ci.org/joaquimadraz/opensubs.io.svg?branch=master)](https://travis-ci.org/joaquimadraz/opensubs.io)
 ## Track recurring bills and subscriptions :money_with_wings:
 
 I'm drafting some blog posts about the work done:
