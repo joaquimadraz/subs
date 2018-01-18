@@ -24,7 +24,7 @@ defmodule SubsWeb.Mixfile do
   def application do
     [
       mod: {SubsWeb.Application, []},
-      extra_applications: [:logger, :runtime_tools, :elixir_make]
+      extra_applications: [:logger, :runtime_tools, :elixir_make, :appsignal]
     ]
   end
 

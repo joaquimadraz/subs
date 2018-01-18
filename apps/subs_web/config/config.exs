@@ -15,8 +15,8 @@ config :subs_web, SubsWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "Dfm/Op55x+WSaLetz1BJ0CMaHNoeuRXV0UP238OH9FfTrsb/wop2dHaRmfW+i59y",
   render_errors: [view: SubsWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: SubsWeb.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: SubsWeb.PubSub, adapter: Phoenix.PubSub.PG2],
+  instrumenters: [Appsignal.Phoenix.Instrumenter]
 
 # Configures Elixir's Logger
 config :logger, :console,

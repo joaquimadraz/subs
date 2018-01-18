@@ -42,6 +42,7 @@ defmodule SubsWeb.Endpoint do
     key: "_subs_web_key",
     signing_salt: "gHcD7ZWY"
 
+  use Appsignal.Phoenix
   plug SubsWeb.Router
 
   @doc """
