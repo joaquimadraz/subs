@@ -5,5 +5,3 @@ config :subs, Subs.Scheduler,
     # Every midnight
     {"@daily", {Subs.Application.DailyNotificationsBuilder, :build, []}},
   ]
-
-import_config "prod.secret.exs"

@@ -8,7 +8,7 @@ config :notifier, Notifier.Scheduler,
 
 config :notifier, Notifier.Mailer,
   adapter: Bamboo.SendgridAdapter,
-  api_key: "my_api_key"
+  api_key: System.get_env("SENDGRID_API_KEY")
 
 config :notifier,
   :from_email, System.get_env("SUBS_ADMIN_EMAIL")
