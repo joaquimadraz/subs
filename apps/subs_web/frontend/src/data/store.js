@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router'
 import { loadingBarMiddleware } from 'react-redux-loading-bar'
 import rootReducer from './rootReducer'
 import initialState from './initialState'
+import errorHandler from './errorHandler'
 
 // For Redux Devtools:
 // https://github.com/zalmoxisus/redux-devtools-extension#12-advanced-store-setup
@@ -22,6 +23,7 @@ const initStore = () => createStore(
       loadingBarMiddleware({
         promiseTypeSuffixes: ['STARTED', 'SUCCESS', 'FAILURE'],
       }),
+      errorHandler,
     ),
   )
 )

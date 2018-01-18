@@ -9,4 +9,5 @@ export default {
   subscriptionsNew: '/payments/new',
   subscriptionsShow: subscriptionId => (`/payments/${subscriptionId}`),
   account: '/account',
+  notFound: '/404',
 }
