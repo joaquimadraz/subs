@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 
 import api from 'data/api'
+import routes from 'constants/routes'
 import { parseErrorResponse } from 'data/domain/RemoteCall'
 
 class ConfirmSignupContainer extends Component {
   constructor() {
     super()
 
-    this.state = { message: 'Confirming...' }
+    this.state = {
+      loading: true,
+      message: 'Confirming...',
+    }
   }
 
   componentDidMount() {
@@ -16,18 +21,27 @@ class ConfirmSignupContainer extends Component {
 
     api.postUsersConfirm({ t })
       .then(() => {
-        this.setState(() => ({ message: 'Account confirmed, ready to login' }))
+        this.setState(() => ({
+          loading: false,
+          message: 'Account confirmed, ready to login'
+        }))
       })
       .catch((error) => {
         const remoteCall = parseErrorResponse(error)
-        this.setState(() => ({ message: remoteCall.get('message') }))
+        this.setState(() => ({
+          loading: false,
+          message: remoteCall.get('message'),
+        }))
       })
   }
 
   render() {
+    const { loading, message } = this.state
+
     return (
       <div className="measure center pa3 bg-white br2 ba b--black shadow-5">
-        <p>{this.state.message}</p>
+        <p>{message}</p>
+        {!loading && <p>Go back <Link to={routes.root} className="white link subs-blue">home</Link></p>}
       </div>
     )
   }
