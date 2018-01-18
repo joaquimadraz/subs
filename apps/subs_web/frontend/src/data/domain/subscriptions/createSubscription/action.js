@@ -2,6 +2,7 @@ import { push } from 'react-router-redux'
 
 import api from 'data/api'
 import routes from 'constants/routes'
+import getAllSubscriptionsAction from '../getAllSubscriptions/action'
 
 const CREATE_SUBSCRIPTION = 'CREATE_SUBSCRIPTION'
 const CREATE_SUBSCRIPTION_STARTED = 'CREATE_SUBSCRIPTION_STARTED'
@@ -18,6 +19,7 @@ function handleCreateSuccess(dispatch, response) {
 
   dispatch({ type: CREATE_SUBSCRIPTION_SUCCESS, data, meta })
   dispatch(push(routes.subscriptions))
+  dispatch(getAllSubscriptionsAction())
 }
 
 function handleCreateFailure(dispatch, error) {

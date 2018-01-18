@@ -1,4 +1,8 @@
+import { push } from 'react-router-redux'
+
 import api from 'data/api'
+import routes from 'constants/routes'
+import getAllSubscriptionsAction from '../getAllSubscriptions/action'
 
 const UPDATE_SUBSCRIPTION = 'UPDATE_SUBSCRIPTION'
 const UPDATE_SUBSCRIPTION_STARTED = 'UPDATE_SUBSCRIPTION_STARTED'
@@ -13,6 +17,8 @@ function handleUpdateSuccess(dispatch, response) {
   const { data, meta } = response.data
 
   dispatch({ type: UPDATE_SUBSCRIPTION_SUCCESS, data, meta })
+  dispatch(push(routes.subscriptions))
+  dispatch(getAllSubscriptionsAction())
 }
 
 function handleUpdateFailure(dispatch, error) {

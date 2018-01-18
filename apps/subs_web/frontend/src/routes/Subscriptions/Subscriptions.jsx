@@ -30,13 +30,13 @@ const Subscriptions = ({
           <div className="moon-gray">
             <div className="fl mr4">
               <div>Avg. per month</div>
-              <div className="f3 ma0 ttu mt1 b subs-blue-darker">
+              <div className="Subscriptions--monthly-avg f3 ma0 ttu mt1 b subs-blue-darker">
                 {currentUser.currencySymbol}{avgs.get('monthly')}
               </div>
             </div>
             <div className="fl">
               <div>Avg. per year</div>
-              <div className="f3 ma0 ttu mt1 b subs-blue-darker">
+              <div className="Subscriptions--yearly-avg f3 ma0 ttu mt1 b subs-blue-darker">
                 {currentUser.currencySymbol}{avgs.get('yearly')}
               </div>
             </div>
