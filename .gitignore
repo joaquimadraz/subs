@@ -7,4 +7,4 @@ erl_crash.dump
 tmp
 rel/releases
 prod.secrets.exs
-docker-compose.yml
+config/ci/shipit.local.sh

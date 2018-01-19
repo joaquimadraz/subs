@@ -12,5 +12,3 @@ config :notifier, Notifier.Mailer,
 
 config :notifier,
   :from_email, System.get_env("SUBS_ADMIN_EMAIL")
-
-import_config "prod.secrets.exs"
