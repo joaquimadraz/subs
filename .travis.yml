@@ -18,6 +18,6 @@ before_script:
   - yarn global add chromedriver
   - mix compile
   - mix ecto.setup
-
-script:
   - mix test
+
+script: ./config/ci/shipit.sh
