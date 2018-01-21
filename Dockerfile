@@ -1,7 +1,11 @@
 # Alias this container as builder:
 FROM bitwalker/alpine-elixir-phoenix as builder
 
-WORKDIR /subs
+# Install aws cli
+RUN apk --no-cache update && \
+    apk --no-cache add python py-pip py-setuptools ca-certificates groff less && \
+    pip --no-cache-dir install awscli && \
+    rm -rf /var/cache/apk/*
 
 ARG HOST
 ARG ERLANG_COOKIE
@@ -14,6 +18,10 @@ ARG SESSION_COOKIE_NAME
 ARG SESSION_COOKIE_SIGNING_SALT
 ARG SESSION_COOKIE_ENCRYPTION_SALT
 ARG GUARDIAN_SECRET_KEY
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+ARG AWS_DEFAULT_REGION
+ARG OPENSUBS_S3_SECRETS_BUCKET
 
 ENV MIX_ENV=prod \
     SUBS_WEB_KEYKEY=/etc/letsencrypt/live/$HOST/privkey.pem \
@@ -30,10 +38,17 @@ ENV MIX_ENV=prod \
     SESSION_COOKIE_NAME=$SESSION_COOKIE_NAME \
     SESSION_COOKIE_SIGNING_SALT=$SESSION_COOKIE_SIGNING_SALT \
     SESSION_COOKIE_ENCRYPTION_SALT=$SESSION_COOKIE_ENCRYPTION_SALT \
-    GUARDIAN_SECRET_KEY=$GUARDIAN_SECRET_KEY
+    GUARDIAN_SECRET_KEY=$GUARDIAN_SECRET_KEY \
+    AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
+    OPENSUBS_S3_SECRETS_BUCKET=$OPENSUBS_S3_SECRETS_BUCKET
 
-# tmp where ssl files are
-COPY tmp tmp
+WORKDIR /subs
+
+# Copy ssl files into builder container tmp folder
+RUN mkdir tmp
+RUN aws s3 sync s3://$OPENSUBS_S3_SECRETS_BUCKET/ssl tmp
 
 # Umbrella
 COPY mix.exs mix.lock ./
@@ -77,9 +92,7 @@ ENV MIX_ENV=prod \
 # Dir where phoenix is looking for cert files. Default for letsencrypt
 WORKDIR /etc/letsencrypt/live/$HOST
 
-COPY --from=builder /subs/tmp/privkey.pem .
-COPY --from=builder /subs/tmp/chain.pem .
-COPY --from=builder /subs/tmp/cert.pem .
+COPY --from=builder /subs/tmp .
 
 WORKDIR /subs
 
