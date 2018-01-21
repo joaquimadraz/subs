@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "TRAVIS_BRANCH: ${TRAVIS_BRANCH}"
+echo "TRAVIS_PULL_REQUEST: ${TRAVIS_PULL_REQUEST}"
+
 # Check if merge to master
 if [ "${TRAVIS_BRANCH}" = master ] & [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   # Install AWS CLI
@@ -18,6 +21,10 @@ if [ "${TRAVIS_BRANCH}" = master ] & [ "${TRAVIS_PULL_REQUEST}" = "false" ]; the
     --build-arg SESSION_COOKIE_SIGNING_SALT=$SESSION_COOKIE_SIGNING_SALT \
     --build-arg SESSION_COOKIE_ENCRYPTION_SALT=$SESSION_COOKIE_ENCRYPTION_SALT \
     --build-arg GUARDIAN_SECRET_KEY=$GUARDIAN_SECRET_KEY \
+    --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
+    --build-arg OPENSUBS_S3_SECRETS_BUCKET=$OPENSUBS_S3_SECRETS_BUCKET \
     .
 
   # Tag docker image
