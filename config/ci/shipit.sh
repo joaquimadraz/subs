@@ -1,10 +1,7 @@
 #!/bin/bash
 
-echo "TRAVIS_BRANCH: ${TRAVIS_BRANCH}"
-echo "TRAVIS_PULL_REQUEST: ${TRAVIS_PULL_REQUEST}"
-
 # Check if merge to master
-if [ "${TRAVIS_BRANCH}" = master ] & [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
+if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
   # Install AWS CLI
   pip install --user awscli
 
