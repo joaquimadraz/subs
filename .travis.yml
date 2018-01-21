@@ -9,8 +9,12 @@ elixir:
 otp_release:
   - 20.0
 
+sudo: true
+
 services:
+  - docker
   - postgresql
+
 addons:
   postgresql: "9.6"
 
