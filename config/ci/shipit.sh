@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if merge to master
-if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
+# if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
   # Install AWS CLI
   pip install --user awscli
 
@@ -22,6 +22,7 @@ if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
     --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
     --build-arg AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
     --build-arg OPENSUBS_S3_SECRETS_BUCKET=$OPENSUBS_S3_SECRETS_BUCKET \
+    --build-arg DATABASE_URL=$DATABASE_URL \
     .
 
   # Tag docker image
@@ -40,7 +41,6 @@ if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
     -e 's/$AWS_ECS_URL/'$AWS_ECS_URL'/g' \
     -e 's/$AWS_ECS_DOCKER_IMAGE/'$AWS_ECS_DOCKER_IMAGE'/g' \
     -e 's/$AWS_ECS_CONTAINER_NAME/'$AWS_ECS_CONTAINER_NAME'/g' \
-    -e 's/$DATABASE_URL/'$DATABASE_URL'/g' \
     -e 's/$HOST/'$HOST'/g' \
     -e 's/$PORT/'$PORT'/g' \
     config/ci/docker-compose-prod.yml
@@ -58,4 +58,4 @@ if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
   ecs-cli compose \
     --file config/ci/docker-compose-prod.yml \
     --project-name "$AWS_ECS_PROJECT_NAME" service up
-fi
+# fi
