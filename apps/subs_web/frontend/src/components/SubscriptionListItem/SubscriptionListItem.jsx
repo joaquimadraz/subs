@@ -31,7 +31,6 @@ const SubscriptionListItem = ({ subscription, current }) => {
         </div>
         <div className="w-20 pa3 tc">
           <span className="SubscriptionListItem--next-bill-date">
-            { isDue ? <span>(Due) </span> : null}
             {current ? subscription.humanCurrentBillDate : subscription.humanNextBillDate}
           </span>
         </div>

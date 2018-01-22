@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Map } from 'immutable'
+import { Map, OrderedSet } from 'immutable'
+import classNames from 'classnames'
 
 import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import SubscriptionsList from 'components/SubscriptionsList'
@@ -27,6 +28,14 @@ const Home = (props) => {
     return (<p>Loading...</p>)
   }
 
+  const subscriptions = month.get('subscriptions').reduce((acc, subscription) => {
+    if (subscription.isCurrentDue) {
+      return acc.update('due', set => set.add(subscription))
+    }
+
+    return acc.update('next', set => set.add(subscription))
+  }, Map({ next: OrderedSet(), due: OrderedSet() }))
+
   const renderLoggedPage = () => {
     return (
       <div>
@@ -36,12 +45,32 @@ const Home = (props) => {
           month={month}
           prevMonth={prevMonth}
         />
-        <div className="br2 bg-white mt4 ba pa4 b--moon-gray">
-          <SubscriptionsList
-            subscriptions={month.get('subscriptions')}
-            current
-          />
-        </div>
+        {(subscriptions.get('next').size > 0 || month.get('subscriptions').size === 0) &&
+          <div className="NextSubscriptions br2 bg-white mt4 ba pa4 b--moon-gray">
+            <SubscriptionsList
+              subscriptions={subscriptions.get('next')}
+              current
+            />
+          </div>
+        }
+
+        {subscriptions.get('next').size > 0 && subscriptions.get('due').size > 0 &&
+          <div>
+            <span className="w-40 mv4 bb b--moon-gray o-20 v-mid dib" />
+            <span className="w-20 dib tc moon-gray">Due</span>
+            <span className="w-40 mv4 bb b--moon-gray o-20 v-mid dib" />
+          </div>
+        }
+
+        {subscriptions.get('due').size > 0 &&
+          <div className={classNames('DueSubscriptions br2 bg-white ba pa4 b--moon-gray', { mt4: subscriptions.get('next').size === 0 })}>
+            <SubscriptionsList
+              subscriptions={subscriptions.get('due')}
+              withHeader={subscriptions.get('next').size === 0}
+              current
+            />
+          </div>
+        }
         <NextMonthStats
           currentUser={currentUser}
           currentDate={currentDate}

@@ -86,7 +86,6 @@ class HomeContainer extends Component {
   render() {
     const {
       currentUser,
-      subscriptions,
       avgs,
       month,
       prevMonth,
@@ -104,7 +103,6 @@ class HomeContainer extends Component {
         prevMonth={prevMonth}
         nextMonth={nextMonth}
         currentUser={currentUser}
-        subscriptions={subscriptions}
         onNextMonthClick={this.handleNextMonthClick}
         isLoading={remoteCall.isLoading(GET_ALL_SUBSCRIPTIONS)}
       />
@@ -115,17 +113,12 @@ class HomeContainer extends Component {
 const mapStateToProps = (state) => {
   const { subscriptions, currentUser } = state
 
-  const subscriptionsRecords = subscriptions.get('ids').map(id => (
-    subscriptions.getIn(['entities', id])
-  ))
-
   return {
     avgs: subscriptions.get('avgs'),
     month: subscriptions.get('month'),
     prevMonth: subscriptions.get('prevMonth'),
     nextMonth: subscriptions.get('nextMonth'),
     currentUser,
-    subscriptions: subscriptionsRecords,
     remoteCall: subscriptions.get('remoteCall'),
   }
 }
@@ -135,7 +128,6 @@ HomeContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   currentUser: PropTypes.instanceOf(CurrentUser).isRequired,
-  subscriptions: PropTypes.instanceOf(OrderedSet).isRequired,
   avgs: PropTypes.instanceOf(Map).isRequired,
   month: PropTypes.instanceOf(Map).isRequired,
   prevMonth: PropTypes.instanceOf(Map).isRequired,

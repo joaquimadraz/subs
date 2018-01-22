@@ -6,14 +6,14 @@ import SubscriptionListItem from 'components/SubscriptionListItem'
 import routes from 'constants/routes'
 
 const renderNoPayments = () => (
-  <p className="b silver tc">
+  <p className="no-payments-cta b silver tc">
     <span>You have no payments. Click </span>
     <Link to={routes.subscriptionsNew} className="subs-blue">here</Link>
     <span> to add one.</span>
   </p>
 )
 
-const SubscriptionsList = ({ subscriptions, current }) => {
+const SubscriptionsList = ({ subscriptions, current, withHeader }) => {
   const renderSubscriptionItem = subscription => (
     <SubscriptionListItem
       key={subscription.id}
@@ -24,15 +24,19 @@ const SubscriptionsList = ({ subscriptions, current }) => {
 
   const renderSubscriptionsList = () => (
     <div>
-      <div className="flex">
-        <div className="w-30 w-40-l moon-gray">Payment</div>
-        <div className="w-20 moon-gray tc">Cycle</div>
-        <div className="w-20 moon-gray tc">
-          {current ? 'Bill date' : 'Next bill date'}
+      {withHeader &&
+        <div>
+          <div className="header flex">
+            <div className="w-30 w-40-l moon-gray">Payment</div>
+            <div className="w-20 moon-gray tc">Cycle</div>
+            <div className="w-20 moon-gray tc">
+              {current ? 'Bill date' : 'Next bill date'}
+            </div>
+            <div className="w-30 w-20-l moon-gray tr">Amount</div>
+          </div>
+          <div className="mv3 bb b--near-white" />
         </div>
-        <div className="w-30 w-20-l moon-gray tr">Amount</div>
-      </div>
-      <div className="mv3 bb b--near-white" />
+      }
       <ul className="pl0 ma0">
         {subscriptions.map(renderSubscriptionItem)}
       </ul>
@@ -52,11 +56,13 @@ const SubscriptionsList = ({ subscriptions, current }) => {
 
 SubscriptionsList.propTypes = {
   subscriptions: PropTypes.instanceOf(OrderedSet).isRequired,
-  current: PropTypes.bool.isRequired,
+  current: PropTypes.bool,
+  withHeader: PropTypes.bool,
 }
 
 SubscriptionsList.defaultProps = {
   current: false,
+  withHeader: true,
 }
 
 export default SubscriptionsList

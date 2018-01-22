@@ -97,6 +97,7 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           First bill
         </div>
         <DatePicker
+          className="subscription-first-bill-date"
           value={subscription.first_bill_date}
           onChange={date => onChange('first_bill_date', date)}
         />
@@ -158,6 +159,7 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           First bill
         </div>
         <DatePicker
+          className="subscription-first-bill-date"
           value={subscription.first_bill_date}
           onChange={date => onChange('first_bill_date', date)}
         />
