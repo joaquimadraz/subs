@@ -5,7 +5,14 @@ import { dateTimeFormat, monthYearFormat } from 'constants'
 
 const timezone = 'Europe/London'
 
+const nowMock = () => {
+  // Same now as DTMock: subs/apps/subs/test/support/dt_mock.ex
+  return moment('2017-08-06T09:00:00Z').tz(timezone).toDate()
+}
+
 const now = () => {
+  if (process.env.NODE_ENV === 'acceptance') { return nowMock() }
+
   return moment.utc().tz(timezone).toDate()
 }
 

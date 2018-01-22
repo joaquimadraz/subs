@@ -6,24 +6,37 @@ import PropTypes from 'prop-types'
 import { SingleDatePicker } from 'react-dates'
 
 import { dateTimeFormat } from 'constants'
-import moment from 'moment'
-import { formatDateToISO8601, parseFromISO8601 } from 'utils/dt'
+import { formatDateToISO8601, toMoment } from 'utils/dt'
 import Styles from './Styles'
 
+// TODO:
+// Remove this after finding alternative for changing picker value on acceptance test.
+// If using portal (modal) is not possible to set date value.
+const withDatePickerPortal = process.env.NODE_ENV !== 'acceptance'
+
 class DatePicker extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.handleOnChange = this.handleOnChange.bind(this)
     this.handleOnFocusChange = this.handleOnFocusChange.bind(this)
 
     this.state = {
       focused: false,
+      date: props.value ? toMoment(props.value) : toMoment(),
     }
   }
 
-  handleOnChange(date) {
-    this.props.onChange(formatDateToISO8601(date.startOf('day')))
+  handleOnChange(newDate) {
+    // newDate may be null if we edit the input manually. eg. acceptance test.
+    // It's set as a moment date when we write a valid date
+    if (!newDate) {
+      this.setState({ date: null })
+      return
+    }
+
+    this.props.onChange(formatDateToISO8601(newDate.startOf('day')))
+    this.setState({ date: newDate })
   }
 
   handleOnFocusChange() {
@@ -37,12 +50,11 @@ class DatePicker extends Component {
   }
 
   render() {
-    const { focused } = this.state
-    const { value } = this.props
-    const date = value ? moment(parseFromISO8601(value)) : moment()
+    const { focused, date } = this.state
+    const { className } = this.props
 
     return (
-      <Styles>
+      <Styles className={className}>
         <SingleDatePicker
           date={date}
           daySize={40}
@@ -54,7 +66,8 @@ class DatePicker extends Component {
           /* Hide help button */
           hideKeyboardShortcutsPanel
           displayFormat={dateTimeFormat}
-          withPortal
+          readOnly={false}
+          withPortal={withDatePickerPortal}
         />
       </Styles>
     )
@@ -63,9 +76,11 @@ class DatePicker extends Component {
 
 DatePicker.defaultProps = {
   onChange: () => {},
+  className: '',
 }
 
 DatePicker.propTypes = {
+  className: PropTypes.string,
   onChange: PropTypes.func,
   value: PropTypes.string,
 }

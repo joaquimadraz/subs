@@ -1,3 +1,3 @@
 cd frontend
 yarn install
-node_modules/.bin/webpack --config webpack.config.js
+NODE_ENV=acceptance node_modules/.bin/webpack --config webpack.config.js
