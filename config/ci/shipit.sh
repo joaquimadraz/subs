@@ -1,9 +1,13 @@
 #!/bin/bash
 
 # Check if merge to master
-# if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
+if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
   # Install AWS CLI
   pip install --user awscli
+
+  # Install AWS ECS CLI
+  sudo curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest
+  sudo chmod +x /usr/local/bin/ecs-cli
 
   # Build container
   docker build -t $AWS_ECS_CONTAINER_NAME \
@@ -58,4 +62,4 @@
   ecs-cli compose \
     --file config/ci/docker-compose-prod.yml \
     --project-name "$AWS_ECS_PROJECT_NAME" service up
-# fi
+fi
