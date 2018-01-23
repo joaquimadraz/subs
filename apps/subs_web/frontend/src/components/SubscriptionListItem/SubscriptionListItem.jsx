@@ -1,18 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
+import classNames from 'classnames'
 
 import routes from 'constants/routes'
 import colors from 'constants/colors'
 import Subscription from 'data/domain/subscriptions/Subscription'
 import Styles from './Styles'
 
-const SubscriptionListItem = ({ subscription, current }) => {
+const SubscriptionListItem = ({ subscription, current, last }) => {
   const isDue = current && subscription.isCurrentDue
+  const cx = classNames('SubscriptionListItem br2', { mb2: !last })
 
   return (
     <Styles
-      className="SubscriptionListItem mb2 list br2"
+      className={cx}
       background={isDue ? colors.disabled.bg : subscription.color}
       textColor={isDue ? colors.disabled.text : subscription.textColor}
     >
@@ -47,10 +49,12 @@ const SubscriptionListItem = ({ subscription, current }) => {
 SubscriptionListItem.propTypes = {
   subscription: PropTypes.instanceOf(Subscription).isRequired,
   current: PropTypes.bool,
+  last: PropTypes.bool,
 }
 
 SubscriptionListItem.defaultProps = {
   current: false,
+  last: false,
 }
 
 export default SubscriptionListItem

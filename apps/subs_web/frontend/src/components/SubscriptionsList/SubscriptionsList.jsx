@@ -6,17 +6,18 @@ import SubscriptionListItem from 'components/SubscriptionListItem'
 const SubscriptionsList = ({ subscriptions, current, withHeader }) => {
   if (subscriptions.size === 0) { return null }
 
-  const renderSubscriptionItem = subscription => (
+  const renderSubscriptionItem = (subscription, index) => (
     <SubscriptionListItem
       key={subscription.id}
       subscription={subscription}
       current={current}
+      last={index === subscriptions.size - 1}
     />
   )
 
   return (
     <div
-      className="SubscriptionList mb2 list"
+      className="SubscriptionList"
     >
       <div>
         {withHeader &&
@@ -32,8 +33,8 @@ const SubscriptionsList = ({ subscriptions, current, withHeader }) => {
             <div className="mv3 bb b--near-white" />
           </div>
         }
-        <ul className="pl0 ma0">
-          {subscriptions.map(renderSubscriptionItem)}
+        <ul className="pl0 ma0 list">
+          {subscriptions.toIndexedSeq().map(renderSubscriptionItem)}
         </ul>
       </div>
     </div>
