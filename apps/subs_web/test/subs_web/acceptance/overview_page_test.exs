@@ -6,7 +6,7 @@ defmodule SubsWeb.Test.Acceptance.OverviewPageTest do
     assert_signup_and_login_user: 1,
   ]
 
-  @tag :accpetance
+  @tag :acceptance
   test "renders add new payment message and hides due section", %{session: session} do
     session
     |> assert_signup_and_login_user()
@@ -14,6 +14,16 @@ defmodule SubsWeb.Test.Acceptance.OverviewPageTest do
     |> assert_has_no_table_headers(".NextSubscriptions")
     |> assert_has(css(".no-payments-cta", with: "You have no payments. Click here to add one."))
     |> assert_has(css(".DueSubscriptions", count: 0))
+  end
+
+  @tag :acceptance
+  test "renders current month and total", %{session: session} do
+    session
+    |> assert_signup_and_login_user()
+    |> visit("/")
+    |> assert_has(css(".CurrentMonthStats--year", text: "2017"))
+    |> assert_has(css(".CurrentMonthStats--month", text: "AUGUST"))
+    |> assert_has(css(".CurrentMonthStats--total", text: "£0"))
   end
 
   @tag :acceptance

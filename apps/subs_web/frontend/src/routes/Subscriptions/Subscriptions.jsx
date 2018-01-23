@@ -6,6 +6,7 @@ import { Map, OrderedSet } from 'immutable'
 import routes from 'constants/routes'
 import CurrentUser from 'data/domain/currentUser/CurrentUser'
 import SubscriptionsList from 'components/SubscriptionsList'
+import NoSubscriptions from 'components/NoSubscriptions'
 
 const Subscriptions = ({
   currentUser,
@@ -52,7 +53,11 @@ const Subscriptions = ({
         </div>
       </div>
       <div className="br2 bg-white mt4 ba ph4 pv4 b--moon-gray">
-        <SubscriptionsList subscriptions={subscriptions} />
+        {
+          subscriptions.size === 0
+            ? <NoSubscriptions />
+            : <SubscriptionsList subscriptions={subscriptions} />
+        }
       </div>
     </div>
   )

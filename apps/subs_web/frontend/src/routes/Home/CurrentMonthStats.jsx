@@ -12,8 +12,8 @@ const CurrentMonthStats = ({ currentUser, currentDate, month, prevMonth }) => (
     <div className="flex ph2">
       <div className="flex-auto">
         <div className="moon-gray">
-          <div>{formatDate(currentDate, 'YYYY')}</div>
-          <h3 className="f3 ma0 ttu mt1 subs-blue-darker">
+          <div className="CurrentMonthStats--year">{formatDate(currentDate, 'YYYY')}</div>
+          <h3 className="CurrentMonthStats--month f3 ma0 ttu mt1 subs-blue-darker">
             {formatDate(currentDate, 'MMMM')}
           </h3>
         </div>
@@ -26,7 +26,7 @@ const CurrentMonthStats = ({ currentUser, currentDate, month, prevMonth }) => (
             currentTotal={month.get('total')}
             previousTotal={prevMonth.get('total')}
           />
-          <span className="f3 ma0 ttu mt1 v-mid ml3 b subs-blue-darker">
+          <span className="CurrentMonthStats--total f3 ma0 ttu mt1 v-mid ml3 b subs-blue-darker">
             {currentUser.currencySymbol}{month.get('total')}
           </span>
         </div>
