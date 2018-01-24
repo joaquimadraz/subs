@@ -108,17 +108,53 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           />
         </div>
         <div className="b dark-gray mb2 mt3">
-          Type
+          Payment from
         </div>
-        <select
-          style={{ height: 35 }}
-          className="subscription-type"
-          onChange={event => handleChange(event, 'type')}
-          value={subscription.type}
-        >
-          <option value="credit_card">Credit Card</option>
-          <option value="bank_accout">Bank Account</option>
-        </select>
+
+        <label htmlFor="payment-type-none" className="mr2 gray">
+          <input
+            type="radio"
+            className="subscription-type mr1"
+            id="payment-type-none"
+            name="payment-type"
+            checked={!subscription.type}
+            onChange={() => onChange('type', null)}
+          />
+          N/A
+        </label>
+        <label htmlFor="payment-type-cc" className="mr2 gray">
+          <input
+            type="radio"
+            className="subscription-type mr1"
+            id="payment-type-cc"
+            name="payment-type"
+            checked={subscription.type === 'credit_card'}
+            onChange={() => onChange('type', 'credit_card')}
+          />
+          Credit Card
+        </label>
+        <label htmlFor="payment-type-dc" className="mr2 gray">
+          <input
+            type="radio"
+            className="subscription-type mr1"
+            id="payment-type-dc"
+            name="payment-type"
+            checked={subscription.type === 'debit_card'}
+            onChange={() => onChange('type', 'debit_card')}
+          />
+          Credit Card
+        </label>
+        <label htmlFor="payment-type-ba" className="mr2 gray">
+          <input
+            type="radio"
+            className="subscription-type mr1"
+            id="payment-type-ba"
+            name="payment-type"
+            checked={subscription.type === 'bank_account'}
+            onChange={() => onChange('type', 'bank_account')}
+          />
+          Bank Account
+        </label>
       </div>
     )
   }
