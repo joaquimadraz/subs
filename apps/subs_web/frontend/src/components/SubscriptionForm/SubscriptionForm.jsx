@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import RemoteCall from 'data/domain/RemoteCall'
 import Subscription from 'data/domain/subscriptions/Subscription'
 import colors from 'constants/colors'
+import paymentTypes from 'constants/paymentTypes'
 
 import ErrorMessages from 'components/ErrorMessages'
 import ColorPicker from 'components/ColorPicker'
@@ -14,6 +15,7 @@ import Button from 'components/Button'
 import InputText from 'components/InputText'
 import InputNumber from 'components/InputNumber'
 import InputSelect from 'components/InputSelect'
+import InputRadio from 'components/InputRadio'
 
 const renderErrors = (remoteCall) => {
   if (remoteCall.loading || !remoteCall.data) { return null }
@@ -48,6 +50,7 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
   }
 
   const servicesOptions = buildServiceOptions(services)
+  const paymentTypesOptions = [{ label: 'N/A', value: null }].concat(paymentTypes)
 
   const renderCustomServiceForm = () => {
     return (
@@ -110,51 +113,13 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
         <div className="b dark-gray mb2 mt3">
           Payment from
         </div>
-
-        <label htmlFor="payment-type-none" className="mr2 gray">
-          <input
-            type="radio"
-            className="subscription-type mr1"
-            id="payment-type-none"
-            name="payment-type"
-            checked={!subscription.type}
-            onChange={() => onChange('type', null)}
-          />
-          N/A
-        </label>
-        <label htmlFor="payment-type-cc" className="mr2 gray">
-          <input
-            type="radio"
-            className="subscription-type mr1"
-            id="payment-type-cc"
-            name="payment-type"
-            checked={subscription.type === 'credit_card'}
-            onChange={() => onChange('type', 'credit_card')}
-          />
-          Credit Card
-        </label>
-        <label htmlFor="payment-type-dc" className="mr2 gray">
-          <input
-            type="radio"
-            className="subscription-type mr1"
-            id="payment-type-dc"
-            name="payment-type"
-            checked={subscription.type === 'debit_card'}
-            onChange={() => onChange('type', 'debit_card')}
-          />
-          Credit Card
-        </label>
-        <label htmlFor="payment-type-ba" className="mr2 gray">
-          <input
-            type="radio"
-            className="subscription-type mr1"
-            id="payment-type-ba"
-            name="payment-type"
-            checked={subscription.type === 'bank_account'}
-            onChange={() => onChange('type', 'bank_account')}
-          />
-          Bank Account
-        </label>
+        <InputRadio
+          name="type"
+          className="subscription-type mr1"
+          options={paymentTypesOptions}
+          value={subscription.type}
+          onChange={onChange}
+        />
       </div>
     )
   }
@@ -212,16 +177,15 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           onChange={date => onChange('first_bill_date', date)}
         />
         <div className="b dark-gray mb2 mt3">
-          Type
+          Payment from
         </div>
-        <select
-          style={{ height: 35 }}
-          className="subscription-type"
-          onChange={event => handleChange(event, 'type')}
+        <InputRadio
+          name="type"
+          className="subscription-type mr1"
+          options={paymentTypesOptions}
           value={subscription.type}
-        >
-          <option value="credit_card">Credit Card</option>
-        </select>
+          onChange={onChange}
+        />
       </div>
     )
   }
