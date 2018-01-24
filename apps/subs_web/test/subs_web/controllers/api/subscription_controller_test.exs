@@ -387,7 +387,7 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
              }
     end
 
-    test "Updates subscription and returns ok", %{conn: conn, user: user} do
+    test "updates subscription name and returns ok", %{conn: conn, user: user} do
       subscription = insert(:complete_subscription, user_id: user.id)
 
       conn =
@@ -400,6 +400,39 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
       assert %{"data" => data} = json_response(conn, 200)
       assert data["id"] == subscription.id
       assert data["name"] == "Updated"
+    end
+
+    test "updates subscription type and returns error for invalid type", %{conn: conn, user: user} do
+      subscription = insert(:complete_subscription, user_id: user.id)
+
+      conn =
+        patch(
+          conn,
+          api_subscription_path(conn, :update, subscription.id),
+          subscription: %{"type" => "invalid"}
+        )
+
+      assert %{"data" => data} = json_response(conn, 422)
+
+      assert data["errors"] == %{
+        "type" => ["must be one of: credit card, debit card, bank account"]
+      }
+    end
+
+    test "updates subscription type and returns ok", %{conn: conn, user: user} do
+      subscription = insert(:complete_subscription, user_id: user.id)
+
+      conn =
+        patch(
+          conn,
+          api_subscription_path(conn, :update, subscription.id),
+          subscription: %{"type" => "bank_account"}
+        )
+
+      assert %{"data" => data} = json_response(conn, 200)
+
+      assert data["type"] == "bank_account"
+      assert data["type_description"] == "Bank Account"
     end
   end
 end

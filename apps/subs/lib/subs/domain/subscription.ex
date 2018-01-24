@@ -63,6 +63,8 @@ defmodule Subs.Subscription do
     first_bill_date
     next_bill_date
     archived
+    type
+    type_description
   )
 
   @currency_codes Money.currency_codes()
@@ -126,17 +128,19 @@ defmodule Subs.Subscription do
     |> populate_type_description()
   end
 
-  defp populate_type_description(changeset = %{changeset: %{type_description: nil}}) do
-    case get_change(changeset, :type) do
-      nil -> changeset
-      "credit_card" -> put_change(changeset, :type_description, "Credit Card")
-      "debit_card" -> put_change(changeset, :type_description, "Debit Card")
-      "bank_account" -> put_change(changeset, :type_description, "Bank Account")
+  defp populate_type_description(changeset) do
+    case get_change(changeset, :type_description) do
+      nil ->
+        case get_change(changeset, :type) do
+          nil -> changeset
+          "credit_card" -> put_change(changeset, :type_description, "Credit Card")
+          "debit_card" -> put_change(changeset, :type_description, "Debit Card")
+          "bank_account" -> put_change(changeset, :type_description, "Bank Account")
+          _ -> changeset
+        end
       _ -> changeset
     end
   end
-
-  defp populate_type_description(changeset), do: changeset
 
   defp sanitize_color(changeset, :create) do
     case get_change(changeset, :color) do
