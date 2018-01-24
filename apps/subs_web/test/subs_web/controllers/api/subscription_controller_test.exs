@@ -261,8 +261,51 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
                "color" => "#36DD30",
                "first_bill_date" => "2017-07-06T09:00:00Z",
                "next_bill_date" => "2017-08-06T09:00:00Z",
-               "service_code" => nil
+               "service_code" => nil,
+               "type" => nil,
+               "type_description" => nil
              }
+    end
+
+    test "returns unprocessable entity for invalid payment type", %{conn: conn} do
+      conn =
+        post(
+          conn,
+          api_subscription_path(conn, :create),
+          subscription: %{
+            "name" => "Custom Service",
+            "amount" => "7.99",
+            "amount_currency" => "GBP",
+            "cycle" => "monthly",
+            "type" => "invalid"
+          }
+        )
+
+      assert data = json_response(conn, 422)
+
+      assert data["data"]["errors"] == %{
+        "type" => ["must be one of: credit card, debit card, bank account"]
+      }
+    end
+
+    test "creates subscription with type", %{conn: conn} do
+      conn =
+        post(
+          conn,
+          api_subscription_path(conn, :create),
+          subscription: %{
+            "name" => "Custom Service",
+            "amount" => "7.99",
+            "amount_currency" => "GBP",
+            "cycle" => "monthly",
+            "type" => "credit_card",
+          }
+        )
+
+      assert data = json_response(conn, 201)
+
+      assert data["data"]["type"] == "credit_card"
+      assert data["data"]["type_description"] == "Credit Card"
     end
   end
 
