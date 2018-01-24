@@ -23,12 +23,13 @@ const SubscriptionsList = ({ subscriptions, current, withHeader }) => {
         {withHeader &&
           <div>
             <div className="header flex">
-              <div className="w-30 w-40-l moon-gray">Payment</div>
+              <div className="w-40 moon-gray">Payment</div>
               <div className="w-20 moon-gray tc">Cycle</div>
               <div className="w-20 moon-gray tc">
                 {current ? 'Bill date' : 'Next bill date'}
               </div>
-              <div className="w-30 w-20-l moon-gray tr">Amount</div>
+              <div className="w-10 moon-gray tc">Type</div>
+              <div className="w-10 moon-gray tr">Amount</div>
             </div>
             <div className="mv3 bb b--near-white" />
           </div>

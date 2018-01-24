@@ -5,6 +5,10 @@ import styled from 'react-emotion'
 export default styled('li') `
   background: ${props => props.background || 'none'};
 
+  & :hover {
+    opacity: 0.8;
+  }
+
   a {
     color: ${props => props.textColor || '#000'};
   }

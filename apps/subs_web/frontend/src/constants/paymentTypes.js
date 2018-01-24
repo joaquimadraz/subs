@@ -1,14 +1,18 @@
-export default [
+export const CARD = 'card'
+export const DIRECT_DEBIT = 'direct_debit'
+export const OTHER = 'other'
+
+export const options = [
   {
     label: 'Card',
-    value: 'card',
+    value: CARD,
   },
   {
     label: 'Direct Debit',
-    value: 'direct_debit',
+    value: DIRECT_DEBIT,
   },
   {
     label: 'Other',
-    value: 'other',
+    value: OTHER,
   },
 ]

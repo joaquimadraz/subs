@@ -89,7 +89,7 @@ defmodule SubsWeb.Test.Acceptance.SubscriptionsNewTest do
     |> click(css("#type-card"))
     |> click(css("#subscription-form button[type=\"submit\"]"))
     |> visit("/payments")
-    |> assert_has(css(".SubscriptionListItem--type--description", text: "Card"))
+    |> assert_has(css(".SubscriptionListItem--type-description[title='Card']", count: 1))
     |> visit("/payments/new")
     |> assert_has(css("#subscription-form"))
     |> fill_in(css("#subscription-form .subscription-name"), with: "Spotify")
@@ -97,7 +97,7 @@ defmodule SubsWeb.Test.Acceptance.SubscriptionsNewTest do
     |> click(css("#type-direct_debit"))
     |> click(css("#subscription-form button[type=\"submit\"]"))
     |> visit("/payments")
-    |> assert_has(css(".SubscriptionListItem--type--description", text: "Direct Debit"))
+    |> assert_has(css(".SubscriptionListItem--type-description[title='Direct Debit']", count: 1))
   end
 
   @tag :acceptance
@@ -112,6 +112,6 @@ defmodule SubsWeb.Test.Acceptance.SubscriptionsNewTest do
     |> fill_in(css("#subscription-form .subscription-type-description"), with: "HSBC")
     |> click(css("#subscription-form button[type=\"submit\"]"))
     |> visit("/payments")
-    |> assert_has(css(".SubscriptionListItem--type--description", text: "HSBC"))
+    |> assert_has(css(".SubscriptionListItem--type-description[title='HSBC']", count: 1))
   end
 end

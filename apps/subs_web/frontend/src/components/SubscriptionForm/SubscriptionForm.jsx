@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import RemoteCall from 'data/domain/RemoteCall'
 import Subscription from 'data/domain/subscriptions/Subscription'
 import colors from 'constants/colors'
-import paymentTypes from 'constants/paymentTypes'
+import { options as paymentTypes } from 'constants/paymentTypes'
 
 import ErrorMessages from 'components/ErrorMessages'
 import ColorPicker from 'components/ColorPicker'
