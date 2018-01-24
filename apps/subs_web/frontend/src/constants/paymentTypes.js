@@ -1,14 +1,14 @@
 export default [
   {
-    label: 'Bank Account',
-    value: 'bank_account',
+    label: 'Card',
+    value: 'card',
   },
   {
-    label: 'Credit Card',
-    value: 'credit_card',
+    label: 'Direct Debit',
+    value: 'direct_debit',
   },
   {
-    label: 'Debit Card',
-    value: 'debit_card',
+    label: 'Other',
+    value: 'other',
   },
 ]

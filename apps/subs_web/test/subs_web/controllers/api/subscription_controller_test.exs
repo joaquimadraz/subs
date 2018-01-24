@@ -284,7 +284,29 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
       assert data = json_response(conn, 422)
 
       assert data["data"]["errors"] == %{
-        "type" => ["must be one of: credit card, debit card, bank account"]
+        "type" => ["must be one of: card, direct debit, other"]
+      }
+    end
+
+    test "returns unprocessable entity for missing type description for type other", %{conn: conn} do
+      conn =
+        post(
+          conn,
+          api_subscription_path(conn, :create),
+          subscription: %{
+            "name" => "Custom Service",
+            "amount" => "7.99",
+            "amount_currency" => "GBP",
+            "cycle" => "monthly",
+            "type" => "other"
+          }
+        )
+
+      assert data = json_response(conn, 422)
+
+
+      assert data["data"]["errors"] == %{
+        "type_description" => ["can't be blank"]
       }
     end
 
@@ -298,14 +320,14 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
             "amount" => "7.99",
             "amount_currency" => "GBP",
             "cycle" => "monthly",
-            "type" => "credit_card",
+            "type" => "card",
           }
         )
 
       assert data = json_response(conn, 201)
 
-      assert data["data"]["type"] == "credit_card"
-      assert data["data"]["type_description"] == "Credit Card"
+      assert data["data"]["type"] == "card"
+      assert data["data"]["type_description"] == "Card"
     end
 
     test "creates subscription with type and custom type description", %{conn: conn} do
@@ -318,14 +340,14 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
             "amount" => "7.99",
             "amount_currency" => "GBP",
             "cycle" => "monthly",
-            "type" => "credit_card",
+            "type" => "card",
             "type_description" => "Monzo",
           }
         )
 
       assert data = json_response(conn, 201)
 
-      assert data["data"]["type"] == "credit_card"
+      assert data["data"]["type"] == "card"
       assert data["data"]["type_description"] == "Monzo"
     end
   end
@@ -415,7 +437,7 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
       assert %{"data" => data} = json_response(conn, 422)
 
       assert data["errors"] == %{
-        "type" => ["must be one of: credit card, debit card, bank account"]
+        "type" => ["must be one of: card, direct debit, other"]
       }
     end
 
@@ -426,13 +448,13 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
         patch(
           conn,
           api_subscription_path(conn, :update, subscription.id),
-          subscription: %{"type" => "bank_account"}
+          subscription: %{"type" => "direct_debit"}
         )
 
       assert %{"data" => data} = json_response(conn, 200)
 
-      assert data["type"] == "bank_account"
-      assert data["type_description"] == "Bank Account"
+      assert data["type"] == "direct_debit"
+      assert data["type_description"] == "Direct Debit"
     end
   end
 end

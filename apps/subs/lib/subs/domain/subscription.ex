@@ -69,7 +69,7 @@ defmodule Subs.Subscription do
 
   @currency_codes Money.currency_codes()
   @cycles ~w(monthly yearly)
-  @types ~w(credit_card debit_card bank_account)
+  @types ~w(card direct_debit other)
   @default_color "#E2E2E2"
 
   def build_with_user(user, params) do
@@ -120,7 +120,8 @@ defmodule Subs.Subscription do
     |> validate_number(:amount, greater_than: 0)
     |> validate_inclusion(:amount_currency, @currency_codes, message: "unknown currency")
     |> validate_inclusion(:cycle, @cycles, message: "must be one of: monthly, yearly")
-    |> validate_inclusion(:type, @types, message: "must be one of: credit card, debit card, bank account")
+    |> validate_inclusion(:type, @types, message: "must be one of: card, direct debit, other")
+    |> validate_type_other()
     |> validate_format(:color, ~r/^#(?:[0-9a-fA-F]{3}){1,2}$/, message: "invalid format, must be HEX format, ex: #FF0000")
     |> sanitize_amount_currency()
     |> populate_first_bill_date()
@@ -128,14 +129,22 @@ defmodule Subs.Subscription do
     |> populate_type_description()
   end
 
+  defp validate_type_other(changeset) do
+    case get_field(changeset, :type) do
+      "other" ->
+        validate_required(changeset, :type_description)
+      _ ->
+        changeset
+    end
+  end
+
   defp populate_type_description(changeset) do
     case get_change(changeset, :type_description) do
       nil ->
         case get_change(changeset, :type) do
           nil -> changeset
-          "credit_card" -> put_change(changeset, :type_description, "Credit Card")
-          "debit_card" -> put_change(changeset, :type_description, "Debit Card")
-          "bank_account" -> put_change(changeset, :type_description, "Bank Account")
+          "card" -> put_change(changeset, :type_description, "Card")
+          "direct_debit" -> put_change(changeset, :type_description, "Direct Debit")
           _ -> changeset
         end
       _ -> changeset

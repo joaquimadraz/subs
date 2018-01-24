@@ -111,7 +111,7 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           />
         </div>
         <div className="b dark-gray mb2 mt3">
-          Payment from
+          Payment by
         </div>
         <InputRadio
           name="type"
@@ -120,13 +120,15 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           value={subscription.type}
           onChange={onChange}
         />
-        <InputText
-          name="type-description"
-          placeholder="Santander, Monzo, American Express, ..."
-          className="subscription-type-description mt2 w-70"
-          value={subscription.type_description}
-          onChange={event => handleChange(event, 'type_description')}
-        />
+        {subscription.type &&
+          <InputText
+            name="type-description"
+            placeholder="Santander, Monzo, American Express, ..."
+            className="subscription-type-description mt2 w-70"
+            value={subscription.type_description}
+            onChange={event => handleChange(event, 'type_description')}
+          />
+        }
       </div>
     )
   }
@@ -193,6 +195,15 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           value={subscription.type}
           onChange={onChange}
         />
+        {subscription.type &&
+          <InputText
+            name="type-description"
+            placeholder="Santander, Monzo, American Express, ..."
+            className="subscription-type-description mt2 w-70"
+            value={subscription.type_description}
+            onChange={event => handleChange(event, 'type_description')}
+          />
+        }
       </div>
     )
   }
