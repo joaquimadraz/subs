@@ -107,6 +107,18 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
             onChange={color => onChange('color', color)}
           />
         </div>
+        <div className="b dark-gray mb2 mt3">
+          Type
+        </div>
+        <select
+          style={{ height: 35 }}
+          className="subscription-type"
+          onChange={event => handleChange(event, 'type')}
+          value={subscription.type}
+        >
+          <option value="credit_card">Credit Card</option>
+          <option value="bank_accout">Bank Account</option>
+        </select>
       </div>
     )
   }
@@ -163,6 +175,17 @@ const SubscriptionForm = ({ subscription, services, onClick, onChange, remoteCal
           value={subscription.first_bill_date}
           onChange={date => onChange('first_bill_date', date)}
         />
+        <div className="b dark-gray mb2 mt3">
+          Type
+        </div>
+        <select
+          style={{ height: 35 }}
+          className="subscription-type"
+          onChange={event => handleChange(event, 'type')}
+          value={subscription.type}
+        >
+          <option value="credit_card">Credit Card</option>
+        </select>
       </div>
     )
   }

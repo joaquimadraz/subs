@@ -77,4 +77,26 @@ defmodule SubsWeb.Test.Acceptance.SubscriptionsNewTest do
     |> visit("/payments")
     |> assert_has(css(".SubscriptionListItem--amount", text: "£2"))
   end
+
+  @tag :acceptance
+  test "creates subscription with type credit card", %{session: session} do
+    session
+    |> assert_signup_and_login_user()
+    |> visit("/payments/new")
+    |> assert_has(css("#subscription-form"))
+    |> fill_in(css("#subscription-form .subscription-name"), with: "Dropbox")
+    |> fill_in(css("#subscription-form .subscription-amount"), with: "1")
+    |> fill_in(css("#subscription-form .subscription-type"), with: "credit_card")
+    |> click(css("#subscription-form button[type=\"submit\"]"))
+    |> visit("/payments")
+    |> assert_has(css(".SubscriptionListItem--type--description", text: "Credit Card"))
+    |> visit("/payments/new")
+    |> assert_has(css("#subscription-form"))
+    |> fill_in(css("#subscription-form .subscription-name"), with: "Spotify")
+    |> fill_in(css("#subscription-form .subscription-amount"), with: "1")
+    |> fill_in(css("#subscription-form .subscription-type"), with: "bank_account")
+    |> click(css("#subscription-form button[type=\"submit\"]"))
+    |> visit("/payments")
+    |> assert_has(css(".SubscriptionListItem--type--description", text: "Bank Account"))
+  end
 end

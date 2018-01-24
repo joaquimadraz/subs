@@ -37,6 +37,11 @@ const SubscriptionListItem = ({ subscription, current, last }) => {
           </span>
         </div>
         <div className="w-30 w-20-l pa3 tr">
+          <span className="SubscriptionListItem--type--description">
+            Credit Card
+          </span>
+        </div>
+        <div className="w-30 w-20-l pa3 tr">
           <span className="SubscriptionListItem--amount">
             {subscription.amountFormatted}
           </span>

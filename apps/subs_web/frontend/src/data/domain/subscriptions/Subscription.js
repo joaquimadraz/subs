@@ -16,6 +16,8 @@ const remoteData = {
   next_bill_date: null,
   current_bill_date: null,
   service_code: '',
+  type: null,
+  type_description: null,
 }
 
 const SubscriptionRecord = Record(remoteData)
