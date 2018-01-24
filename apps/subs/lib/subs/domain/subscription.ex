@@ -43,6 +43,7 @@ defmodule Subs.Subscription do
     description
     first_bill_date
     type
+    type_description
   )a
 
   @required_updated_fields ~w(
@@ -125,7 +126,7 @@ defmodule Subs.Subscription do
     |> populate_type_description()
   end
 
-  defp populate_type_description(changeset) do
+  defp populate_type_description(changeset = %{changeset: %{type_description: nil}}) do
     case get_change(changeset, :type) do
       nil -> changeset
       "credit_card" -> put_change(changeset, :type_description, "Credit Card")
@@ -134,6 +135,8 @@ defmodule Subs.Subscription do
       _ -> changeset
     end
   end
+
+  defp populate_type_description(changeset), do: changeset
 
   defp sanitize_color(changeset, :create) do
     case get_change(changeset, :color) do

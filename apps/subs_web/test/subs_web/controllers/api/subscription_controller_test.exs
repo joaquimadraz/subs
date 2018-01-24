@@ -307,6 +307,27 @@ defmodule SubsWeb.Test.Controllers.SubscriptionControllerTest do
       assert data["data"]["type"] == "credit_card"
       assert data["data"]["type_description"] == "Credit Card"
     end
+
+    test "creates subscription with type and custom type description", %{conn: conn} do
+      conn =
+        post(
+          conn,
+          api_subscription_path(conn, :create),
+          subscription: %{
+            "name" => "Custom Service",
+            "amount" => "7.99",
+            "amount_currency" => "GBP",
+            "cycle" => "monthly",
+            "type" => "credit_card",
+            "type_description" => "Monzo",
+          }
+        )
+
+      assert data = json_response(conn, 201)
+
+      assert data["data"]["type"] == "credit_card"
+      assert data["data"]["type_description"] == "Monzo"
+    end
   end
 
   describe "PATCH /api/subscriptions" do
