@@ -1,10 +1,11 @@
 # Alias this container as builder:
 FROM bitwalker/alpine-elixir-phoenix as builder
 
-# Install aws cli
+# Install aws cli and yarn
 RUN apk --no-cache update && \
     apk --no-cache add python py-pip py-setuptools ca-certificates groff less && \
     pip --no-cache-dir install awscli && \
+    apk --no-cache add yarn && \
     rm -rf /var/cache/apk/*
 
 ARG HOST
@@ -64,7 +65,7 @@ RUN cd deps/comeonin && make clean && make
 
 # Build assets in production mode:
 WORKDIR /subs/apps/subs_web/frontend
-RUN npm install --global yarn && yarn install && yarn build
+RUN yarn install && yarn build
 
 WORKDIR /subs/apps/subs_web
 RUN mix phx.digest
