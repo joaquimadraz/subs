@@ -38,7 +38,6 @@ class AppContainer extends Component {
     // TODO: Extract to component
     if (!currentUser.wasRequested) {
       return (
-
         <CenteredContainer>
           <p className="white tc">Booting the systems...</p>
         </CenteredContainer>
@@ -47,7 +46,7 @@ class AppContainer extends Component {
 
     return (
       <Styles className="f6">
-        <LoadingBar style={{ backgroundColor: '#0077FF', height: 4 }} />
+        <LoadingBar style={{ backgroundColor: '#0077FF', height: 4, zIndex: 3 }} />
 
         {currentUser.isLogged
           ? (
