@@ -47,16 +47,23 @@ sed -i '.original' \
   -e 's/$PORT/'$PORT'/g' \
   config/ci/docker-compose-prod.yml
 
-# Stops all tasks and deletes service
+# Deregister old task definition
+REVISION=$(aws ecs list-task-definitions --region $AWS_ECS_REGION | jq '.taskDefinitionArns[]' | tr -d '"' | tail -1 | rev | cut -d':' -f 1 | rev)
+if [ ! -z "$REVISION" ]; then
+  aws ecs deregister-task-definition \
+    --region $AWS_ECS_REGION \
+    --task-definition $AWS_ECS_PROJECT_NAME:$REVISION \
+    >> /tmp/task_output_app.txt
+fi
+
+# Stops all tasks
 ecs-cli compose \
   --file config/ci/docker-compose-prod.yml \
   --project-name "$AWS_ECS_PROJECT_NAME" \
-  service rm
+  service stop
 
-# Even with `wait` I'm getting InvalidParameterException: Unable to Start a service that is still Draining
-sleep 5
-
-# Start a new service with latest image
+# Start a new task
 ecs-cli compose \
   --file config/ci/docker-compose-prod.yml \
-  --project-name "$AWS_ECS_PROJECT_NAME" service up
+  --project-name "$AWS_ECS_PROJECT_NAME" \
+  service up
