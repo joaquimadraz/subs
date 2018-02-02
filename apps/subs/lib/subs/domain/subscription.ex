@@ -190,7 +190,7 @@ defmodule Subs.Subscription do
   defp populate_next_bill_date(changeset = %{valid?: false}), do: changeset
   defp populate_next_bill_date(changeset) do
     with {_, cycle} <- fetch_field(changeset, :cycle),
-         {:ok, first_bill_date} <- fetch_change(changeset, :first_bill_date) do
+         {_, first_bill_date} <- fetch_field(changeset, :first_bill_date) do
       next_bill_date = calculate_next_bill_date(first_bill_date, cycle)
       put_change(changeset, :next_bill_date, next_bill_date)
     else

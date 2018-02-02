@@ -224,7 +224,7 @@ defmodule Subs.Test.Domain.SubscriptionTest do
       assert next_bill_date == ~N[2018-01-01 00:00:00]
     end
 
-    test "populates next_bill_date forwarding a bunch of months", %{user: user} do
+    test "populates next_bill_date advancing a bunch of months", %{user: user} do
       params =
         string_params_for(
           :subscription,

@@ -97,15 +97,22 @@ defmodule Subs.Test.Application.DailyNotificationsBuilderTest do
   end
 
   test "updates subscription next_bill_date without creating notification" do
-    now = ~N[2018-01-01T00:00:00Z]
-    next_bill_date = ~N[2018-02-01T00:00:00Z]
+    now = ~N[2017-08-06T00:00:00Z]
+    next_bill_date = ~N[2017-09-06T00:00:00Z]
 
     user = insert(:user)
 
     subscription =
-      insert(:complete_subscription, cycle: "monthly", user: user, next_bill_date: now)
+      insert(
+        :complete_subscription,
+        cycle: "monthly",
+        user: user,
+        first_bill_date: now,
+        next_bill_date: now
+      )
 
-    # next_bill_date updated but no notitifaction created, only on 2018-01-31 there's one
+    # next_bill_date updated but no notification created, only on 2017-08-31 there's one
+    # for the September. DT.now -> 2017-08-06, check DTMock
     [] = DailyNotificationsBuilder.build(now)
 
     subscription = SubscriptionRepo.get_user_subscription(user, subscription.id)

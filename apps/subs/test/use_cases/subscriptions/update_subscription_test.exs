@@ -48,4 +48,19 @@ defmodule Subs.Test.UseCases.Subscriptions.UpdateSubscriptionTest do
     assert subscription.archived == true
     assert subscription.archived_at != nil
   end
+
+  test "updates cycle and recalculates next_bill_date", %{user: user} do
+    subscription = insert(
+      :complete_subscription,
+      user_id: user.id,
+      cycle: "monthly",
+      first_bill_date: ~N[2017-08-01T00:00:00Z],
+      next_bill_date: ~N[2017-09-01T00:00:00Z],
+    )
+
+    {:ok, %{subscription: subscription}} =
+      UpdateSubscription.perform(user, subscription.id, %{"cycle" => "yearly"})
+
+    assert subscription.next_bill_date == ~N[2018-08-01T00:00:00.000000]
+  end
 end
