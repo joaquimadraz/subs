@@ -19,7 +19,6 @@ import RedirectIfNotLogged from './routes/RedirectIfNotLogged'
 import UsersConfirmSignup from './routes/Users/routes/ConfirmSignup'
 import UsersResetPassword from './routes/Users/routes/ResetPassword'
 import NewSubscription from './routes/Subscriptions/routes/NewSubscription'
-import ShowSubscription from './routes/Subscriptions/routes/ShowSubscription'
 import Subscriptions from './routes/Subscriptions'
 import Account from './routes/Account'
 
@@ -43,7 +42,6 @@ if (document.getElementById('app')) {
             <IndexRoute component={Home} />
             <Route path={routes.subscriptions} component={Subscriptions}>
               <Route path={routes.subscriptionsNew} component={NewSubscription} />
-              <Route path={routes.subscriptionsShow(':subscriptionId')} component={ShowSubscription} />
             </Route>
             <Route path={routes.account} component={Account} />
           </Route>
