@@ -40,7 +40,7 @@ const renderYearlyPaymentMessage = (date, count, diffPerc) => {
   const precCx = diffPerc > 0 ? 'red' : 'green'
   const payments = count === 1 ? 'payment' : 'payments'
   const are = count === 1 ? 'is' : 'are'
-  console.log(diffPerc)
+
   return (
     <div>
       <p className="mv2">
