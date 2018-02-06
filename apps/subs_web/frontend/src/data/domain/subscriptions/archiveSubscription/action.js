@@ -1,7 +1,4 @@
-import { push } from 'react-router-redux'
-
 import api from 'data/api'
-import routes from 'constants/routes'
 import getAllSubscriptionsAction from '../getAllSubscriptions/action'
 
 const ARCHIVE_SUBSCRIPTION_STARTED = 'ARCHIVE_SUBSCRIPTION_STARTED'
@@ -16,7 +13,6 @@ function handleArchiveSuccess(dispatch, response) {
   const { data, meta } = response.data
 
   dispatch({ type: ARCHIVE_SUBSCRIPTION_SUCCESS, data, meta })
-  dispatch(push(routes.subscriptions))
   dispatch(getAllSubscriptionsAction())
 }
 
