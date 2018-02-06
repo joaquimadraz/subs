@@ -9,7 +9,7 @@ export default styled('li') `
     opacity: 0.8;
   }
 
-  a {
+  div:first-child {
     color: ${props => props.textColor || '#000'};
   }
 `

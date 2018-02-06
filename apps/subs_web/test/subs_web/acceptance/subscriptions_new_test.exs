@@ -71,7 +71,7 @@ defmodule SubsWeb.Test.Acceptance.SubscriptionsNewTest do
     |> click(css("#subscription-form button[type=\"submit\"]"))
     |> assert_has(css("a", text: "New payment"))
     |> assert_has(css(".SubscriptionListItem--name", text: "Dropbox"))
-    |> click(css(".SubscriptionListItem a"))
+    |> click(css(".SubscriptionListItem"))
     |> fill_in(css("#subscription-form .subscription-amount"), with: "2")
     |> click(css("#subscription-form button[type=\"submit\"]"))
     |> visit("/payments")

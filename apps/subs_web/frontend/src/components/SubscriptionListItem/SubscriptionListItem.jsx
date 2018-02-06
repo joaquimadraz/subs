@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router'
 import classNames from 'classnames'
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faCreditCard from '@fortawesome/fontawesome-free-solid/faCreditCard'
 import faUniversity from '@fortawesome/fontawesome-free-solid/faUniversity'
 import faInfo from '@fortawesome/fontawesome-free-solid/faInfo'
 
-import routes from 'constants/routes'
 import colors from 'constants/colors'
 import { CARD, DIRECT_DEBIT, OTHER } from 'constants/paymentTypes'
 import Tooltip from 'components/Tooltip'
@@ -41,7 +39,12 @@ const renderPaymentType = (subscription) => {
   )
 }
 
-const SubscriptionListItem = ({ subscription, current, last }) => {
+const SubscriptionListItem = ({
+  subscription,
+  current,
+  last,
+  onClick,
+}) => {
   const isDue = current && subscription.isCurrentDue
   const cx = classNames('SubscriptionListItem br2', { mb2: !last })
 
@@ -50,9 +53,9 @@ const SubscriptionListItem = ({ subscription, current, last }) => {
       className={cx}
       background={isDue ? colors.disabled.bg : subscription.color}
       textColor={isDue ? colors.disabled.text : subscription.textColor}
+      onClick={() => onClick(subscription)}
     >
-      <Link
-        to={routes.subscriptionsShow(subscription.id)}
+      <div
         className="flex items-center pointer no-underline"
         title={subscription.name}
       >
@@ -77,7 +80,7 @@ const SubscriptionListItem = ({ subscription, current, last }) => {
             {subscription.amountFormatted}
           </span>
         </div>
-      </Link>
+      </div>
     </Styles>
   )
 }
@@ -86,11 +89,13 @@ SubscriptionListItem.propTypes = {
   subscription: PropTypes.instanceOf(Subscription).isRequired,
   current: PropTypes.bool,
   last: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 SubscriptionListItem.defaultProps = {
   current: false,
   last: false,
+  onClick: () => {},
 }
 
 export default SubscriptionListItem
