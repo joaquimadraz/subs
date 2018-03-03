@@ -1,5 +1,6 @@
 defmodule SubsWeb.Router do
   use SubsWeb, :router
+  use Plug.ErrorHandler
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -47,5 +48,9 @@ defmodule SubsWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/*path", PageController, :index
+  end
+
+  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
+    SubsWeb.RollbaxHelper.report(conn, kind, reason, stacktrace)
   end
 end

@@ -11,8 +11,7 @@ sudo chmod +x /usr/local/bin/ecs-cli
 docker build -t $AWS_ECS_CONTAINER_NAME \
   --build-arg HOST=$HOST \
   --build-arg ERLANG_COOKIE=$ERLANG_COOKIE \
-  --build-arg APPSIGNAL_NAME=$APPSIGNAL_NAME \
-  --build-arg APPSIGNAL_KEY=$APPSIGNAL_KEY \
+  --build-arg ROLLBAR_ACCESS_TOKEN=$ROLLBAR_ACCESS_TOKEN \
   --build-arg SENDGRID_API_KEY=$SENDGRID_API_KEY \
   --build-arg SUBS_ADMIN_EMAIL=$SUBS_ADMIN_EMAIL \
   --build-arg PHOENIX_SECRET_KEY_BASE=$PHOENIX_SECRET_KEY_BASE \

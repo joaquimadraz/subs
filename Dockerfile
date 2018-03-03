@@ -10,8 +10,7 @@ RUN apk --no-cache update && \
 
 ARG HOST
 ARG ERLANG_COOKIE
-ARG APPSIGNAL_NAME
-ARG APPSIGNAL_KEY
+ARG ROLLBAR_ACCESS_TOKEN
 ARG SENDGRID_API_KEY
 ARG SUBS_ADMIN_EMAIL
 ARG PHOENIX_SECRET_KEY_BASE
@@ -31,9 +30,7 @@ ENV MIX_ENV=prod \
     SUBS_WEB_CACERTFILE=/etc/letsencrypt/live/$HOST/chain.pem \
     HOST=$HOST \
     ERLANG_COOKIE=$ERLANG_COOKIE \
-    APPSIGNAL_BUILD_FOR_MUSL=1\
-    APPSIGNAL_NAME=$APPSIGNAL_NAME \
-    APPSIGNAL_KEY=$APPSIGNAL_KEY \
+    ROLLBAR_ACCESS_TOKEN=$ROLLBAR_ACCESS_TOKEN \
     SENDGRID_API_KEY=$SENDGRID_API_KEY \
     SUBS_ADMIN_EMAIL=$SUBS_ADMIN_EMAIL \
     PHOENIX_SECRET_KEY_BASE=$PHOENIX_SECRET_KEY_BASE \
@@ -83,10 +80,8 @@ FROM alpine:3.6
 ARG HOST
 
 # We need bash and openssl for Phoenix
-# The update is needed for appsignal
 RUN apk upgrade --no-cache && \
-    apk add --no-cache bash openssl && \
-    apk add --update alpine-sdk coreutils curl
+    apk add --no-cache bash openssl
 
 ENV MIX_ENV=prod \
     REPLACE_OS_VARS=true \

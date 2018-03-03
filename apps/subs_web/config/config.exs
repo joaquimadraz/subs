@@ -35,6 +35,12 @@ config :subs_web, SubsWeb.Helpers.AuthAccessPipeline,
 
 config :subs_web, :subs_services, SubsServices
 
+config :rollbax,
+  enabled: :false,
+  access_token: System.get_env("ROLLBAR_ACCESS_TOKEN"),
+  environment: Mix.env,
+  enable_crash_reports: true
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

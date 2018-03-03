@@ -35,6 +35,8 @@ config :subs_web, SubsWeb.Guardian,
   issuer: "SubsWeb",
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 
+config :rollbax, enabled: :true
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

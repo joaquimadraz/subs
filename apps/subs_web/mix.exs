@@ -24,7 +24,7 @@ defmodule SubsWeb.Mixfile do
   def application do
     [
       mod: {SubsWeb.Application, []},
-      extra_applications: [:logger, :runtime_tools, :elixir_make]
+      extra_applications: [:logger, :runtime_tools, :elixir_make, :rollbax]
     ]
   end
 
@@ -49,6 +49,8 @@ defmodule SubsWeb.Mixfile do
       {:guardian, "~> 1.0-beta"},
       {:distillery, "~> 1.5", runtime: false},
       {:wallaby, "~> 0.19.2", only: :test},
+      {:rollbax, ">= 0.0.0"},
+      {:jason, "~> 1.0"},
     ]
   end
 
