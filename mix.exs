@@ -11,7 +11,7 @@ defmodule Subs.Umbrella.Mixfile do
   end
 
   defp deps do
-    [{:appsignal, "~> 1.0"}]
+    []
   end
 
   defp aliases do
