@@ -52,7 +52,7 @@ defmodule Subs.SubscriptionRepo do
     query =
       from(
         s in Subscription,
-        where: s.next_bill_date >= ^from and s.next_bill_date <= ^to,
+        where: s.next_bill_date >= ^from and s.next_bill_date <= ^to and s.archived == false,
         preload: :user
       )
 

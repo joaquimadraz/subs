@@ -119,6 +119,16 @@ defmodule Subs.Test.Application.DailyNotificationsBuilderTest do
     assert NaiveDateTime.to_date(subscription.next_bill_date) == NaiveDateTime.to_date(next_bill_date)
   end
 
+  test "ignores archived subscriptions" do
+    now = ~N[2018-01-01T00:00:00Z]
+    tomorrow = ~N[2018-01-02T00:00:00Z]
+
+    user = insert(:user)
+    insert(:complete_subscription, user: user, next_bill_date: tomorrow, archived: true)
+
+    assert [] = DailyNotificationsBuilder.build(now)
+  end
+
   describe "Weekly notification" do
     setup do
       [
