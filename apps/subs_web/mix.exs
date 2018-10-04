@@ -10,9 +10,9 @@ defmodule SubsWeb.Mixfile do
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
       elixir: "~> 1.5",
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
     ]
@@ -30,7 +30,7 @@ defmodule SubsWeb.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -47,10 +47,10 @@ defmodule SubsWeb.Mixfile do
       {:repository, in_umbrella: true},
       {:cowboy, "~> 1.0"},
       {:guardian, "~> 1.0-beta"},
-      {:distillery, "~> 1.5", runtime: false},
+      {:distillery, "~> 1.5.5", runtime: false},
       {:wallaby, "~> 0.20.0", only: :test},
       {:rollbax, ">= 0.0.0"},
-      {:jason, "~> 1.0"},
+      {:jason, "~> 1.0"}
     ]
   end
 
@@ -59,6 +59,6 @@ defmodule SubsWeb.Mixfile do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    ["test": ["ecto.create --quiet", "ecto.migrate", "test"]]
+    [test: ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end
